@@ -40,6 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AggregateBase.cs" />
+    <Compile Include="EventFactory.cs" />
+    <Compile Include="EventHandlerFactory.cs" />
+    <Compile Include="IEventFactory.cs" />
+    <Compile Include="IEventHandlerFactory.cs" />
+    <Compile Include="IEventSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
