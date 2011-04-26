@@ -1,14 +1,15 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace NES
 {
-    public abstract class AggregateBase<T> : IEventSource<T>
+    public abstract class AggregateBase<T> : IEventSource
     {
         public Guid Id { get; protected set; }
 
-        int IEventSource<T>.Version
+        int IEventSource.Version
         {
             get { return _version; }
         }
@@ -18,17 +19,16 @@ namespace NES
         private static readonly EventFactory<T> _eventFactory = new EventFactory<T>();
         private static readonly EventHandlerFactory<T> _eventHandlerFactory = new EventHandlerFactory<T>();
 
-        void IEventSource<T>.Hydrate(IEnumerable<T> events)
+        void IEventSource.Hydrate(IEnumerable events)
         {
-            foreach (var @event in events)
+            foreach (var @event in events.Cast<T>())
             {
                 Raise(@event);
+                _version++;
             }
-
-            _version = _version + events.Count();
         }
 
-        IEnumerable<T> IEventSource<T>.Flush()
+        IEnumerable IEventSource.Flush()
         {
             var events = new List<T>(_events);
 
@@ -40,7 +40,7 @@ namespace NES
 
         protected void Apply<TEvent>(Action<TEvent> action) where TEvent : T
         {
-            var @event = _eventFactory.CreateEvent(action);
+            var @event = _eventFactory.Create(action);
 
             Raise(@event);
 
@@ -49,7 +49,7 @@ namespace NES
 
         private void Raise(T @event)
         {
-            _eventHandlerFactory.GetHandler(GetType(), @event.GetType())(this, @event);
+            _eventHandlerFactory.Get(GetType(), @event.GetType())(this, @event);
         }
     }
 }

@@ -21,16 +21,16 @@ namespace NES
             _moduleBuilder = assemblyBuilder.DefineDynamicModule(@namespace);
         }
 
-        public TEvent CreateEvent<TEvent>(Action<TEvent> action) where TEvent : T
+        public TEvent Create<TEvent>(Action<TEvent> action) where TEvent : T
         {
-            var @event = (TEvent)CreateEvent(typeof(TEvent));
+            var @event = (TEvent)Create(typeof(TEvent));
 
             action(@event);
 
             return @event;
         }
 
-        private object CreateEvent(Type type)
+        private object Create(Type type)
         {
             return FormatterServices.GetUninitializedObject(GetConcreteType(type));
         }

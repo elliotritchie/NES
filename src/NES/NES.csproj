@@ -43,10 +43,16 @@
     <Compile Include="AggregateBase.cs" />
     <Compile Include="EventFactory.cs" />
     <Compile Include="EventHandlerFactory.cs" />
+    <Compile Include="GuidComb.cs" />
     <Compile Include="IEventFactory.cs" />
     <Compile Include="IEventHandlerFactory.cs" />
     <Compile Include="IEventSource.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="IUnitOfWorkFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository.cs" />
+    <Compile Include="UnitOfWorkFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -10,14 +10,14 @@ namespace NES.Tests
         public class When_hydrating_and_events_are_supplied : Test
         {
             private AggregateStub _aggregate;
-            private IEventSource<IEvent> _eventSource;
+            private IEventSource _eventSource;
             private readonly EventFactory<IEvent> _eventFactory = new EventFactory<IEvent>();
             private readonly List<IEvent> _events = new List<IEvent>();
             
             protected override void Context()
             {
                 _eventSource = _aggregate = new AggregateStub();
-                _events.Add(_eventFactory.CreateEvent<SomethingHappenedEvent>(e => {}));
+                _events.Add(_eventFactory.Create<SomethingHappenedEvent>(e => {}));
             }
 
             protected override void Event()
@@ -42,7 +42,7 @@ namespace NES.Tests
         public class When_hydrating_and_events_are_not_supplied : Test
         {
             private AggregateStub _aggregate;
-            private IEventSource<IEvent> _eventSource;
+            private IEventSource _eventSource;
             private readonly List<IEvent> _events = new List<IEvent>();
 
             protected override void Context()
@@ -72,7 +72,7 @@ namespace NES.Tests
         public class When_applying_event : Test
         {
             private AggregateStub _aggregate;
-            private IEventSource<IEvent> _eventSource;
+            private IEventSource _eventSource;
             private const string _value = "qwerty";
 
             protected override void Context()
@@ -97,7 +97,7 @@ namespace NES.Tests
         public class When_flushing_and_events_have_been_applied : Test
         {
             private AggregateStub _aggregate;
-            private IEventSource<IEvent> _eventSource;
+            private IEventSource _eventSource;
             private IEnumerable<IEvent> _flushedEvents;
             private const string _value = "qwerty";
 
@@ -109,7 +109,7 @@ namespace NES.Tests
 
             protected override void Event()
             {
-                _flushedEvents = _eventSource.Flush();
+                _flushedEvents = _eventSource.Flush().Cast<IEvent>();
             }
 
             [TestMethod]
@@ -130,7 +130,7 @@ namespace NES.Tests
         public class When_flushing_and_no_events_have_been_applied : Test
         {
             private AggregateStub _aggregate;
-            private IEventSource<IEvent> _eventSource;
+            private IEventSource _eventSource;
             private IEnumerable<IEvent> _flushedEvents;
 
             protected override void Context()
@@ -140,7 +140,7 @@ namespace NES.Tests
 
             protected override void Event()
             {
-                _flushedEvents = _eventSource.Flush();
+                _flushedEvents = _eventSource.Flush().Cast<IEvent>();
             }
 
             [TestMethod]
