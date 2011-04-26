@@ -5,7 +5,9 @@ namespace NES.Tests.Stubs
 {
     public class AggregateStub : AggregateBase<IEvent>
     {
-        public readonly List<IEvent> Events = new List<IEvent>();
+        public readonly List<IEvent> HandledEvents = new List<IEvent>();
+
+        private string _something;
 
         public AggregateStub(Guid id)
         {
@@ -30,11 +32,15 @@ namespace NES.Tests.Stubs
         private void Handle(CreatedAggregateStubEvent @event)
         {
             Id = @event.Id;
+
+            HandledEvents.Add(@event);
         }
 
         private void Handle(SomethingHappenedEvent @event)
         {
-            Events.Add(@event);
+            _something = @event.Something;
+
+            HandledEvents.Add(@event);
         }
     }
 }

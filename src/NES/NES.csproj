@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EventStore">
+      <HintPath>..\..\lib\EventStore\EventStore.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -44,13 +47,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AggregateBase.cs" />
+    <Compile Include="ConflictingCommandException.cs" />
     <Compile Include="EventFactory.cs" />
     <Compile Include="EventHandlerFactory.cs" />
+    <Compile Include="EventSourceFactory.cs" />
+    <Compile Include="EventSourceMapper.cs" />
+    <Compile Include="EventStoreAdapter.cs" />
     <Compile Include="GuidComb.cs" />
     <Compile Include="IEventFactory.cs" />
     <Compile Include="IEventHandlerFactory.cs" />
     <Compile Include="IEventSource.cs" />
+    <Compile Include="IEventSourceFactory.cs" />
     <Compile Include="IEventSourceMapper.cs" />
+    <Compile Include="IEventStoreAdapter.cs" />
+    <Compile Include="IMemento.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="IUnitOfWorkFactory.cs" />

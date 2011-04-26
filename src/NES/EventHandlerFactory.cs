@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace NES
 {
-    public class EventHandlerFactory<T> : IEventHandlerFactory<T>
+    public class EventHandlerFactory<T> : IEventHandlerFactory<T> where T : class
     {
         private static readonly Dictionary<Type, Dictionary<Type, Action<AggregateBase<T>, T>>> _cache = new Dictionary<Type, Dictionary<Type, Action<AggregateBase<T>, T>>>();
         private static readonly object _cacheLock = new object();

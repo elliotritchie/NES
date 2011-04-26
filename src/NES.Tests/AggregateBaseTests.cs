@@ -29,7 +29,7 @@ namespace NES.Tests
             [TestMethod]
             public void Should_raise_events()
             {
-                Assert.IsTrue(_aggregate.Events.SequenceEqual(_events));
+                Assert.IsTrue(_aggregate.HandledEvents.SequenceEqual(_events));
             }
 
             [TestMethod]
@@ -59,7 +59,7 @@ namespace NES.Tests
             [TestMethod]
             public void Should_not_raise_events()
             {
-                Assert.IsTrue(_aggregate.Events.SequenceEqual(_events));
+                Assert.IsTrue(_aggregate.HandledEvents.SequenceEqual(_events));
             }
 
             [TestMethod]
@@ -89,8 +89,8 @@ namespace NES.Tests
             [TestMethod]
             public void Should_raise_events()
             {
-                Assert.AreEqual(1, _aggregate.Events.Count);
-                Assert.AreEqual(_value, _aggregate.Events.OfType<SomethingHappenedEvent>().Single().Something);
+                Assert.AreEqual(1, _aggregate.HandledEvents.Count);
+                Assert.AreEqual(_value, _aggregate.HandledEvents.OfType<SomethingHappenedEvent>().Single().Something);
             }
         }
 
@@ -116,7 +116,7 @@ namespace NES.Tests
             [TestMethod]
             public void Should_return_flushed_events()
             {
-                Assert.IsTrue(_flushedEvents.SequenceEqual(_aggregate.Events));
+                Assert.IsTrue(_flushedEvents.SequenceEqual(_aggregate.HandledEvents));
                 Assert.AreEqual(_value, _flushedEvents.OfType<SomethingHappenedEvent>().Single().Something);
             }
 

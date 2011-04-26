@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace NES
 {
@@ -7,7 +7,9 @@ namespace NES
     {
         Guid Id { get; }
         int Version { get; }
-        void Hydrate(IEnumerable events);
-        IEnumerable Flush();
+        void Hydrate(IMemento memento);
+        void Hydrate(IEnumerable<object> events);
+        IMemento TakeSnapshot();
+        IEnumerable<object> Flush();
     }
 }

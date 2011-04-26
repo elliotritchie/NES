@@ -11,14 +11,13 @@ namespace NES.Tests
         public class When_getting_an_event_source_once : Test
         {
             private readonly Guid _id = Guid.NewGuid();
-            private Mock<IEventSourceMapper> _eventSourceMapper;
+            private readonly Mock<IEventSourceMapper> _eventSourceMapper = new Mock<IEventSourceMapper>();
             private UnitOfWork _unitOfWork;
             private AggregateStub _aggregate;
             private AggregateStub _returnedAggregate;
 
             protected override void Context()
             {
-                _eventSourceMapper = new Mock<IEventSourceMapper>();
                 _unitOfWork = new UnitOfWork(_eventSourceMapper.Object);
                 _aggregate = new AggregateStub(_id);
 
@@ -43,14 +42,13 @@ namespace NES.Tests
         public class When_getting_an_event_source_more_than_once : Test
         {
             private readonly Guid _id = Guid.NewGuid();
-            private Mock<IEventSourceMapper> _eventSourceMapper;
+            private readonly Mock<IEventSourceMapper> _eventSourceMapper = new Mock<IEventSourceMapper>();
             private UnitOfWork _unitOfWork;
             private AggregateStub _aggregate;
             private AggregateStub _returnedAggregate;
 
             protected override void Context()
             {
-                _eventSourceMapper = new Mock<IEventSourceMapper>();
                 _unitOfWork = new UnitOfWork(_eventSourceMapper.Object);
                 _aggregate = new AggregateStub(_id);
 
@@ -75,13 +73,12 @@ namespace NES.Tests
         [TestClass]
         public class When_committing_and_an_event_source_has_been_registered : Test
         {
-            private Mock<IEventSourceMapper> _eventSourceMapper;
+            private readonly Mock<IEventSourceMapper> _eventSourceMapper = new Mock<IEventSourceMapper>();
             private UnitOfWork _unitOfWork;
             private IEventSource _aggregate;
 
             protected override void Context()
             {
-                _eventSourceMapper = new Mock<IEventSourceMapper>();
                 _unitOfWork = new UnitOfWork(_eventSourceMapper.Object);
                 _aggregate = new AggregateStub();
 
@@ -103,13 +100,12 @@ namespace NES.Tests
         [TestClass]
         public class When_committing_and_an_event_source_has_been_registered_more_than_once : Test
         {
-            private Mock<IEventSourceMapper> _eventSourceMapper;
+            private readonly Mock<IEventSourceMapper> _eventSourceMapper = new Mock<IEventSourceMapper>();
             private UnitOfWork _unitOfWork;
             private IEventSource _aggregate;
 
             protected override void Context()
             {
-                _eventSourceMapper = new Mock<IEventSourceMapper>();
                 _unitOfWork = new UnitOfWork(_eventSourceMapper.Object);
                 _aggregate = new AggregateStub();
 
@@ -132,14 +128,13 @@ namespace NES.Tests
         [TestClass]
         public class When_committing_and_event_sources_have_been_registered : Test
         {
-            private Mock<IEventSourceMapper> _eventSourceMapper;
+            private readonly Mock<IEventSourceMapper> _eventSourceMapper = new Mock<IEventSourceMapper>();
             private UnitOfWork _unitOfWork;
             private IEventSource _aggregate1;
             private IEventSource _aggregate2;
 
             protected override void Context()
             {
-                _eventSourceMapper = new Mock<IEventSourceMapper>();
                 _unitOfWork = new UnitOfWork(_eventSourceMapper.Object);
                 _aggregate1 = new AggregateStub();
                 _aggregate2 = new AggregateStub();

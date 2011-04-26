@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 
 namespace NES
 {
-    public class EventFactory<T> : IEventFactory<T>
+    public class EventFactory<T> : IEventFactory<T> where T : class
     {
         private const string _suffix = ".__Concrete";
         private static readonly Dictionary<Type, Type> _cache = new Dictionary<Type, Type>();
