@@ -11,14 +11,14 @@ namespace NES
             _unitOfWork = unitOfWorkFactory.GetUnitOfWork();
         }
 
-        public void Add<T>(T aggregate) where T : IEventSource
-        {
-            _unitOfWork.Register(aggregate);
-        }
-
-        public T Get<T>(Guid id) where T : IEventSource
+        public T Get<T>(Guid id) where T : class, IEventSource
         {
             return _unitOfWork.Get<T>(id);
+        }
+
+        public void Add<T>(T aggregate) where T : class, IEventSource
+        {
+            _unitOfWork.Register(aggregate);
         }
     }
 }

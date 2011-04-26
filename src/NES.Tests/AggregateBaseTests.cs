@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NES.Tests.Stubs;
 
 namespace NES.Tests
 {
@@ -153,33 +154,6 @@ namespace NES.Tests
             public void Should_not_increment_version()
             {
                 Assert.AreEqual(_flushedEvents.Count(), _eventSource.Version);
-            }
-        }
-
-        public interface IEvent
-        {
-        }
-
-        public interface SomethingHappenedEvent : IEvent
-        {
-            string Something { get; set; }
-        }
-
-        public class AggregateStub : AggregateBase<IEvent>
-        {
-            public readonly List<IEvent> Events = new List<IEvent>();
-
-            public void DoSomething(string value)
-            {
-                Apply<SomethingHappenedEvent>(e =>
-                {
-                    e.Something = value;
-                });
-            }
-
-            private void Handle(SomethingHappenedEvent @event)
-            {
-                Events.Add(@event);
             }
         }
     }
