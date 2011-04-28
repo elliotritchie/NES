@@ -3,26 +3,11 @@ using System;
 namespace NES
 {
     /// <summary>
-    /// Generates <see cref="System.Guid"/> values 
-    /// using a strategy suggested Jimmy Nilsson's 
-    /// <a href="http://www.informit.com/articles/article.asp?p=25862">article</a>
-    /// on <a href="http://www.informit.com">informit.com</a>. 
+    /// Based on the GuidCombGenerator implementation in NHibernate
+    /// https://nhibernate.svn.sourceforge.net/svnroot/nhibernate/trunk/nhibernate/src/NHibernate/Id/GuidCombGenerator.cs
     /// </summary>
-    /// <remarks>
-    /// <p>
-    /// The <c>comb</c> algorithm is designed to make the use of GUIDs as Primary Keys, Foreign Keys, 
-    /// and Indexes nearly as efficient as ints.
-    /// </p>
-    /// <p>
-    /// This code was modifed based on Donald Mull's contributor to the
-    /// NHibernate source.
-    /// </p>
-    /// </remarks>
     public static class GuidComb
     {
-        /// <summary>
-        /// Generate a new <see cref="Guid"/> using the comb algorithm.
-        /// </summary>
         public static Guid NewGuidComb()
         {
             byte[] guidArray = Guid.NewGuid().ToByteArray();

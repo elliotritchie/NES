@@ -4,21 +4,21 @@ namespace NES
 {
     public class Repository : IRepository
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly UnitOfWorkFactory _unitOfWorkFactory;
 
-        public Repository(IUnitOfWorkFactory unitOfWorkFactory)
+        public Repository()
         {
-            _unitOfWork = unitOfWorkFactory.GetUnitOfWork();
+            _unitOfWorkFactory = UnitOfWorkFactory.Current;
         }
 
         public T Get<T>(Guid id) where T : class, IEventSource
         {
-            return _unitOfWork.Get<T>(id);
+            return _unitOfWorkFactory.GetUnitOfWork().Get<T>(id);
         }
 
         public void Add<T>(T aggregate) where T : class, IEventSource
         {
-            _unitOfWork.Register(aggregate);
+            _unitOfWorkFactory.GetUnitOfWork().Register(aggregate);
         }
     }
 }

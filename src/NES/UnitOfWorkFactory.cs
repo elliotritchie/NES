@@ -1,16 +1,21 @@
 using System;
-using Microsoft.Practices.ServiceLocation;
 
 namespace NES
 {
-    public class UnitOfWorkFactory : IUnitOfWorkFactory
+    public sealed class UnitOfWorkFactory
     {
+        private static readonly UnitOfWorkFactory _current = new UnitOfWorkFactory();
+        public static UnitOfWorkFactory Current
+        {
+            get { return _current; }
+        }
+
         [ThreadStatic]
         private static IUnitOfWork _unitOfWork;
-
+        
         public void Begin()
         {
-            _unitOfWork = ServiceLocator.Current.GetInstance<IUnitOfWork>();
+            _unitOfWork = DI.Current.Resolve<IUnitOfWork>();
         }
 
         public void End()

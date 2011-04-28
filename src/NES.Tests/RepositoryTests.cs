@@ -7,38 +7,21 @@ namespace NES.Tests
     public static class RepositoryTests
     {
         [TestClass]
-        public class When_initializing : Test
-        {
-            private readonly Mock<IUnitOfWorkFactory> _unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
-
-            protected override void Context()
-            {
-            }
-
-            protected override void Event()
-            {
-                 new Repository(_unitOfWorkFactory.Object);
-            }
-
-            [TestMethod]
-            public void Should_get_unit_of_work()
-            {
-                _unitOfWorkFactory.Verify(f => f.GetUnitOfWork());
-            }
-        }
-
-        [TestClass]
         public class When_adding_aggregate : Test
         {
             private Repository _repository;
-            private readonly Mock<IUnitOfWorkFactory> _unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
+            private readonly Mock<IDependencyInjectionContainer> _container = new Mock<IDependencyInjectionContainer>();
             private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
             private readonly Mock<IEventSource> _aggregate = new Mock<IEventSource>();
 
             protected override void Context()
             {
-                _unitOfWorkFactory.Setup(f => f.GetUnitOfWork()).Returns(_unitOfWork.Object);
-                _repository = new Repository(_unitOfWorkFactory.Object);
+                _container.Setup(c => c.Resolve<IUnitOfWork>()).Returns(_unitOfWork.Object);
+
+                DI.Current = _container.Object;
+                UnitOfWorkFactory.Current.Begin();
+                
+                _repository = new Repository();
             }
 
             protected override void Event()
@@ -57,14 +40,18 @@ namespace NES.Tests
         public class When_getting_aggregate : Test
         {
             private Repository _repository;
-            private readonly Mock<IUnitOfWorkFactory> _unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
+            private readonly Mock<IDependencyInjectionContainer> _container = new Mock<IDependencyInjectionContainer>();
             private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
             private readonly Guid _id = GuidComb.NewGuidComb();
 
             protected override void Context()
             {
-                _unitOfWorkFactory.Setup(f => f.GetUnitOfWork()).Returns(_unitOfWork.Object);
-                _repository = new Repository(_unitOfWorkFactory.Object);
+                _container.Setup(c => c.Resolve<IUnitOfWork>()).Returns(_unitOfWork.Object);
+
+                DI.Current = _container.Object;
+                UnitOfWorkFactory.Current.Begin();
+
+                _repository = new Repository();
             }
 
             protected override void Event()

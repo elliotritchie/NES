@@ -15,8 +15,8 @@ namespace NES
 
         private int _version;
         private readonly List<T> _events = new List<T>();
-        private static readonly IEventFactory<T> _eventFactory = new EventFactory<T>();
-        private static readonly IEventHandlerFactory<T> _eventHandlerFactory = new EventHandlerFactory<T>();
+        private static readonly EventFactory<T> _eventFactory = new EventFactory<T>();
+        private static readonly EventHandlerFactory<T> _eventHandlerFactory = new EventHandlerFactory<T>();
 
         void IEventSource.Hydrate(IMemento memento)
         {
