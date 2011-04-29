@@ -115,6 +115,7 @@
     <Compile Include="EventStore\NESWireup.cs" />
     <Compile Include="EventStore\WireupExtensions.cs" />
     <Compile Include="GuidComb.cs" />
+    <Compile Include="IBusAdapter.cs" />
     <Compile Include="IDependencyInjectionContainer.cs" />
     <Compile Include="IEventSource.cs" />
     <Compile Include="IEventSourceFactory.cs" />
@@ -123,6 +124,8 @@
     <Compile Include="IMemento.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="NServiceBus\BusAdapter.cs" />
+    <Compile Include="NServiceBus\ConfigureNES.cs" />
     <Compile Include="NServiceBus\MessageModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />

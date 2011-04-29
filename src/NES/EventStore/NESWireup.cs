@@ -1,4 +1,5 @@
 using EventStore;
+using EventStore.Dispatcher;
 
 namespace NES.EventStore
 {
