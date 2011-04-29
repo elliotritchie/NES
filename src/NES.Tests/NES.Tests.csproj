@@ -51,6 +51,9 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AggregateBaseTests.cs" />
     <Compile Include="DependencyInjectionContainerTests.cs" />
     <Compile Include="EventSourceMapperTests.cs" />
