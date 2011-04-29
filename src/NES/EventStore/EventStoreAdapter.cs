@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using EventStore;
 
-namespace NES
+namespace NES.EventStore
 {
     public class EventStoreAdapter : IEventStoreAdapter
     {

@@ -1,6 +1,6 @@
 using NServiceBus;
 
-namespace NES
+namespace NES.NServiceBus
 {
     public class MessageModule : IMessageModule
     {
