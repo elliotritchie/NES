@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using NServiceBus;
 
@@ -12,9 +13,12 @@ namespace NES.NServiceBus
             _bus = bus;
         }
 
-        public void Publish(params object[] events)
+        public void Publish(IEnumerable<object> events)
         {
-            _bus.Publish(events.Cast<IMessage>().ToArray());
+            foreach (var @event in events.Cast<IMessage>())
+            {
+                _bus.Publish(@event);
+            }
         }
     }
 }
