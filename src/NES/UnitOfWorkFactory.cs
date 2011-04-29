@@ -2,30 +2,24 @@ using System;
 
 namespace NES
 {
-    public sealed class UnitOfWorkFactory
+    public static class UnitOfWorkFactory
     {
-        private static readonly UnitOfWorkFactory _current = new UnitOfWorkFactory();
-        public static UnitOfWorkFactory Current
+        [ThreadStatic]
+        private static IUnitOfWork _current;
+        public static IUnitOfWork Current
         {
             get { return _current; }
+            set { _current = value; }
         }
 
-        [ThreadStatic]
-        private static IUnitOfWork _unitOfWork;
-        
-        public void Begin()
+        public static void Begin()
         {
-            _unitOfWork = DI.Current.Resolve<IUnitOfWork>();
+            _current = DI.Current.Resolve<IUnitOfWork>();
         }
 
-        public void End()
+        public static void End()
         {
-            _unitOfWork = null;
-        }
-
-        public IUnitOfWork GetUnitOfWork()
-        {
-            return _unitOfWork;
+            _current = null;
         }
     }
 }
