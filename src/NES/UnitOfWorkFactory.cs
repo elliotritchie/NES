@@ -9,7 +9,7 @@ namespace NES
         public static IUnitOfWork Current
         {
             get { return _current; }
-            set { _current = value; }
+            internal set { _current = value; }
         }
 
         public static void Begin()

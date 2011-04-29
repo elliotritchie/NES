@@ -6,7 +6,7 @@ namespace NES
         public static IDependencyInjectionContainer Current
         {
             get { return _current; }
-            set { _current = value; }
+            internal set { _current = value; }
         }
 
         static DI()

@@ -6,7 +6,7 @@ using EventStore.Dispatcher;
 namespace NES.EventStore
 {
     public class MessagePublisher : IPublishMessages
-	{
+    {
         private readonly Func<IBusAdapter> _factory;
 
         public MessagePublisher(Func<IBusAdapter> factory)
@@ -17,7 +17,7 @@ namespace NES.EventStore
         public virtual void Publish(Commit commit)
         {
             _factory().Publish(commit.Events.Select(e => e.Body));
-		}
+        }
 
         public void Dispose()
         {
@@ -28,5 +28,5 @@ namespace NES.EventStore
         protected virtual void Dispose(bool disposing)
         {
         }
-	}
+    }
 }

@@ -18,8 +18,8 @@ namespace NES
         {
             var eventSource = _eventSourceFactory.Create<T>();
 
-            HydrateWithMemento(id, eventSource);
-            HydrateWithEvents(id, eventSource);
+            RestoreSnapshot(id, eventSource);
+            Hydrate(id, eventSource);
             
             return eventSource.Id != Guid.Empty ? eventSource : null;
         }
@@ -37,17 +37,17 @@ namespace NES
             }
         }
 
-        private void HydrateWithMemento<T>(Guid id, T eventSource) where T : IEventSource
+        private void RestoreSnapshot<T>(Guid id, T eventSource) where T : IEventSource
         {
             var memento = _eventStoreAdapter.Read(id);
 
             if (memento != null)
             {
-                eventSource.Hydrate(memento);
+                eventSource.RestoreSnapshot(memento);
             }
         }
 
-        private void HydrateWithEvents<T>(Guid id, T eventSource) where T : IEventSource
+        private void Hydrate<T>(Guid id, T eventSource) where T : IEventSource
         {
             var events = _eventStoreAdapter.Read(id, eventSource.Version);
 

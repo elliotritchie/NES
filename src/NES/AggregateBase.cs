@@ -18,21 +18,12 @@ namespace NES
         private static readonly EventFactory<T> _eventFactory = new EventFactory<T>();
         private static readonly EventHandlerFactory<T> _eventHandlerFactory = new EventHandlerFactory<T>();
 
-        void IEventSource.Hydrate(IMemento memento)
+        void IEventSource.RestoreSnapshot(IMemento memento)
         {
             Id = memento.Id;
             _version = memento.Version;
 
             RestoreSnapshot(memento);
-        }
-
-        void IEventSource.Hydrate(IEnumerable<object> events)
-        {
-            foreach (var @event in events.Cast<T>())
-            {
-                Raise(@event);
-                _version++;
-            }
         }
 
         IMemento IEventSource.TakeSnapshot()
@@ -43,6 +34,15 @@ namespace NES
             snapshot.Version = _version;
 
             return snapshot;
+        }
+
+        void IEventSource.Hydrate(IEnumerable<object> events)
+        {
+            foreach (var @event in events.Cast<T>())
+            {
+                Raise(@event);
+                _version++;
+            }
         }
 
         IEnumerable<object> IEventSource.Flush()

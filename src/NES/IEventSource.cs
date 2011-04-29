@@ -7,9 +7,9 @@ namespace NES
     {
         Guid Id { get; }
         int Version { get; }
-        void Hydrate(IMemento memento);
-        void Hydrate(IEnumerable<object> events);
+        void RestoreSnapshot(IMemento memento);
         IMemento TakeSnapshot();
+        void Hydrate(IEnumerable<object> events);
         IEnumerable<object> Flush();
     }
 }

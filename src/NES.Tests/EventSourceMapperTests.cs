@@ -43,9 +43,9 @@ namespace NES.Tests
             }
 
             [TestMethod]
-            public void Should_hydrate_event_source_with_snapshot()
+            public void Should_restore_snapshot()
             {
-                _eventSource.Verify(s => s.Hydrate(_memento.Object));
+                _eventSource.Verify(s => s.RestoreSnapshot(_memento.Object));
             }
 
             [TestMethod]
@@ -89,9 +89,9 @@ namespace NES.Tests
             }
 
             [TestMethod]
-            public void Should_not_hydrate_event_source_with_snapshot()
+            public void Should_not_restore_snapshot()
             {
-                _eventSource.Verify(s => s.Hydrate(It.IsAny<IMemento>()), Times.Never());
+                _eventSource.Verify(s => s.RestoreSnapshot(It.IsAny<IMemento>()), Times.Never());
             }
 
             [TestMethod]
