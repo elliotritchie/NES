@@ -112,6 +112,8 @@
     <Compile Include="EventSourceFactory.cs" />
     <Compile Include="EventSourceMapper.cs" />
     <Compile Include="EventStore\EventStoreAdapter.cs" />
+    <Compile Include="EventStore\NESWireup.cs" />
+    <Compile Include="EventStore\WireupExtensions.cs" />
     <Compile Include="GuidComb.cs" />
     <Compile Include="IDependencyInjectionContainer.cs" />
     <Compile Include="IEventSource.cs" />
