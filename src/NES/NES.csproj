@@ -38,19 +38,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EventStore, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7735eb81c0bd9948, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\EventStore.2.0.0.0\net40\EventStore.dll</HintPath>
+      <HintPath>..\..\lib\EventStore.2.0.11117.21\net40\EventStore.dll</HintPath>
     </Reference>
     <Reference Include="EventStore.Persistence.MongoPersistence, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7735eb81c0bd9948, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\EventStore.2.0.0.0\net40\EventStore.Persistence.MongoPersistence.dll</HintPath>
+      <HintPath>..\..\lib\EventStore.2.0.11117.21\net40\EventStore.Persistence.MongoPersistence.dll</HintPath>
     </Reference>
     <Reference Include="EventStore.Persistence.RavenPersistence, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7735eb81c0bd9948, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\EventStore.2.0.0.0\net40\EventStore.Persistence.RavenPersistence.dll</HintPath>
+      <HintPath>..\..\lib\EventStore.2.0.11117.21\net40\EventStore.Persistence.RavenPersistence.dll</HintPath>
     </Reference>
     <Reference Include="EventStore.Serialization.Json, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7735eb81c0bd9948, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\EventStore.2.0.0.0\net40\EventStore.Serialization.Json.dll</HintPath>
+      <HintPath>..\..\lib\EventStore.2.0.11117.21\net40\EventStore.Serialization.Json.dll</HintPath>
     </Reference>
     <Reference Include="EventStore.Serialization.ServiceStack, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7735eb81c0bd9948, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\EventStore.2.0.0.0\net40\EventStore.Serialization.ServiceStack.dll</HintPath>
+      <HintPath>..\..\lib\EventStore.2.0.11117.21\net40\EventStore.Serialization.ServiceStack.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <HintPath>..\..\lib\NServiceBus.2.5.0.1446\net40\log4net.dll</HintPath>
