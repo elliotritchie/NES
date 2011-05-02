@@ -6,7 +6,7 @@ namespace NES.EventStore
         public NESWireup(Wireup inner)
             : base(inner)
         {
-            inner.UsingAsynchronousDispatcher(new MessagePublisher(() => DI.Current.Resolve<IBusAdapter>()));
+            inner.UsingAsynchronousDispatcher(new MessagePublisher(() => DI.Current.Resolve<IEventPublisher>()));
             
             DI.Current.Register<IEventStore, IStoreEvents>(eventStore => new EventStoreAdapter(eventStore));
             DI.Current.Register(() => Container.Resolve<IStoreEvents>());

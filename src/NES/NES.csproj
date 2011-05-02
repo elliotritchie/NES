@@ -93,7 +93,7 @@
     <Compile Include="EventStore\NESWireup.cs" />
     <Compile Include="EventStore\WireupExtensions.cs" />
     <Compile Include="GuidComb.cs" />
-    <Compile Include="IBusAdapter.cs" />
+    <Compile Include="IEventPublisher.cs" />
     <Compile Include="IDependencyInjectionContainer.cs" />
     <Compile Include="IEventSource.cs" />
     <Compile Include="IEventSourceFactory.cs" />

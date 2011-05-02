@@ -4,7 +4,7 @@ using NServiceBus;
 
 namespace NES.NServiceBus
 {
-    public class BusAdapter : IBusAdapter
+    public class BusAdapter : IEventPublisher
     {
         private readonly IBus _bus;
 

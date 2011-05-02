@@ -7,9 +7,9 @@ namespace NES.EventStore
 {
     public class MessagePublisher : IPublishMessages
     {
-        private readonly Func<IBusAdapter> _factory;
+        private readonly Func<IEventPublisher> _factory;
 
-        public MessagePublisher(Func<IBusAdapter> factory)
+        public MessagePublisher(Func<IEventPublisher> factory)
         {
             _factory = factory;
         }
