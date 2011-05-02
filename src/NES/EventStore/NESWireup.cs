@@ -8,7 +8,7 @@ namespace NES.EventStore
         {
             inner.UsingAsynchronousDispatcher(new MessagePublisher(() => DI.Current.Resolve<IBusAdapter>()));
             
-            DI.Current.Register<IEventStoreAdapter, IStoreEvents>(eventStore => new EventStoreAdapter(eventStore));
+            DI.Current.Register<IEventStore, IStoreEvents>(eventStore => new EventStoreAdapter(eventStore));
             DI.Current.Register(() => Container.Resolve<IStoreEvents>());
         }
     }

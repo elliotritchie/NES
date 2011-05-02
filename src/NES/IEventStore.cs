@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NES
 {
-    public interface IEventStoreAdapter
+    public interface IEventStore
     {
         IMemento Read(Guid id);
         IEnumerable<object> Read(Guid id, int version);

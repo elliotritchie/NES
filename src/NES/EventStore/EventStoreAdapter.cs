@@ -5,7 +5,7 @@ using EventStore;
 
 namespace NES.EventStore
 {
-    public class EventStoreAdapter : IEventStoreAdapter
+    public class EventStoreAdapter : IEventStore
     {
         private readonly IStoreEvents _eventStore;
 

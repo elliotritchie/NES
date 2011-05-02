@@ -8,7 +8,7 @@ namespace NES
 {
     /// <summary>
     /// Based on the MessageMapper implementation in NServiceBus
-    /// https://github.com/NServiceBus/NServiceBus/blob/master/src/impl/messageInterfaces/NServiceBus.MessageInterfaces.MessageMapper.Reflection/MessageMapper.cs
+    /// https://www.github.com/NServiceBus/NServiceBus/blob/master/src/impl/messageInterfaces/NServiceBus.MessageInterfaces.MessageMapper.Reflection/MessageMapper.cs
     /// </summary>
     public class EventFactory<T> where T : class
     {

@@ -98,7 +98,7 @@
     <Compile Include="IEventSource.cs" />
     <Compile Include="IEventSourceFactory.cs" />
     <Compile Include="IEventSourceMapper.cs" />
-    <Compile Include="IEventStoreAdapter.cs" />
+    <Compile Include="IEventStore.cs" />
     <Compile Include="IMemento.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />

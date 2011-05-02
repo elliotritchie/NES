@@ -6,12 +6,12 @@ namespace NES
     public class EventSourceMapper : IEventSourceMapper
     {
         private readonly IEventSourceFactory _eventSourceFactory;
-        private readonly IEventStoreAdapter _eventStoreAdapter;
+        private readonly IEventStore _eventStore;
 
-        public EventSourceMapper(IEventSourceFactory eventSourceFactory, IEventStoreAdapter eventStoreAdapter)
+        public EventSourceMapper(IEventSourceFactory eventSourceFactory, IEventStore eventStore)
         {
             _eventSourceFactory = eventSourceFactory;
-            _eventStoreAdapter = eventStoreAdapter;
+            _eventStore = eventStore;
         }
 
         public T Get<T>(Guid id) where T : class, IEventSource
@@ -28,7 +28,7 @@ namespace NES
         {
             try
             {
-                _eventStoreAdapter.Write(eventSource.Id, eventSource.Version, eventSource.Flush());
+                _eventStore.Write(eventSource.Id, eventSource.Version, eventSource.Flush());
             }
             catch (ConflictingCommandException)
             {
@@ -39,7 +39,7 @@ namespace NES
 
         private void RestoreSnapshot<T>(Guid id, T eventSource) where T : IEventSource
         {
-            var memento = _eventStoreAdapter.Read(id);
+            var memento = _eventStore.Read(id);
 
             if (memento != null)
             {
@@ -49,7 +49,7 @@ namespace NES
 
         private void Hydrate<T>(Guid id, T eventSource) where T : IEventSource
         {
-            var events = _eventStoreAdapter.Read(id, eventSource.Version);
+            var events = _eventStore.Read(id, eventSource.Version);
 
             if (events.Any())
             {
