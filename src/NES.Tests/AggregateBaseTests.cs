@@ -12,7 +12,7 @@ namespace NES.Tests
         {
             private AggregateStub _aggregate;
             private IEventSource _eventSource;
-            private readonly EventFactory<IEvent> _eventFactory = new EventFactory<IEvent>();
+            private readonly EventFactory _eventFactory = new EventFactory();
             private readonly List<IEvent> _events = new List<IEvent>();
             
             protected override void Context()

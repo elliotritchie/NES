@@ -94,6 +94,7 @@
     <Compile Include="EventStore\WireupExtensions.cs" />
     <Compile Include="GuidComb.cs" />
     <Compile Include="IEventFactory.cs" />
+    <Compile Include="IEventHandlerFactory.cs" />
     <Compile Include="IEventPublisher.cs" />
     <Compile Include="IDependencyInjectionContainer.cs" />
     <Compile Include="IEventSource.cs" />

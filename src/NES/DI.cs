@@ -18,6 +18,7 @@ namespace NES
                 new EventSourceMapper(eventSourceFactory, eventStoreAdapter));
 
             _current.Register<IEventFactory>(() => new EventFactory());
+            _current.Register<IEventHandlerFactory>(() => new EventHandlerFactory());
         }
     }
 }

@@ -12,7 +12,7 @@ namespace NES.Tests
         {
             private IEventSourceMapper _eventSourceMapper;
             private readonly Mock<IEventSourceFactory> _eventSourceFactory = new Mock<IEventSourceFactory>();
-            private readonly Mock<IEventStoreAdapter> _eventStoreAdapter = new Mock<IEventStoreAdapter>();
+            private readonly Mock<IEventStore> _eventStore = new Mock<IEventStore>();
             private readonly Mock<IEventSource> _eventSource = new Mock<IEventSource>();
             private readonly Guid _id = Guid.NewGuid();
             private const int _version = 0;
@@ -22,13 +22,13 @@ namespace NES.Tests
 
             protected override void Context()
             {
-                _eventSourceMapper = new EventSourceMapper(_eventSourceFactory.Object, _eventStoreAdapter.Object);
+                _eventSourceMapper = new EventSourceMapper(_eventSourceFactory.Object, _eventStore.Object);
 
                 _eventSourceFactory.Setup(f => f.Create<IEventSource>()).Returns(_eventSource.Object);
                 _eventSource.Setup(s => s.Id).Returns(_id);
                 _eventSource.Setup(s => s.Version).Returns(_version);
-                _eventStoreAdapter.Setup(a => a.Read(_id)).Returns(_memento.Object);
-                _eventStoreAdapter.Setup(a => a.Read(_id, _version)).Returns(_events);
+                _eventStore.Setup(a => a.Read(_id)).Returns(_memento.Object);
+                _eventStore.Setup(a => a.Read(_id, _version)).Returns(_events);
             }
 
             protected override void Event()
@@ -66,13 +66,13 @@ namespace NES.Tests
         {
             private IEventSourceMapper _eventSourceMapper;
             private readonly Mock<IEventSourceFactory> _eventSourceFactory = new Mock<IEventSourceFactory>();
-            private readonly Mock<IEventStoreAdapter> _eventStoreAdapter = new Mock<IEventStoreAdapter>();
+            private readonly Mock<IEventStore> _eventStore = new Mock<IEventStore>();
             private readonly Mock<IEventSource> _eventSource = new Mock<IEventSource>();
             private IEventSource _returnedEventSource;
 
             protected override void Context()
             {
-                _eventSourceMapper = new EventSourceMapper(_eventSourceFactory.Object, _eventStoreAdapter.Object);
+                _eventSourceMapper = new EventSourceMapper(_eventSourceFactory.Object, _eventStore.Object);
 
                 _eventSourceFactory.Setup(f => f.Create<IEventSource>()).Returns(_eventSource.Object);
             }

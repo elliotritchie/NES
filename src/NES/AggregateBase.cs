@@ -16,7 +16,7 @@ namespace NES
         private int _version;
         private readonly List<T> _events = new List<T>();
         private static readonly IEventFactory _eventFactory = DI.Current.Resolve<IEventFactory>();
-        private static readonly EventHandlerFactory<T> _eventHandlerFactory = new EventHandlerFactory<T>();
+        private static readonly IEventHandlerFactory _eventHandlerFactory = DI.Current.Resolve<IEventHandlerFactory>();
 
         void IEventSource.RestoreSnapshot(IMemento memento)
         {
@@ -75,7 +75,7 @@ namespace NES
 
         private void Raise(T @event)
         {
-            _eventHandlerFactory.Get(GetType(), @event.GetType())(this, @event);
+            _eventHandlerFactory.Get(this, @event)();
         }
     }
 }
