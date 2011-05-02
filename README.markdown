@@ -22,7 +22,8 @@ NES hooks into NServiceBus' and the EventStore's configuration objects and trans
 * Automatic publishing of persisted events
 
 ## Building
-You can download the v0.1 [binaries](https://github.com/downloads/elliotritchie/NES/NES-v0.1.zip) or download the source and run 'build.bat' from the command line. Once built, the files will be placed in the 'build' folder. NES is targeted for .NET v4.0 and references the following assemblies -
+You can download the v0.1 [binaries](https://github.com/downloads/elliotritchie/NES/NES-v0.1.zip) or download the source and run 'build.bat' from the command line. Once built, the files will be placed in the 'build' folder. NES is targeted for .NET v4.0 and references the following assemblies:
+
 * NServiceBus [v2.5.0.1446 Community Edition](http://www.nservicebus.com/downloads/Community.NServiceBus.2.5.0.1446.zip)
 * EventStore [v2.0.11117.21](https://github.com/downloads/joliver/EventStore/EventStore-2.0.11117.21-net40.zip)
 
