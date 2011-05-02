@@ -1,14 +1,18 @@
-﻿@{
-    ViewBag.Title = "Received Messages";
+﻿@model System.Collections.Generic.IEnumerable<NES.Sample.Dtos.MessageDto>
+
+@{
+    ViewBag.Title = "Received messages";
 }
 
-<h1>Received Messages</h1>
-<p>No one has sent a message yet!</p>
-
-<div class="messages">
-    <ol>
-        <li><blockquote>What's on your mind?</blockquote> by Anonymous on 17 Apr 11 at 00:28</li>
-        <li><blockquote>What's on your mind?</blockquote> by Anonymous on 17 Apr 11 at 00:28</li>
-        <li><blockquote>What's on your mind?</blockquote> by Anonymous on 17 Apr 11 at 00:28</li>
-    </ol>
-</div>
+<section id="received-messages">
+    <h1>Received messages</h1>
+    @if (Model.Any()) {
+        <ol>
+            @foreach (var message in Model) {
+                <li><blockquote>@message.Message</blockquote> by @message.Username on @message.Sent.ToString("dd MMM yy 'at' HH:mm:ss")</li>
+            }
+        </ol>
+    } else {
+        <p>No one has sent a message yet!</p>
+    }
+</section>

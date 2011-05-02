@@ -13,28 +13,16 @@
             <a href="/" class="logo">NES<span>.Sample</span></a>
             <nav>
                 <ul>
-                    <li><a href="#">Received Messages</a></li>
-                    <li><a href="#">Sent Messages</a></li>
+                    <li>@Html.ActionLink("Received messages", "Index", "Messages")</li>
+                    <li>@Html.ActionLink("Send a message", "Send", "Messages")</li>
                 </ul>
             </nav>
         </div>
     </header>
     <div id="wrapper">
-        <section id="main">
+        <div id="main">
             @RenderBody()
-        </section>
-        <section id="send">
-            <h2>If you've got something to say, type it in the box below and hit submit!</h2>
-            <form>
-                <fieldset>
-                    <div class="editor-label"><label for="username">Username</label></div>
-                    <div class="editor-field"><input id="username" type="text" name="username" value="Anonymous" /></div>
-                    <div class="editor-label"><label for="message">Message</label></div>
-                    <div class="editor-field"><textarea id="message" name="message" cols="68" rows="1">What's on your mind?</textarea></div>
-                    <input type="submit" value="Submit" />
-                </fieldset>
-            </form>
-        </section>
+        </div>
     </div>
     <footer>
         <div class="inner">

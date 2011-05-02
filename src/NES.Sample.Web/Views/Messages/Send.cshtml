@@ -1,0 +1,18 @@
+﻿@model NES.Sample.Messages.SendMessageCommand
+
+@{
+    ViewBag.Title = "Send a message";
+}
+
+<h1>Send a message</h1>
+<p>If you've got something to say, type it in the box below and hit submit!</p>
+
+<section id="send-a-message">
+    @using (Html.BeginForm()) {
+        <fieldset>
+            <div class="editor-label">@Html.LabelFor(m => m.Message)</div>
+            <div class="editor-field">@Html.EditorFor(m => m.Message)</div>
+            <input type="submit" value="Submit" />
+        </fieldset>
+    }
+</section>

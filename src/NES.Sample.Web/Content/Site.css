@@ -1,7 +1,7 @@
 ﻿html {background:#4593B8;}
 body {margin:0; font:11px/1.3 Helevetica, Arial, Sans-Serif; color:#DAECF5;}
 header, footer, nav, section {display:block;}
-h1, h2, h3, h4, h5, h6, p {margin:20px 0;}
+h1, h2, h3, h4, h5, h6, p {margin:10px 0;}
 h1 {font-size:16px;}
 h2 {font-size:14px;}
 a {text-decoration:none; font-weight:bold; color:#95C7DE;}
@@ -9,20 +9,16 @@ a:hover, a:active {text-decoration:underline; color:#DAECF5;}
 form {margin:10px 0; padding:10px; border-radius:4px; background:#276E9A;}
 fieldset {margin:0; padding:0; border:0;}
 input {font:11px/1.3 Helevetica, Arial, Sans-Serif; color:#4B4B4B;}
-input[type=text] {width:566px; padding:4px; border:3px solid #4593B8; border-radius:4px; outline:0; background:#F2F2F2; font-weight:bold; font-size:16px;}
-input[type=text]:hover, input[type=text]:focus {border-color:#5CA9CD;}
 input[type=submit] {float:right; font-weight:bold;}
-textarea {width:566px; max-width:566px; height:42px; margin:0; padding:4px; border:3px solid #4593B8; border-radius:4px; outline:0; background:#F2F2F2; font:bold 16px/1.3 Helevetica, Arial, Sans-Serif; color:#4B4B4B;}
-textarea:hover, textarea:focus {border-color:#5CA9CD;}
 
 header {padding:8px 0; border-bottom:1px solid #5CA9CD; background:#1A1A1A; color:#BBB;}
 header a {color:#777;}
 header a:hover, header a:active {color:#DDD;}
 header .inner {margin:0 auto; width:600px; overflow:hidden;}
-header .logo {display:block; float:left; font-weight:bold; font-size:11px; color:#4593B8; text-decoration:none;}
+header .logo {display:block; float:left; font-weight:bold; font-size:16px; color:#4593B8; text-decoration:none;}
 header .logo span {font-weight:normal;}
 
-nav {float:right;}
+nav {margin:3px 0; float:right;}
 nav ul {margin:0; padding:0;}
 nav li {margin:0 0 0 10px; padding:0 0 0 10px; border-left:1px solid #777; float:left; list-style:none;}
 nav li:first-child {border:0;}
@@ -31,18 +27,24 @@ nav li:first-child {border:0;}
 
 #main {margin:10px 0;}
 
-footer {margin:20px 0; padding:10px 0 0; border-top:1px solid #5CA9CD;}
+#log-on {margin:10px 0;}
+
+#received-messages {margin:10px 0;}
+#received-messages ol {margin:0; padding:0;}
+#received-messages li {margin:10px 0; padding:10px; border-radius:4px; list-style:none; display:block; background:#276E9A;}
+#received-messages blockquote {margin:0; font-weight:bold; font-size:16px;}
+
+#send-a-message {margin:10px 0;}
+
+footer {margin:40px 0; padding:10px 0 0; border-top:1px solid #5CA9CD;}
 footer .inner {width:600px; margin:0 auto;}
 
-.field-validation-error {color:#ff0000;}
+.text-box {width:566px; padding:4px; border:3px solid #4593B8; border-radius:4px; outline:0; background:#F2F2F2; font-weight:bold; font-size:16px;}
+.multi-line {width:566px; max-width:566px; height:42px; margin:0; padding:4px; border:3px solid #4593B8; border-radius:4px; outline:0; background:#F2F2F2; font:bold 16px/1.3 Helevetica, Arial, Sans-Serif; color:#4B4B4B;}
+.field-validation-error {color:#F00;}
 .field-validation-valid {display:none;}
-.input-validation-error {border:1px solid #ff0000; background-color:#ffeeee;}
-.validation-summary-errors {font-weight: bold; color:#ff0000;}
-.validation-summary-valid {display: none;}
+.input-validation-error {border:3px solid #F00; background-color:#FEE;}
+.validation-summary-errors {font-weight:bold; color:#F00;}
+.validation-summary-valid {display:none;}
 .display-label, .editor-label {}
 .display-field, .editor-field {margin:10px 0;}
-
-.messages {margin:20px 0;}
-.messages ol {margin:0; padding:0;}
-.messages li {margin:10px 0; padding:10px; border-radius:4px; list-style:none; display:block; background:#276E9A;}
-.messages blockquote {margin:0; font-weight:bold; font-size:16px;}

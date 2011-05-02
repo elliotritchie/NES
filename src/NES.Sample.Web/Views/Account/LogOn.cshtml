@@ -1,0 +1,18 @@
+﻿@model NES.Sample.Messages.CreateUserCommand
+
+@{
+    ViewBag.Title = "Log on";
+}
+
+<h1>Log on</h1>
+<p>Type a username in the box below and hit submit!</p>
+
+<section id="log-on">
+    @using (Html.BeginForm()) {
+        <fieldset>
+            <div class="editor-label">@Html.LabelFor(m => m.Username)</div>
+            <div class="editor-field">@Html.EditorFor(m => m.Username)</div>
+            <input type="submit" value="Submit" />
+        </fieldset>
+    }
+</section>

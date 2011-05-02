@@ -31,8 +31,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EventStore, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7735eb81c0bd9948, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\EventStore.2.0.11117.21\net40\EventStore.dll</HintPath>
+    </Reference>
+    <Reference Include="EventStore.Persistence.MongoPersistence">
+      <HintPath>..\..\lib\EventStore.2.0.11117.21\net40\EventStore.Persistence.MongoPersistence.dll</HintPath>
+    </Reference>
+    <Reference Include="EventStore.Persistence.RavenPersistence">
+      <HintPath>..\..\lib\EventStore.2.0.11117.21\net40\EventStore.Persistence.RavenPersistence.dll</HintPath>
+    </Reference>
+    <Reference Include="EventStore.Serialization.Json">
+      <HintPath>..\..\lib\EventStore.2.0.11117.21\net40\EventStore.Serialization.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="EventStore.Serialization.ServiceStack">
+      <HintPath>..\..\lib\EventStore.2.0.11117.21\net40\EventStore.Serialization.ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\NServiceBus.2.5.0.1446\net40\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus, Version=2.5.0.1446, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\NServiceBus.2.5.0.1446\net40\NServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Core, Version=2.5.0.1446, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\NServiceBus.2.5.0.1446\net40\NServiceBus.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Host">
+      <HintPath>..\..\lib\NServiceBus.2.5.0.1446\net40\NServiceBus.Host.exe</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,13 +69,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ISession.cs" />
+    <Compile Include="Data\Session.cs" />
+    <Compile Include="Dtos\MessageDto.cs" />
+    <Compile Include="Dtos\UserDto.cs" />
+    <Compile Include="EndpointConfig.cs" />
+    <Compile Include="Handlers\CreateUserCommandHandler.cs" />
+    <Compile Include="Handlers\MessageDtosHandler.cs" />
+    <Compile Include="Handlers\SendMessageCommandHandler.cs" />
+    <Compile Include="Handlers\UserDtosHandler.cs" />
+    <Compile Include="Messages\CreatedUserEvent.cs" />
+    <Compile Include="Messages\CreateUserCommand.cs" />
+    <Compile Include="Messages\IEvent.cs" />
+    <Compile Include="Messages\SendMessageCommand.cs" />
+    <Compile Include="Messages\SentMessageEvent.cs" />
+    <Compile Include="Model\Aggregate.cs" />
+    <Compile Include="Model\Message.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AuthenticationService.cs" />
+    <Compile Include="Services\FormsAuthenticationService.cs" />
+    <Compile Include="Services\IAuthenticationService.cs" />
+    <Compile Include="Services\IFormsAuthenticationService.cs" />
+    <Compile Include="Services\IMessagesService.cs" />
+    <Compile Include="Services\IValidationService.cs" />
+    <Compile Include="Services\MessagesService.cs" />
+    <Compile Include="Services\ValidationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NES\NES.csproj">
       <Project>{EC7040E2-7A13-4447-900D-6ED57328E5DF}</Project>
       <Name>NES</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
