@@ -10,7 +10,7 @@ namespace NES
     /// Based on the MessageMapper implementation in NServiceBus
     /// https://www.github.com/NServiceBus/NServiceBus/blob/master/src/impl/messageInterfaces/NServiceBus.MessageInterfaces.MessageMapper.Reflection/MessageMapper.cs
     /// </summary>
-    public class EventFactory<T> where T : class
+    public class EventFactory : IEventFactory
     {
         private const string _suffix = ".__Concrete";
         private static readonly Dictionary<Type, Type> _cache = new Dictionary<Type, Type>();
@@ -25,9 +25,9 @@ namespace NES
             _moduleBuilder = assemblyBuilder.DefineDynamicModule(@namespace);
         }
 
-        public TEvent Create<TEvent>(Action<TEvent> action) where TEvent : T
+        public T Create<T>(Action<T> action)
         {
-            var @event = (TEvent)Create(typeof(TEvent));
+            var @event = (T)Create(typeof(T));
 
             action(@event);
 

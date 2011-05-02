@@ -15,7 +15,7 @@ namespace NES
 
         private int _version;
         private readonly List<T> _events = new List<T>();
-        private static readonly EventFactory<T> _eventFactory = new EventFactory<T>();
+        private static readonly IEventFactory _eventFactory = DI.Current.Resolve<IEventFactory>();
         private static readonly EventHandlerFactory<T> _eventHandlerFactory = new EventHandlerFactory<T>();
 
         void IEventSource.RestoreSnapshot(IMemento memento)
