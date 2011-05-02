@@ -10,6 +10,7 @@ namespace NES.NServiceBus
         {
             config.Configurer.ConfigureComponent<MessageModule>(ComponentCallModelEnum.Singlecall);
 
+            DI.Current.Register<IEventFactory, IMessageMapper>(messageMapper => new MessageMapperAdapter(messageMapper));
             DI.Current.Register(() => config.Builder.Build<IMessageMapper>());
             DI.Current.Register<IEventPublisher, IBus>(bus => new BusAdapter(bus));
             DI.Current.Register(() => config.Builder.Build<IBus>());
