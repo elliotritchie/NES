@@ -34,16 +34,14 @@ At the time of writing these are the recommended versions of these frameworks to
 	{
 		public void Init()
 		{
-			// EventStore Wireup
-			Wireup.Init()
+			EventStore.Wireup.Init()
 				.UsingInMemoryPersistence()
 				.InitializeStorageEngine()
 				.UsingJsonSerialization()
 				.NES()
 				.Build();
 
-			// NServiceBus Configuration
-			Configure.With()
+			NServiceBus.Configure.With()
 				.Log4Net()
 				.DefaultBuilder()
 				.XmlSerializer()
@@ -51,4 +49,4 @@ At the time of writing these are the recommended versions of these frameworks to
 		}
 	}
 
-For a more complete example, please open NES.sln in Visual Studio and hit F5. This will start the [NES.Sample](https://github.com/elliotritchie/NES/tree/master/src/NES.Sample) NServiceBus endpoint aswell as the [NES.Sample.Web](https://github.com/elliotritchie/NES/tree/master/src/NES.Sample.Web) MVC 3 website.
+For a more complete example, please open and build NES.Sample.sln in Visual Studio and hit F5. This will start the [NES.Sample](https://github.com/elliotritchie/NES/tree/master/sample/NES.Sample) NServiceBus endpoint aswell as the [NES.Sample.Web](https://github.com/elliotritchie/NES/tree/master/sample/NES.Sample.Web) MVC 3 website.
