@@ -14,7 +14,7 @@ NES hooks into NServiceBus' and the EventStore's configuration objects and trans
 
 ## Project Goals
 * Transparent configuration.
-* Allow processing of messages sent in a batch as a single transaction ([Ref](https://github.com/NServiceBus/NServiceBus/blob/master/src/core/NServiceBus/IBus.cs#L92))
+* Allow processing of messages sent in a batch as a single transaction ([Ref](http://www.udidahan.com/2008/03/30/nservicebus-explanations-3/))
 * Allow use of interfaces for events ([Ref](http://www.nservicebus.com/MessagesAsInterfaces.aspx))
 * Convention based event handling within aggregates
 * No 'Save()' methods on repositories
