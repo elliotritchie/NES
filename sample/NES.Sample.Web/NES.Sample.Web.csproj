@@ -121,12 +121,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NES.Sample\NES.Sample.csproj">
-      <Project>{C56DB675-874E-40CC-B1A1-EFFEA2859D69}</Project>
-      <Name>NES.Sample</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Messages\Sent.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +128,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\LogOn.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NES.Sample\NES.Sample.csproj">
+      <Project>{C56DB675-874E-40CC-B1A1-EFFEA2859D69}</Project>
+      <Name>NES.Sample</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -97,13 +97,13 @@
     <Compile Include="Services\ValidationService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NES\NES.csproj">
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\NES\NES.csproj">
       <Project>{EC7040E2-7A13-4447-900D-6ED57328E5DF}</Project>
       <Name>NES</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
