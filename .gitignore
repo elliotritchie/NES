@@ -17,6 +17,8 @@
 *.lib
 *.sbr
 *.scc
+*.gpState
+*.docstates
 [Bb]in
 [Dd]ebug*/
 obj/
