@@ -19,6 +19,7 @@
 *.scc
 *.gpState
 *.docstates
+*.nupkg
 [Bb]in
 [Dd]ebug*/
 obj/
