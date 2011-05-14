@@ -8,7 +8,7 @@
     <licenseUrl>http://github.com/elliotritchie/NES/license.txt</licenseUrl>
     <projectUrl>http://getnes.net</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>$description$</description>
+    <description>NES (.NET Event Sourcing) is a lightweight framework that helps you build domain models when you're doing event sourcing.</description>
     <tags>nes cqrs eventsourcing nservicebus eventstore</tags>
   </metadata>
 </package>
