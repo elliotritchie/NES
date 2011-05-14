@@ -11,8 +11,6 @@ namespace NES.Sample
         {
             Wireup.Init()
                 .UsingInMemoryPersistence()
-                .InitializeStorageEngine()
-                .UsingJsonSerialization()
                 .NES()
                 .Build();
 
