@@ -14,12 +14,14 @@ namespace NES
             _current.Register<IUnitOfWork, IEventSourceMapper>(eventSourceMapper => 
                 new UnitOfWork(eventSourceMapper));
             
-            _current.Register<IEventSourceMapper, IEventSourceFactory, IEventStore>((eventSourceFactory, eventStoreAdapter) => 
-                new EventSourceMapper(eventSourceFactory, eventStoreAdapter));
+            _current.Register<IEventSourceMapper, IEventSourceFactory, IEventStore, IEventConversionRunner>((eventSourceFactory, eventStoreAdapter, eventConverterFactory) =>
+                new EventSourceMapper(eventSourceFactory, eventStoreAdapter, eventConverterFactory));
 
             _current.Register<IEventSourceFactory>(() => new EventSourceFactory());
             _current.Register<IEventFactory>(() => new EventFactory());
             _current.Register<IEventHandlerFactory>(() => new EventHandlerFactory());
+            _current.Register<IEventConversionRunner, IEventConverterFactory>(eventConverterFactory => new EventConversionRunner(eventConverterFactory));
+            _current.Register<IEventConverterFactory>(() => new EventConverterFactory());
         }
     }
 }

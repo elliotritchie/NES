@@ -11,7 +11,7 @@ namespace NES.Tests.Stubs
 
         public AggregateStub(Guid id)
         {
-            Apply<CreatedAggregateStubEvent>(e =>
+            Apply<CreatedAggregateEvent>(e =>
             {
                 e.Id = id;
             });
@@ -29,18 +29,18 @@ namespace NES.Tests.Stubs
             });
         }
 
-        private void Handle(CreatedAggregateStubEvent @event)
+        private void Handle(CreatedAggregateEvent @event)
         {
-            Id = @event.Id;
-
             HandledEvents.Add(@event);
+
+            Id = @event.Id;
         }
 
         private void Handle(SomethingHappenedEvent @event)
         {
-            _something = @event.Something;
-
             HandledEvents.Add(@event);
+
+            _something = @event.Something;
         }
     }
 }

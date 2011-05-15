@@ -72,6 +72,9 @@
     <Compile Include="ConflictingCommandException.cs" />
     <Compile Include="DependencyInjectionContainer.cs" />
     <Compile Include="DI.cs" />
+    <Compile Include="EventConversionRunner.cs" />
+    <Compile Include="EventConverter.cs" />
+    <Compile Include="EventConverterFactory.cs" />
     <Compile Include="EventFactory.cs" />
     <Compile Include="EventHandlerFactory.cs" />
     <Compile Include="EventSourceFactory.cs" />
@@ -81,6 +84,8 @@
     <Compile Include="EventStore\NESWireup.cs" />
     <Compile Include="EventStore\WireupExtensions.cs" />
     <Compile Include="GuidComb.cs" />
+    <Compile Include="IEventConversionRunner.cs" />
+    <Compile Include="IEventConverterFactory.cs" />
     <Compile Include="IEventFactory.cs" />
     <Compile Include="IEventHandlerFactory.cs" />
     <Compile Include="IEventPublisher.cs" />

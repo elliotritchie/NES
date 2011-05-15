@@ -59,12 +59,16 @@
     </Compile>
     <Compile Include="AggregateBaseTests.cs" />
     <Compile Include="DependencyInjectionContainerTests.cs" />
+    <Compile Include="EventConversionRunnerTests.cs" />
+    <Compile Include="EventConverterFactoryTests.cs" />
     <Compile Include="EventSourceMapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryTests.cs" />
     <Compile Include="Stubs\AggregateStub.cs" />
-    <Compile Include="Stubs\CreatedAggregateStubEvent.cs" />
+    <Compile Include="Stubs\CreatedAggregateEvent.cs" />
+    <Compile Include="Mocks\EventConverterMock.cs" />
     <Compile Include="Stubs\IEvent.cs" />
+    <Compile Include="Stubs\SomethingElseHappenedEvent.cs" />
     <Compile Include="Stubs\SomethingHappenedEvent.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="UnitOfWorkTests.cs" />

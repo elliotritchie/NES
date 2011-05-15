@@ -2,7 +2,7 @@ using System;
 
 namespace NES.Tests.Stubs
 {
-    public interface CreatedAggregateStubEvent : IEvent
+    public interface CreatedAggregateEvent : IEvent
     {
         Guid Id { get; set; }
     }

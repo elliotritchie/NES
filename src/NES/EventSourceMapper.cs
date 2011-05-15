@@ -7,11 +7,13 @@ namespace NES
     {
         private readonly IEventSourceFactory _eventSourceFactory;
         private readonly IEventStore _eventStore;
+        private readonly IEventConversionRunner _eventConversionRunner;
 
-        public EventSourceMapper(IEventSourceFactory eventSourceFactory, IEventStore eventStore)
+        public EventSourceMapper(IEventSourceFactory eventSourceFactory, IEventStore eventStore, IEventConversionRunner eventConversionRunner)
         {
             _eventSourceFactory = eventSourceFactory;
             _eventStore = eventStore;
+            _eventConversionRunner = eventConversionRunner;
         }
 
         public T Get<T>(Guid id) where T : class, IEventSource
@@ -53,7 +55,7 @@ namespace NES
 
             if (events.Any())
             {
-                eventSource.Hydrate(events);
+                eventSource.Hydrate(_eventConversionRunner.Run(events));
             }
         }
     }

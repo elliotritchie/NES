@@ -13,6 +13,7 @@ namespace NES.Tests
             private IEventSourceMapper _eventSourceMapper;
             private readonly Mock<IEventSourceFactory> _eventSourceFactory = new Mock<IEventSourceFactory>();
             private readonly Mock<IEventStore> _eventStore = new Mock<IEventStore>();
+            private readonly Mock<IEventConversionRunner> _eventConversionRunner = new Mock<IEventConversionRunner>();
             private readonly Mock<IEventSource> _eventSource = new Mock<IEventSource>();
             private readonly Guid _id = Guid.NewGuid();
             private const int _version = 0;
@@ -22,13 +23,14 @@ namespace NES.Tests
 
             protected override void Context()
             {
-                _eventSourceMapper = new EventSourceMapper(_eventSourceFactory.Object, _eventStore.Object);
+                _eventSourceMapper = new EventSourceMapper(_eventSourceFactory.Object, _eventStore.Object, _eventConversionRunner.Object);
 
                 _eventSourceFactory.Setup(f => f.Create<IEventSource>()).Returns(_eventSource.Object);
                 _eventSource.Setup(s => s.Id).Returns(_id);
                 _eventSource.Setup(s => s.Version).Returns(_version);
                 _eventStore.Setup(a => a.Read(_id)).Returns(_memento.Object);
                 _eventStore.Setup(a => a.Read(_id, _version)).Returns(_events);
+                _eventConversionRunner.Setup(r => r.Run(_events)).Returns(_events);
             }
 
             protected override void Event()
@@ -46,6 +48,12 @@ namespace NES.Tests
             public void Should_restore_snapshot()
             {
                 _eventSource.Verify(s => s.RestoreSnapshot(_memento.Object));
+            }
+
+            [TestMethod]
+            public void Should_convert_events()
+            {
+                _eventConversionRunner.Verify(r => r.Run(_events));
             }
 
             [TestMethod]
@@ -67,12 +75,13 @@ namespace NES.Tests
             private IEventSourceMapper _eventSourceMapper;
             private readonly Mock<IEventSourceFactory> _eventSourceFactory = new Mock<IEventSourceFactory>();
             private readonly Mock<IEventStore> _eventStore = new Mock<IEventStore>();
+            private readonly Mock<IEventConversionRunner> _eventConversionRunner = new Mock<IEventConversionRunner>();
             private readonly Mock<IEventSource> _eventSource = new Mock<IEventSource>();
             private IEventSource _returnedEventSource;
 
             protected override void Context()
             {
-                _eventSourceMapper = new EventSourceMapper(_eventSourceFactory.Object, _eventStore.Object);
+                _eventSourceMapper = new EventSourceMapper(_eventSourceFactory.Object, _eventStore.Object, _eventConversionRunner.Object);
 
                 _eventSourceFactory.Setup(f => f.Create<IEventSource>()).Returns(_eventSource.Object);
             }
@@ -92,6 +101,12 @@ namespace NES.Tests
             public void Should_not_restore_snapshot()
             {
                 _eventSource.Verify(s => s.RestoreSnapshot(It.IsAny<IMemento>()), Times.Never());
+            }
+
+            [TestMethod]
+            public void Should_not_convert_events()
+            {
+                _eventConversionRunner.Verify(r => r.Run(It.IsAny<IEnumerable<object>>()), Times.Never());
             }
 
             [TestMethod]
