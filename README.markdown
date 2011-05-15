@@ -1,4 +1,4 @@
-NES v0.1
+NES v0.2
 ======================================================================
 
 NES (.NET Event Sourcing) is a lightweight framework that helps you build domain models when you're doing event sourcing.
@@ -13,12 +13,13 @@ The code required to bring NServiceBus and the EventStore together isn't hard to
 NES hooks into NServiceBus' and the EventStore's configuration objects and transparently takes care of everything for you. All you have to do is add two extra lines to your application's initialisation code.
 
 ## Project Goals
-* Transparent configuration.
 * Allow processing of messages sent in a batch as a single transaction ([Ref](http://www.udidahan.com/2008/03/30/nservicebus-explanations-3/))
 * Allow use of interfaces for events ([Ref](http://www.nservicebus.com/MessagesAsInterfaces.aspx))
+* Allow upconversion of events ([Ref](http://distributedpodcast.com/2011/episode-5-cqrs-eventstore-best-frameworklibrary-ever) @ 36:00)
+* Automatic publishing of persisted events
 * Convention based event handling within aggregates
 * No 'Save()' methods on repositories
-* Automatic publishing of persisted events
+* Transparent configuration.
 
 ## Building
 You can install NES via [NuGet](http://nuget.org/List/Packages/NES) or download the [binaries](http://github.com/elliotritchie/NES/downloads) or download the source and run 'build.bat' from the command line. Once built, the files will be placed in the 'build' folder. NES is targeted for .NET v4.0 and references the following assemblies:
@@ -30,6 +31,7 @@ At the time of writing these are the recommended versions of these frameworks to
 
 ## Using NES
 
+	```C#
 	public class EndpointConfig : IConfigureThisEndpoint, AsA_Publisher, IWantCustomInitialization
 	{
 		public void Init()
@@ -46,5 +48,6 @@ At the time of writing these are the recommended versions of these frameworks to
 				.NES();
 		}
 	}
+	```
 
 For a more complete example, please open and build NES.Sample.sln in Visual Studio and hit F5. This will start the [NES.Sample](https://github.com/elliotritchie/NES/tree/master/sample/NES.Sample) NServiceBus endpoint aswell as the [NES.Sample.Web](https://github.com/elliotritchie/NES/tree/master/sample/NES.Sample.Web) MVC 3 website.
