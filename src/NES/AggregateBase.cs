@@ -75,7 +75,7 @@ namespace NES
 
         private void Raise(T @event)
         {
-            _eventHandlerFactory.Get(this, @event)();
+            _eventHandlerFactory.Get(this, @event.GetType())(@event);
         }
     }
 }

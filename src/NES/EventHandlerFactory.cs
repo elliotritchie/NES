@@ -11,12 +11,9 @@ namespace NES
         private static readonly Dictionary<Type, Dictionary<Type, Action<object, object>>> _cache = new Dictionary<Type, Dictionary<Type, Action<object, object>>>();
         private static readonly object _cacheLock = new object();
 
-        public Action Get<TAggregate, TEvent>(TAggregate aggregate, TEvent @event) 
-            where TAggregate : AggregateBase<TEvent> 
-            where TEvent : class
+        public Action<object> Get(object aggregate, Type @eventType)
         {
             var aggregateType = aggregate.GetType();
-            var eventType = @event.GetType();
 
             lock (_cacheLock)
             {
@@ -25,17 +22,16 @@ namespace NES
 
                 if (!_cache.TryGetValue(aggregateType, out handlers) || !handlers.TryGetValue(eventType, out handler))
                 {
-                    var methodInfo = aggregateType.GetMethod("Handle", BindingFlags.Instance | BindingFlags.NonPublic, null, new[] { eventType }, null);
+                    var handlerMethodInfo = aggregateType.GetMethod("Handle", BindingFlags.Instance | BindingFlags.NonPublic, null, new[] { eventType }, null);
 
-                    if (methodInfo != null)
+                    if (handlerMethodInfo != null)
                     {
-                        var parameterInfo = methodInfo.GetParameters().Single();
-                        var instance = Expression.Parameter(typeof(TAggregate), "instance");
-                        var argument = Expression.Parameter(typeof(TEvent), "argument");
-                        var methodCall = Expression.Call(Expression.Convert(instance, aggregateType), methodInfo, Expression.Convert(argument, parameterInfo.ParameterType));
-                        var @delegate = Expression.Lambda<Action<TAggregate, TEvent>>(methodCall, instance, argument).Compile();
+                        var aggregateParameter = Expression.Parameter(typeof(object), "aggregate");
+                        var eventParameter = Expression.Parameter(typeof(object), "event");
+                        var eventInterfaceType = handlerMethodInfo.GetParameters().Single().ParameterType;
+                        var handlerCall = Expression.Call(Expression.Convert(aggregateParameter, aggregateType), handlerMethodInfo, Expression.Convert(eventParameter, eventInterfaceType));
                         
-                        handler = (a, e) => { @delegate((TAggregate)a, (TEvent)e); };
+                        handler = Expression.Lambda<Action<object, object>>(handlerCall, aggregateParameter, eventParameter).Compile();
                     }
                     else
                     {
@@ -50,7 +46,7 @@ namespace NES
                     _cache[aggregateType][eventType] = handler;
                 }
 
-                return () => handler(aggregate, @event);
+                return e => handler(aggregate, e);
             }
         }
     }
