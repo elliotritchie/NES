@@ -44,18 +44,17 @@ namespace NES
                 var eventConverterMemberInit = Expression.MemberInit(
                     Expression.New(type), 
                     Expression.Bind(eventFactoryMemberInfo, Expression.Constant(eventFactory)));
-                var eventConverterMemberInitDelegate = Expression.Lambda<Func<object>>(eventConverterMemberInit).Compile();
-                var eventConverter = eventConverterMemberInitDelegate.Invoke();
+                var eventConverter = Expression.Lambda<Func<object>>(eventConverterMemberInit).Compile().Invoke();
 
-                var eventConverterParameter = Expression.Parameter(typeof(object), "eventConverter");
+                var eventConverterParameter = Expression.Constant(eventConverter);
                 var eventParameter = Expression.Parameter(typeof(object), "event");
                 var eventConverterCall = Expression.Call(
                     Expression.Convert(eventConverterParameter, type),
                     type.GetMethod("Convert"),
                     Expression.Convert(eventParameter, fromType));
-                var eventConverterCallDelegate = Expression.Lambda<Func<object, object, object>>(eventConverterCall, eventConverterParameter, eventParameter).Compile();
+                var @delegate = Expression.Lambda<Func<object, object>>(eventConverterCall, eventParameter).Compile();
 
-                _cache[fromType] = e => { return eventConverterCallDelegate(eventConverter, e); };
+                _cache[fromType] = @delegate;
             }
         }
 
