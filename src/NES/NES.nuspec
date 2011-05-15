@@ -5,7 +5,7 @@
     <version>$version$</version>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <licenseUrl>http://github.com/elliotritchie/NES/license.txt</licenseUrl>
+    <licenseUrl>https://github.com/elliotritchie/NES/blob/master/license.txt</licenseUrl>
     <projectUrl>http://getnes.net</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>NES (.NET Event Sourcing) is a lightweight framework that helps you build domain models when you're doing event sourcing.</description>
