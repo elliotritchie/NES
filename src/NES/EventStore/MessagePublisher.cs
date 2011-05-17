@@ -7,16 +7,16 @@ namespace NES.EventStore
 {
     public class MessagePublisher : IPublishMessages
     {
-        private readonly Func<IEventPublisher> _factory;
+        private readonly Func<IEventPublisher> _eventPublisherFactory;
 
-        public MessagePublisher(Func<IEventPublisher> factory)
+        public MessagePublisher(Func<IEventPublisher> eventPublisherFactory)
         {
-            _factory = factory;
+            _eventPublisherFactory = eventPublisherFactory;
         }
 
         public virtual void Publish(Commit commit)
         {
-            _factory().Publish(commit.Events.Select(e => e.Body));
+            _eventPublisherFactory().Publish(commit.Events.Select(e => e.Body));
         }
 
         public void Dispose()

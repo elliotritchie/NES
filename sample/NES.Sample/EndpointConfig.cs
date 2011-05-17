@@ -17,7 +17,7 @@ namespace NES.Sample
             Configure.With()
                 .Log4Net()
                 .DefaultBuilder()
-                .XmlSerializer()
+                .XmlSerializer("http://getnes.net")
                 .NES();
         }
     }

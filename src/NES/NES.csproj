@@ -58,6 +58,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -82,6 +83,7 @@
     <Compile Include="EventStore\EventStoreAdapter.cs" />
     <Compile Include="EventStore\MessagePublisher.cs" />
     <Compile Include="EventStore\NESWireup.cs" />
+    <Compile Include="EventStore\Serializer.cs" />
     <Compile Include="EventStore\WireupExtensions.cs" />
     <Compile Include="GuidComb.cs" />
     <Compile Include="IEventConversionRunner.cs" />
@@ -90,6 +92,7 @@
     <Compile Include="IEventHandlerFactory.cs" />
     <Compile Include="IEventPublisher.cs" />
     <Compile Include="IDependencyInjectionContainer.cs" />
+    <Compile Include="IEventSerializer.cs" />
     <Compile Include="IEventSource.cs" />
     <Compile Include="IEventSourceFactory.cs" />
     <Compile Include="IEventSourceMapper.cs" />
@@ -101,6 +104,7 @@
     <Compile Include="NServiceBus\ConfigureNES.cs" />
     <Compile Include="NServiceBus\MessageMapperAdapter.cs" />
     <Compile Include="NServiceBus\MessageModule.cs" />
+    <Compile Include="NServiceBus\MessageSerializerAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="UnitOfWork.cs" />

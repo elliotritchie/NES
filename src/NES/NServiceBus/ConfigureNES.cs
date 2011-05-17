@@ -1,6 +1,7 @@
 using NServiceBus;
 using NServiceBus.MessageInterfaces;
 using NServiceBus.ObjectBuilder;
+using NServiceBus.Serialization;
 
 namespace NES.NServiceBus
 {
@@ -14,6 +15,8 @@ namespace NES.NServiceBus
             DI.Current.Register(() => config.Builder.Build<IMessageMapper>());
             DI.Current.Register<IEventPublisher, IBus>(bus => new BusAdapter(bus));
             DI.Current.Register(() => config.Builder.Build<IBus>());
+            DI.Current.Register<IEventSerializer, IMessageSerializer>(messageSerializer => new MessageSerializerAdapter(messageSerializer));
+            DI.Current.Register(() => config.Builder.Build<IMessageSerializer>());
 
             return config;
         }
