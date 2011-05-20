@@ -15,11 +15,11 @@ NES hooks into NServiceBus' and the EventStore's configuration objects and trans
 ## Project Goals
 * Allow processing of messages sent in a batch as a single transaction ([Ref](http://www.udidahan.com/2008/03/30/nservicebus-explanations-3/))
 * Allow use of interfaces for events ([Ref](http://www.nservicebus.com/MessagesAsInterfaces.aspx))
-* Allow upconversion of events ([Ref](http://distributedpodcast.com/2011/episode-5-cqrs-eventstore-best-frameworklibrary-ever) @ 36:00)
+* Allow up-conversion of events ([Ref](http://distributedpodcast.com/2011/episode-5-cqrs-eventstore-best-frameworklibrary-ever) @ 36:00)
 * Automatic publishing of persisted events
 * Convention based event handling within aggregates
 * No 'Save()' methods on repositories
-* Transparent configuration.
+* Transparent configuration
 
 ## Building
 You can install NES via [NuGet](http://nuget.org/List/Packages/NES) or download the [binaries](http://github.com/elliotritchie/NES/downloads) or download the source and run 'build.bat' from the command line. Once built, the files will be placed in the 'build' folder. NES is targeted for .NET v4.0 and references the following assemblies:
@@ -51,3 +51,9 @@ public class EndpointConfig : IConfigureThisEndpoint, AsA_Publisher, IWantCustom
 ```
 
 For a more complete example, please open and build NES.Sample.sln in Visual Studio and hit F5. This will start the [NES.Sample](https://github.com/elliotritchie/NES/tree/master/sample/NES.Sample) NServiceBus endpoint aswell as the [NES.Sample.Web](https://github.com/elliotritchie/NES/tree/master/sample/NES.Sample.Web) MVC 3 website.
+
+## Need help? Found a bug? Have a question?
+
+* For guidance on how to use NES please take a look at the wiki [pages](http://github.com/elliotritchie/NES/wiki/_pages).
+* If you have any problems using NES please submit a new [issue](https://github.com/elliotritchie/NES/issues).
+* Ask your question on [Stack Overflow](http://stackoverflow.com) and tag your question with the CQRS tag and the word "NES" in the title.
