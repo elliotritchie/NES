@@ -11,7 +11,7 @@ namespace NES
         private static readonly Dictionary<Type, Dictionary<Type, Action<object, object>>> _cache = new Dictionary<Type, Dictionary<Type, Action<object, object>>>();
         private static readonly object _cacheLock = new object();
 
-        public Action<object> Get(object aggregate, Type @eventType)
+        public Action<object> Get(object aggregate, Type eventType)
         {
             var aggregateType = aggregate.GetType();
 
@@ -29,7 +29,11 @@ namespace NES
                         var aggregateParameter = Expression.Parameter(typeof(object), "aggregate");
                         var eventParameter = Expression.Parameter(typeof(object), "event");
                         var eventInterfaceType = handlerMethodInfo.GetParameters().Single().ParameterType;
-                        var handlerCall = Expression.Call(Expression.Convert(aggregateParameter, aggregateType), handlerMethodInfo, Expression.Convert(eventParameter, eventInterfaceType));
+
+                        var handlerCall = Expression.Call(
+                            Expression.Convert(aggregateParameter, aggregateType), 
+                            handlerMethodInfo, 
+                            Expression.Convert(eventParameter, eventInterfaceType));
                         
                         handler = Expression.Lambda<Action<object, object>>(handlerCall, aggregateParameter, eventParameter).Compile();
                     }

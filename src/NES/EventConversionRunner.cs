@@ -22,8 +22,8 @@ namespace NES
 
         private object Run(object @event)
         {
-            var @delegate = _eventConverterFactory.Get(GetInterfaceType(@event.GetType()));
-            return @delegate != null ? Run(@delegate(@event)) : @event;
+            var converter = _eventConverterFactory.Get(GetInterfaceType(@event.GetType()));
+            return converter != null ? Run(converter(@event)) : @event;
         }
 
         private Type GetInterfaceType(Type type)
