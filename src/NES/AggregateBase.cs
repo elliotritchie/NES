@@ -20,10 +20,10 @@ namespace NES
 
         void IEventSource.RestoreSnapshot(IMemento memento)
         {
+            RestoreSnapshot(memento);
+
             Id = memento.Id;
             _version = memento.Version;
-
-            RestoreSnapshot(memento);
         }
 
         IMemento IEventSource.TakeSnapshot()
