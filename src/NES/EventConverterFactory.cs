@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 
 namespace NES
 {
@@ -13,9 +10,13 @@ namespace NES
 
         static EventConverterFactory()
         {
-            foreach (var fileInfo in new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).GetFiles("*.dll", SearchOption.AllDirectories))
-            foreach (var type in Assembly.LoadFrom(fileInfo.FullName).GetTypes().Where(t => t.IsClass && !t.IsAbstract))
+            foreach (var type in Global.TypesToScan)
             {
+                if (!type.IsClass || type.IsAbstract)
+                {
+                    continue;
+                }
+
                 var baseType = type.BaseType;
 
                 if (baseType == null || !baseType.IsGenericType)
@@ -41,26 +42,27 @@ namespace NES
 
                 var eventFactory = DI.Current.Resolve<IEventFactory>();
                 var eventFactoryMemberInfo = type.GetProperty("EventFactory");
-                var eventConverterMemberInit = Expression.MemberInit(
-                    Expression.New(type), 
-                    Expression.Bind(eventFactoryMemberInfo, Expression.Constant(eventFactory)));
-                var eventConverter = Expression.Lambda<Func<object>>(eventConverterMemberInit).Compile().Invoke();
 
+                var eventConverterMemberInit = Expression.MemberInit(
+                    Expression.New(type),
+                    Expression.Bind(eventFactoryMemberInfo, Expression.Constant(eventFactory)));
+
+                var eventConverter = Expression.Lambda<Func<object>>(eventConverterMemberInit).Compile().Invoke();
                 var eventConverterParameter = Expression.Constant(eventConverter);
                 var eventParameter = Expression.Parameter(typeof(object), "event");
+
                 var eventConverterCall = Expression.Call(
                     Expression.Convert(eventConverterParameter, type),
                     type.GetMethod("Convert"),
                     Expression.Convert(eventParameter, fromType));
-                var @delegate = Expression.Lambda<Func<object, object>>(eventConverterCall, eventParameter).Compile();
 
-                _cache[fromType] = @delegate;
+                _cache[fromType] = Expression.Lambda<Func<object, object>>(eventConverterCall, eventParameter).Compile();
             }
         }
 
-        public Func<object, object> Get(Type @eventType)
+        public Func<object, object> Get(Type eventType)
         {
-            return _cache.ContainsKey(@eventType) ? _cache[@eventType] : null;
+            return _cache.ContainsKey(eventType) ? _cache[eventType] : null;
         }
     }
 }

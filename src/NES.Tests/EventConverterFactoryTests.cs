@@ -9,14 +9,17 @@ namespace NES.Tests
         [TestClass]
         public class When_converter_for_event_is_requested_and_event_converter_exists : Test
         {
-            private readonly IEventConverterFactory _eventConverterFactory = new EventConverterFactory();
             private readonly EventFactory _eventFactory = new EventFactory();
+            private IEventConverterFactory _eventConverterFactory;
             private SomethingHappenedEvent _event;
-            private Func<object, object> _delegate;
+            private Func<object, object> _converter;
             private Exception _ex;
 
             protected override void Context()
             {
+                Global.TypesToScan = typeof(Test).Assembly.GetTypes();
+                
+                _eventConverterFactory = new EventConverterFactory();
                 _event = _eventFactory.Create<SomethingHappenedEvent>(e => {});
             }
 
@@ -24,8 +27,8 @@ namespace NES.Tests
             {
                 try
                 {
-                    _delegate = _eventConverterFactory.Get(typeof(SomethingHappenedEvent));
-                    _delegate(_event);
+                    _converter = _eventConverterFactory.Get(typeof(SomethingHappenedEvent));
+                    _converter(_event);
                 }
                 catch(Exception ex)
                 {
@@ -34,9 +37,9 @@ namespace NES.Tests
             }
 
             [TestMethod]
-            public void Should_return_event_converter_delegate()
+            public void Should_return_event_converter()
             {
-                Assert.IsNotNull(_delegate);
+                Assert.IsNotNull(_converter);
                 Assert.IsNull(_ex);
             }
         }
@@ -44,22 +47,25 @@ namespace NES.Tests
         [TestClass]
         public class When_converter_for_event_is_requested_and_event_converter_doesnt_exist : Test
         {
-            private readonly IEventConverterFactory _eventConverterFactory = new EventConverterFactory();
-            private Func<object, object> _delegate;
+            private IEventConverterFactory _eventConverterFactory;
+            private Func<object, object> _converter;
 
             protected override void Context()
             {
+                Global.TypesToScan = typeof(Test).Assembly.GetTypes();
+
+                _eventConverterFactory = new EventConverterFactory();
             }
 
             protected override void Event()
             {
-                _delegate = _eventConverterFactory.Get(typeof(SomethingElseHappenedEvent));
+                _converter = _eventConverterFactory.Get(typeof(SomethingElseHappenedEvent));
             }
 
             [TestMethod]
             public void Should_return_null()
             {
-                Assert.IsNull(_delegate);
+                Assert.IsNull(_converter);
             }
         }
     }

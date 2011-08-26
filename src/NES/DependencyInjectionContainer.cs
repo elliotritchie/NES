@@ -23,6 +23,11 @@ namespace NES
             return default(TService);
         }
 
+        public void Register<TService>(TService service)
+        {
+            _factories[typeof(TService)] = service;
+        }
+
         public void Register<TService>(Func<TService> factory)
         {
             _factories[typeof(TService)] = factory;

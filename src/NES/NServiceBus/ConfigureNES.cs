@@ -9,6 +9,8 @@ namespace NES.NServiceBus
     {
         public static Configure NES(this Configure config)
         {
+            Global.TypesToScan = Configure.TypesToScan;
+
             config.Configurer.ConfigureComponent<MessageModule>(ComponentCallModelEnum.Singlecall);
 
             DI.Current.Register<IEventFactory, IMessageMapper>(messageMapper => new MessageMapperAdapter(messageMapper));
