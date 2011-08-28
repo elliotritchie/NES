@@ -24,8 +24,8 @@ NES hooks into NServiceBus' and the EventStore's configuration objects and trans
 ## Building
 You can install NES via [NuGet](http://nuget.org/List/Packages/NES) or download the [binaries](http://github.com/elliotritchie/NES/downloads) or download the source and run 'build.bat' from the command line. Once built, the files will be placed in the 'build' folder. NES is targeted for .NET v4.0 and references the following assemblies:
 
-* NServiceBus [v2.5.0.1446 Community Edition](http://www.nservicebus.com/downloads/Community.NServiceBus.2.5.0.1446.zip)
-* EventStore [v2.0.11126.34](http://github.com/downloads/joliver/EventStore/EventStore-2.0.11126.34-net40.zip)
+* NServiceBus [v2.5.0.1490 Community Edition](http://nservicebus.com/downloads/Community.NServiceBus.2.5.0.1490.zip)
+* EventStore [v2.0.11157.39](https://github.com/downloads/joliver/EventStore/EventStore-2.0.11157.39-net40.zip)
 
 At the time of writing these are the recommended versions of these frameworks to use. Currently, if you require a build for a different minor version of these assemblies you should replace their corresponding dlls in the 'lib' folder, re-reference them from the solution and re-run 'build.bat'.
 

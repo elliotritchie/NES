@@ -37,24 +37,23 @@
     <AssemblyOriginatorKeyFile>..\NES.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EventStore, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7735eb81c0bd9948, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\EventStore.2.0.11126.34\net40\EventStore.dll</HintPath>
+    <Reference Include="EventStore">
+      <HintPath>..\..\lib\EventStore.2.0.11157.39\net40\EventStore.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\NServiceBus.2.5.0.1446\net40\log4net.dll</HintPath>
+    <Reference Include="log4net">
+      <HintPath>..\..\lib\NServiceBus.2.5.0.1490\net40\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="NServiceBus, Version=2.5.0.1446, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\NServiceBus.2.5.0.1446\net40\NServiceBus.dll</HintPath>
+    <Reference Include="NServiceBus">
+      <HintPath>..\..\lib\NServiceBus.2.5.0.1490\net40\NServiceBus.dll</HintPath>
     </Reference>
-    <Reference Include="NServiceBus.Core, Version=2.5.0.1446, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\NServiceBus.2.5.0.1446\net40\NServiceBus.Core.dll</HintPath>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\..\lib\NServiceBus.2.5.0.1490\net40\NServiceBus.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NServiceBus.Host, Version=2.5.0.1446, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
-      <ExecutableExtension>.exe</ExecutableExtension>
-      <HintPath>..\..\lib\NServiceBus.2.5.0.1446\net40\NServiceBus.Host.exe</HintPath>
+    <Reference Include="NServiceBus.Host">
+      <HintPath>..\..\lib\NServiceBus.2.5.0.1490\net40\NServiceBus.Host.exe</HintPath>
     </Reference>
-    <Reference Include="NServiceBus.Testing, Version=2.5.0.1446, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\NServiceBus.2.5.0.1446\net40\NServiceBus.Testing.dll</HintPath>
+    <Reference Include="NServiceBus.Testing">
+      <HintPath>..\..\lib\NServiceBus.2.5.0.1490\net40\NServiceBus.Testing.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
