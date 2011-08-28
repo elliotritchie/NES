@@ -59,6 +59,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,6 +71,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AggregateBase.cs" />
+    <Compile Include="EnlistmentNotification.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="ConflictingCommandException.cs" />
     <Compile Include="DependencyInjectionContainer.cs" />

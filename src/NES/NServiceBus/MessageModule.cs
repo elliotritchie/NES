@@ -1,3 +1,4 @@
+using System.Transactions;
 using NServiceBus;
 
 namespace NES.NServiceBus
@@ -11,18 +12,19 @@ namespace NES.NServiceBus
 
         public void HandleEndMessage()
         {
-            try
+            var unitOfWork = UnitOfWorkFactory.Current;
+
+            if (Transaction.Current == null && unitOfWork != null)
             {
-                UnitOfWorkFactory.Current.Commit();
+                unitOfWork.Commit();
             }
-            finally
-            {
-                UnitOfWorkFactory.End();
-            }
+
+            UnitOfWorkFactory.End();
         }
 
         public void HandleError()
         {
+            UnitOfWorkFactory.End();
         }
     }
 }

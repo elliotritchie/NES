@@ -1,4 +1,5 @@
 using System;
+using System.Transactions;
 
 namespace NES
 {
@@ -14,7 +15,18 @@ namespace NES
 
         public static void Begin()
         {
-            _current = DI.Current.Resolve<IUnitOfWork>();
+            var unitOfWork = DI.Current.Resolve<IUnitOfWork>();
+
+            if (Transaction.Current != null)
+            {
+                var ambientTransaction = Transaction.Current.Clone();
+
+                Transaction.Current.EnlistVolatile(new EnlistmentNotification(ambientTransaction, unitOfWork), EnlistmentOptions.EnlistDuringPrepareRequired);
+
+                ambientTransaction.TransactionCompleted += (s, e) => unitOfWork = null;
+            }
+
+            _current = unitOfWork;
         }
 
         public static void End()
