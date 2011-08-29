@@ -19,11 +19,7 @@ namespace NES
 
             if (Transaction.Current != null)
             {
-                var ambientTransaction = Transaction.Current.Clone();
-
-                Transaction.Current.EnlistVolatile(new EnlistmentNotification(ambientTransaction, unitOfWork), EnlistmentOptions.EnlistDuringPrepareRequired);
-
-                ambientTransaction.TransactionCompleted += (s, e) => unitOfWork = null;
+                Transaction.Current.EnlistVolatile(new EnlistmentNotification(Transaction.Current.Clone(), unitOfWork), EnlistmentOptions.EnlistDuringPrepareRequired);
             }
 
             _current = unitOfWork;
