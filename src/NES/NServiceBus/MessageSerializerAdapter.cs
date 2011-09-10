@@ -16,8 +16,9 @@ namespace NES.NServiceBus
         public string Serialize(object @event)
         {
             using (var stream = new MemoryStream())
-            using (var reader = new StreamReader(stream))
             {
+                var reader = new StreamReader(stream);
+
                 _messageSerializer.Serialize(new[] { (IMessage)@event }, stream);
                 stream.Position = 0;
 
@@ -28,8 +29,9 @@ namespace NES.NServiceBus
         public object Deserialize(string data)
         {
             using (var stream = new MemoryStream())
-            using (var writer = new StreamWriter(stream))
             {
+                var writer = new StreamWriter(stream);
+
                 writer.Write(data);
                 writer.Flush();
                 stream.Position = 0;
