@@ -33,7 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="NServiceBus">
+      <HintPath>..\packages\NServiceBus.2.6.0.1498\lib\net40\NServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\packages\NServiceBus.2.6.0.1498\lib\net40\NServiceBus.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -45,7 +54,25 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\AggregateBuilder.cs" />
+    <Compile Include="Model\MessageTests.cs" />
+    <Compile Include="Builders\UserBuilder.cs" />
+    <Compile Include="Model\UserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\NES\NES.csproj">
+      <Project>{EC7040E2-7A13-4447-900D-6ED57328E5DF}</Project>
+      <Name>NES</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NES.Sample\NES.Sample.csproj">
+      <Project>{C56DB675-874E-40CC-B1A1-EFFEA2859D69}</Project>
+      <Name>NES.Sample</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
