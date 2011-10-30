@@ -11,8 +11,8 @@ namespace NES
 
         static DI()
         {
-            _current.Register<IUnitOfWork, IEventSourceMapper>(eventSourceMapper => 
-                new UnitOfWork(eventSourceMapper));
+            _current.Register<IUnitOfWork, ICommandContextProvider, IEventSourceMapper>((commandContextProvider, eventSourceMapper) =>
+                new UnitOfWork(commandContextProvider, eventSourceMapper));
             
             _current.Register<IEventSourceMapper, IEventSourceFactory, IEventStore, IEventConversionRunner>((eventSourceFactory, eventStoreAdapter, eventConverterFactory) =>
                 new EventSourceMapper(eventSourceFactory, eventStoreAdapter, eventConverterFactory));

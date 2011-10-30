@@ -67,6 +67,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AggregateBase.cs" />
+    <Compile Include="CommandContext.cs" />
     <Compile Include="EnlistmentNotification.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="ConflictingCommandException.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="EventStore\Serializer.cs" />
     <Compile Include="EventStore\WireupExtensions.cs" />
     <Compile Include="GuidComb.cs" />
+    <Compile Include="ICommandContextProvider.cs" />
     <Compile Include="IEventConversionRunner.cs" />
     <Compile Include="IEventConverterFactory.cs" />
     <Compile Include="IEventFactory.cs" />
@@ -100,6 +102,7 @@
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="NServiceBus\BusAdapter.cs" />
+    <Compile Include="NServiceBus\CommandContextProvider.cs" />
     <Compile Include="NServiceBus\ConfigureNES.cs" />
     <Compile Include="NServiceBus\MessageMapperAdapter.cs" />
     <Compile Include="NServiceBus\MessageModule.cs" />

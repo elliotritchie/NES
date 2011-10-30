@@ -1,10 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using NServiceBus;
 
 namespace NES.Sample.Messages
 {
-    public class CreateUserCommand : IMessage
+    public class CreateUserCommand : Command
     {
         [Required]
         public Guid? UserId { get; set; }

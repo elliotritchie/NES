@@ -11,16 +11,19 @@ namespace NES.Tests
         public class When_getting_an_event_source_once : Test
         {
             private readonly Guid _id = Guid.NewGuid();
+            private readonly Mock<ICommandContextProvider> _commandContextProvider = new Mock<ICommandContextProvider>();
             private readonly Mock<IEventSourceMapper> _eventSourceMapper = new Mock<IEventSourceMapper>();
             private UnitOfWork _unitOfWork;
             private AggregateStub _aggregate;
+            private readonly CommandContext _commandContext = new CommandContext();
             private AggregateStub _returnedAggregate;
 
             protected override void Context()
             {
-                _unitOfWork = new UnitOfWork(_eventSourceMapper.Object);
+                _unitOfWork = new UnitOfWork(_commandContextProvider.Object, _eventSourceMapper.Object);
                 _aggregate = new AggregateStub(_id);
 
+                _commandContextProvider.Setup(p => p.Get()).Returns(_commandContext);
                 _eventSourceMapper.Setup(m => m.Get<AggregateStub>(_id)).Returns(_aggregate);
             }
 
@@ -35,6 +38,12 @@ namespace NES.Tests
                 _eventSourceMapper.Verify(m => m.Get<AggregateStub>(_id), Times.Once());
 
                 Assert.AreSame(_aggregate, _returnedAggregate);
+            }
+
+            [TestMethod]
+            public void Should_get_command_context_once()
+            {
+                _commandContextProvider.Verify(p => p.Get(), Times.Once());
             }
         }
 
@@ -42,16 +51,19 @@ namespace NES.Tests
         public class When_getting_an_event_source_more_than_once : Test
         {
             private readonly Guid _id = Guid.NewGuid();
+            private readonly Mock<ICommandContextProvider> _commandContextProvider = new Mock<ICommandContextProvider>();
             private readonly Mock<IEventSourceMapper> _eventSourceMapper = new Mock<IEventSourceMapper>();
             private UnitOfWork _unitOfWork;
             private AggregateStub _aggregate;
+            private readonly CommandContext _commandContext = new CommandContext();
             private AggregateStub _returnedAggregate;
 
             protected override void Context()
             {
-                _unitOfWork = new UnitOfWork(_eventSourceMapper.Object);
+                _unitOfWork = new UnitOfWork(_commandContextProvider.Object, _eventSourceMapper.Object);
                 _aggregate = new AggregateStub(_id);
 
+                _commandContextProvider.Setup(p => p.Get()).Returns(_commandContext);
                 _eventSourceMapper.Setup(m => m.Get<AggregateStub>(_id)).Returns(_aggregate);
             }
 
@@ -68,20 +80,29 @@ namespace NES.Tests
 
                 Assert.AreSame(_aggregate, _returnedAggregate);
             }
+
+            [TestMethod]
+            public void Should_get_command_context_once()
+            {
+                _commandContextProvider.Verify(p => p.Get(), Times.Once());
+            }
         }
 
         [TestClass]
         public class When_committing_and_an_event_source_has_been_registered : Test
         {
+            private readonly Mock<ICommandContextProvider> _commandContextProvider = new Mock<ICommandContextProvider>();
             private readonly Mock<IEventSourceMapper> _eventSourceMapper = new Mock<IEventSourceMapper>();
             private UnitOfWork _unitOfWork;
             private IEventSource _aggregate;
+            private readonly CommandContext _commandContext = new CommandContext();
 
             protected override void Context()
             {
-                _unitOfWork = new UnitOfWork(_eventSourceMapper.Object);
+                _unitOfWork = new UnitOfWork(_commandContextProvider.Object, _eventSourceMapper.Object);
                 _aggregate = new AggregateStub();
 
+                _commandContextProvider.Setup(p => p.Get()).Returns(_commandContext);
                 _unitOfWork.Register(_aggregate);
             }
 
@@ -93,22 +114,25 @@ namespace NES.Tests
             [TestMethod]
             public void Should_set_aggregate_in_event_source_mapper_once()
             {
-                _eventSourceMapper.Verify(m => m.Set(_aggregate), Times.Once());
+                _eventSourceMapper.Verify(m => m.Set(_commandContext, _aggregate), Times.Once());
             }
         }
 
         [TestClass]
         public class When_committing_and_an_event_source_has_been_registered_more_than_once : Test
         {
+            private readonly Mock<ICommandContextProvider> _commandContextProvider = new Mock<ICommandContextProvider>();
             private readonly Mock<IEventSourceMapper> _eventSourceMapper = new Mock<IEventSourceMapper>();
             private UnitOfWork _unitOfWork;
             private IEventSource _aggregate;
+            private readonly CommandContext _commandContext = new CommandContext();
 
             protected override void Context()
             {
-                _unitOfWork = new UnitOfWork(_eventSourceMapper.Object);
+                _unitOfWork = new UnitOfWork(_commandContextProvider.Object, _eventSourceMapper.Object);
                 _aggregate = new AggregateStub();
 
+                _commandContextProvider.Setup(p => p.Get()).Returns(_commandContext);
                 _unitOfWork.Register(_aggregate);
                 _unitOfWork.Register(_aggregate);
             }
@@ -121,24 +145,27 @@ namespace NES.Tests
             [TestMethod]
             public void Should_set_aggregate_in_event_source_mapper_once()
             {
-                _eventSourceMapper.Verify(m => m.Set(_aggregate), Times.Once());
+                _eventSourceMapper.Verify(m => m.Set(_commandContext, _aggregate), Times.Once());
             }
         }
 
         [TestClass]
         public class When_committing_and_event_sources_have_been_registered : Test
         {
+            private readonly Mock<ICommandContextProvider> _commandContextProvider = new Mock<ICommandContextProvider>();
             private readonly Mock<IEventSourceMapper> _eventSourceMapper = new Mock<IEventSourceMapper>();
             private UnitOfWork _unitOfWork;
             private IEventSource _aggregate1;
             private IEventSource _aggregate2;
+            private readonly CommandContext _commandContext = new CommandContext();
 
             protected override void Context()
             {
-                _unitOfWork = new UnitOfWork(_eventSourceMapper.Object);
+                _unitOfWork = new UnitOfWork(_commandContextProvider.Object, _eventSourceMapper.Object);
                 _aggregate1 = new AggregateStub();
                 _aggregate2 = new AggregateStub();
 
+                _commandContextProvider.Setup(p => p.Get()).Returns(_commandContext);
                 _unitOfWork.Register(_aggregate1);
                 _unitOfWork.Register(_aggregate2);
             }
@@ -151,8 +178,8 @@ namespace NES.Tests
             [TestMethod]
             public void Should_set_aggregates_in_event_source_mapper_once()
             {
-                _eventSourceMapper.Verify(m => m.Set(_aggregate1), Times.Once());
-                _eventSourceMapper.Verify(m => m.Set(_aggregate2), Times.Once());
+                _eventSourceMapper.Verify(m => m.Set(_commandContext, _aggregate1), Times.Once());
+                _eventSourceMapper.Verify(m => m.Set(_commandContext, _aggregate2), Times.Once());
             }
         }
     }

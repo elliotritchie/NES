@@ -26,11 +26,11 @@ namespace NES
             return eventSource.Id != Guid.Empty ? eventSource : null;
         }
 
-        public void Set<T>(T eventSource) where T : class, IEventSource
+        public void Set<T>(CommandContext commandContext, T eventSource) where T : class, IEventSource
         {
             try
             {
-                _eventStore.Write(eventSource.Id, eventSource.Version, eventSource.Flush());
+                _eventStore.Write(eventSource.Id, eventSource.Version, eventSource.Flush(), commandContext.Id, commandContext.Headers);
             }
             catch (ConflictingCommandException)
             {

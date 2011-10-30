@@ -6,11 +6,14 @@ namespace NES
 {
     public class UnitOfWork : IUnitOfWork
     {
+        private readonly ICommandContextProvider _commandContextProvider;
         private readonly IEventSourceMapper _eventSourceMapper;
+        private CommandContext _commandContext;
         private readonly HashSet<IEventSource> _eventSources = new HashSet<IEventSource>();
 
-        public UnitOfWork(IEventSourceMapper eventSourceMapper)
+        public UnitOfWork(ICommandContextProvider commandContextProvider, IEventSourceMapper eventSourceMapper)
         {
+            _commandContextProvider = commandContextProvider;
             _eventSourceMapper = eventSourceMapper;
         }
 
@@ -25,6 +28,11 @@ namespace NES
 
         public void Register<T>(T eventSource) where T : class, IEventSource
         {
+            if (_commandContext == null)
+            {
+                _commandContext = _commandContextProvider.Get();
+            }
+
             _eventSources.Add(eventSource);
         }
 
@@ -32,7 +40,7 @@ namespace NES
         {
             foreach (var eventSource in _eventSources)
             {
-                _eventSourceMapper.Set(eventSource);
+                _eventSourceMapper.Set(_commandContext, eventSource);
             }
         }
     }

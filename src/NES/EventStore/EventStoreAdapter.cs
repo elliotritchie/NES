@@ -28,22 +28,29 @@ namespace NES.EventStore
             }
         }
 
-        public void Write(Guid id, int version, IEnumerable<object> events)
+        public void Write(Guid id, int version, IEnumerable<object> events, Guid commitId, Dictionary<string, string> headers)
         {
-            using (var stream = _eventStore.OpenStream(id, version, int.MaxValue))
+            if (events.Any())
             {
-                foreach (var @event in events)
+                using (var stream = _eventStore.OpenStream(id, version, int.MaxValue))
                 {
-                    stream.Add(new EventMessage { Body = @event });
-                }
+                    foreach (var @event in events)
+                    {
+                        stream.Add(new EventMessage { Body = @event });
+                    }
 
-                try
-                {
-                    stream.CommitChanges(Guid.NewGuid());
-                }
-                catch (ConcurrencyException ex)
-                {
-                    throw new ConflictingCommandException(ex.Message, ex);
+                    try
+                    {
+                        stream.CommitChanges(commitId);
+                    }
+                    catch (DuplicateCommitException)
+                    {
+                        stream.ClearChanges();
+                    }
+                    catch (ConcurrencyException ex)
+                    {
+                        throw new ConflictingCommandException(ex.Message, ex);
+                    }
                 }
             }
         }

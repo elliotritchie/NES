@@ -71,6 +71,7 @@
     <Compile Include="Handlers\MessageDtosHandler.cs" />
     <Compile Include="Handlers\SendMessageCommandHandler.cs" />
     <Compile Include="Handlers\UserDtosHandler.cs" />
+    <Compile Include="Messages\Command.cs" />
     <Compile Include="Messages\CreatedUserEvent.cs" />
     <Compile Include="Messages\CreateUserCommand.cs" />
     <Compile Include="Messages\IEvent.cs" />
