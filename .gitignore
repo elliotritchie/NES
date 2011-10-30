@@ -20,6 +20,8 @@
 *.gpState
 *.docstates
 *.nupkg
+*.dbmdl
+*.schemaview
 [Bb]in
 [Dd]ebug*/
 obj/
