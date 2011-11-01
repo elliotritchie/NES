@@ -7,7 +7,7 @@ properties {
 	$tools_dir = "$base_dir\tools"
 	$_dir = "$base_dir\build\"
 	$build_dir = "$base_dir\build\"
-	$bin_dir = "$build_dir\bin\"
+	$bin_dir = "$build_dir\bin\\"
 }
 
 task default -depends clean, build, output
