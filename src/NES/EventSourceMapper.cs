@@ -53,10 +53,7 @@ namespace NES
         {
             var events = _eventStore.Read(id, eventSource.Version);
 
-            if (events.Any())
-            {
-                eventSource.Hydrate(_eventConversionRunner.Run(events));
-            }
+            eventSource.Hydrate(_eventConversionRunner.Run(events));
         }
     }
 }
