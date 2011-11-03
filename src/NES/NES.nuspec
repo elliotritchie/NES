@@ -10,5 +10,9 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>NES (.NET Event Sourcing) is a lightweight framework that helps you build domain models when you're doing event sourcing.</description>
     <tags>nes cqrs eventsourcing nservicebus eventstore</tags>
+    <dependencies>
+        <dependency id="NServiceBus" version="2.6.0.1496"/>
+        <dependency id="EventStore" version="[2,3)"/>
+    </dependencies>
   </metadata>
 </package>
