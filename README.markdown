@@ -16,6 +16,7 @@ NES hooks into NServiceBus' and the EventStore's configuration objects and trans
 * Allow processing of messages sent in a batch as a single transaction ([Ref](http://www.udidahan.com/2008/03/30/nservicebus-explanations-3/))
 * Allow use of interfaces for events ([Ref](http://www.nservicebus.com/MessagesAsInterfaces.aspx))
 * Allow up-conversion of events ([Ref](http://distributedpodcast.com/2011/episode-5-cqrs-eventstore-best-frameworklibrary-ever) @ 36:00)
+* Automatic persistence of message headers
 * Automatic publishing of persisted events
 * Convention based event handling within aggregates
 * No 'Save()' methods on repositories
