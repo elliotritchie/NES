@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NES
@@ -28,9 +29,29 @@ namespace NES
 
         public void Set<T>(CommandContext commandContext, T eventSource) where T : class, IEventSource
         {
+            var id = eventSource.Id;
+            var version = eventSource.Version;
+            var type = eventSource.GetType();
+            var events = eventSource.Flush();
+            var commitId = commandContext.Id;
+            var headers = commandContext.Headers;
+            var eventHeaders = new Dictionary<object, Dictionary<string, object>>();
+
+            if (!events.Any())
+                return;
+
+            headers["AggregateId"] = id;
+            headers["AggregateVersion"] = version + events.Count();
+            headers["AggregateType"] = type.FullName;
+
+            for (int i = 0; i < events.Count(); i++)
+            {
+                eventHeaders[events.ElementAt(i)] = new Dictionary<string, object> {{ "EventVersion", version + i + 1 }};
+            }
+
             try
             {
-                _eventStore.Write(eventSource.Id, eventSource.Version, eventSource.Flush(), commandContext.Id, commandContext.Headers);
+                _eventStore.Write(id, version, events, commitId, headers, eventHeaders);
             }
             catch (ConflictingCommandException)
             {

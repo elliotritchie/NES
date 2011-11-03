@@ -8,6 +8,75 @@ namespace NES.Tests
     public static class EventSourceMapperTests
     {
         [TestClass]
+        public class When_setting_event_source_and_events_exist : Test
+        {
+            private IEventSourceMapper _eventSourceMapper;
+            private readonly Mock<IEventStore> _eventStore = new Mock<IEventStore>();
+            private readonly CommandContext _commandContext = new CommandContext();
+            private readonly Guid _commitId = GuidComb.NewGuidComb();
+            private readonly Mock<IEventSource> _eventSource = new Mock<IEventSource>();
+            private readonly Guid _id = GuidComb.NewGuidComb();
+            private const int _version = 2;
+            private readonly List<object> _events = new List<object> { new object(), new object() };
+            private Dictionary<string, object> _committedHeaders;
+            private Dictionary<object, Dictionary<string, object>> _committedEventHeaders;
+
+            protected override void Context()
+            {
+                _eventSourceMapper = new EventSourceMapper(null, _eventStore.Object, null);
+
+                _commandContext.Id = _commitId;
+                _commandContext.Headers = new Dictionary<string, object> {{ "TestKey", "TestValue" }};
+                _eventSource.Setup(s => s.Id).Returns(_id);
+                _eventSource.Setup(s => s.Version).Returns(_version);
+                _eventSource.Setup(s => s.Flush()).Returns(_events);
+
+                _eventStore
+                    .Setup(s => s.Write(
+                        It.IsAny<Guid>(), 
+                        It.IsAny<int>(), 
+                        It.IsAny<IEnumerable<object>>(), 
+                        It.IsAny<Guid>(), 
+                        It.IsAny<Dictionary<string, object>>(), 
+                        It.IsAny<Dictionary<object, Dictionary<string, object>>>()))
+                    .Callback<Guid, int, IEnumerable<object>, Guid, Dictionary<string, object>, Dictionary<object, Dictionary<string, object>>>((a, b, c, d, e, f) =>
+                    {
+                        _committedHeaders = e;
+                        _committedEventHeaders = f;
+                    });
+            }
+
+            protected override void Event()
+            {
+                _eventSourceMapper.Set(_commandContext, _eventSource.Object);
+            }
+
+            [TestMethod]
+            public void Should_commit_to_event_store()
+            {
+                _eventStore.Verify(s => s.Write(_id, _version, _events, _commitId, It.IsAny<Dictionary<string, object>>(), It.IsAny<Dictionary<object, Dictionary<string, object>>>()));
+            }
+
+            [TestMethod]
+            public void Should_commit_headers_to_event_store()
+            {
+                Assert.AreEqual("TestValue", _committedHeaders["TestKey"]);
+                Assert.AreEqual(_id, _committedHeaders["AggregateId"]);
+                Assert.AreEqual(_version + _events.Count, _committedHeaders["AggregateVersion"]);
+                Assert.AreEqual(_eventSource.Object.GetType().FullName, _committedHeaders["AggregateType"]);
+            }
+
+            [TestMethod]
+            public void Should_commit_event_headers_to_event_store()
+            {
+                for (int i = 0; i < _events.Count; i++)
+                {
+                    Assert.AreEqual(_version + i + 1, _committedEventHeaders[_events[i]]["EventVersion"]);
+                }
+            }
+        }
+
+        [TestClass]
         public class When_getting_event_source_and_snapshot_and_events_exist : Test
         {
             private IEventSourceMapper _eventSourceMapper;
@@ -104,15 +173,15 @@ namespace NES.Tests
             }
 
             [TestMethod]
-            public void Should_not_convert_events()
+            public void Should_convert_events()
             {
-                _eventConversionRunner.Verify(r => r.Run(It.IsAny<IEnumerable<object>>()), Times.Never());
+                _eventConversionRunner.Verify(r => r.Run(It.IsAny<IEnumerable<object>>()));
             }
 
             [TestMethod]
-            public void Should_not_hydrate_event_source_with_events()
+            public void Should_hydrate_event_source_with_events()
             {
-                _eventSource.Verify(s => s.Hydrate(It.IsAny<IEnumerable<object>>()), Times.Never());
+                _eventSource.Verify(s => s.Hydrate(It.IsAny<IEnumerable<object>>()));
             }
 
             [TestMethod]

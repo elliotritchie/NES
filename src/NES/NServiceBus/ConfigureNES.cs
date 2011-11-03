@@ -13,7 +13,7 @@ namespace NES.NServiceBus
 
             config.Configurer.ConfigureComponent<MessageModule>(ComponentCallModelEnum.Singlecall);
 
-            DI.Current.Register<ICommandContextProvider>(() => new CommandContextProvider());
+            DI.Current.Register<ICommandContextProvider, IBus>(bus => new CommandContextProvider(bus));
             DI.Current.Register<IEventFactory, IMessageMapper>(messageMapper => new MessageMapperAdapter(messageMapper));
             DI.Current.Register(() => config.Builder.Build<IMessageMapper>());
             DI.Current.Register<IEventPublisher, IBus>(bus => new BusAdapter(bus));

@@ -28,29 +28,36 @@ namespace NES.EventStore
             }
         }
 
-        public void Write(Guid id, int version, IEnumerable<object> events, Guid commitId, Dictionary<string, string> headers)
+        public void Write(Guid id, int version, IEnumerable<object> events, Guid commitId, Dictionary<string, object> headers, Dictionary<object, Dictionary<string, object>> eventHeaders)
         {
-            if (events.Any())
+            using (var stream = _eventStore.OpenStream(id, version, int.MaxValue))
             {
-                using (var stream = _eventStore.OpenStream(id, version, int.MaxValue))
+                foreach (var header in headers)
                 {
-                    foreach (var @event in events)
+                    stream.UncommittedHeaders[header.Key] = header.Value;
+                }
+
+                foreach (var @event in events.Select(e => new EventMessage { Body = e }))
+                {
+                    foreach (var header in eventHeaders[@event.Body])
                     {
-                        stream.Add(new EventMessage { Body = @event });
+                        @event.Headers[header.Key] = header.Value;
                     }
 
-                    try
-                    {
-                        stream.CommitChanges(commitId);
-                    }
-                    catch (DuplicateCommitException)
-                    {
-                        stream.ClearChanges();
-                    }
-                    catch (ConcurrencyException ex)
-                    {
-                        throw new ConflictingCommandException(ex.Message, ex);
-                    }
+                    stream.Add(@event);
+                }
+
+                try
+                {
+                    stream.CommitChanges(commitId);
+                }
+                catch (DuplicateCommitException)
+                {
+                    stream.ClearChanges();
+                }
+                catch (ConcurrencyException ex)
+                {
+                    throw new ConflictingCommandException(ex.Message, ex);
                 }
             }
         }

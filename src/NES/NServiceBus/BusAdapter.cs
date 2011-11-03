@@ -13,10 +13,20 @@ namespace NES.NServiceBus
             _bus = bus;
         }
 
-        public void Publish(IEnumerable<object> events)
+        public void Publish(IEnumerable<object> events, Dictionary<string, object> headers, Dictionary<object, Dictionary<string, object>> eventHeaders)
         {
+            foreach (var header in headers)
+            {
+                _bus.OutgoingHeaders[header.Key] = header.Value.ToString();
+            }
+
             foreach (var @event in events.Cast<IMessage>())
             {
+                foreach (var header in eventHeaders[@event])
+                {
+                    @event.SetHeader(header.Key, header.Value.ToString());
+                }
+
                 _bus.Publish(@event);
             }
         }

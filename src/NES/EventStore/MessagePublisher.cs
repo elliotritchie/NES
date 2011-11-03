@@ -16,7 +16,7 @@ namespace NES.EventStore
 
         public virtual void Publish(Commit commit)
         {
-            _eventPublisherFactory().Publish(commit.Events.Select(e => e.Body));
+            _eventPublisherFactory().Publish(commit.Events.Select(e => e.Body), commit.Headers, commit.Events.ToDictionary(e => e.Body, e => e.Headers));
         }
 
         public void Dispose()

@@ -6,6 +6,6 @@ namespace NES
     public class CommandContext
     {
         public Guid Id { get; set; }
-        public Dictionary<string, string> Headers { get; set; }
+        public Dictionary<string, object> Headers { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using NServiceBus;
 
@@ -9,6 +10,12 @@ namespace NES.NServiceBus
     {
         private static readonly Dictionary<Type, Func<object, Guid>> _cache = new Dictionary<Type, Func<object, Guid>>();
         private static readonly object _cacheLock = new object();
+        private readonly IBus _bus;
+
+        public CommandContextProvider(IBus bus)
+        {
+            _bus = bus;
+        }
 
         public CommandContext Get()
         {
@@ -41,7 +48,7 @@ namespace NES.NServiceBus
                 return new CommandContext
                 {
                     Id = property(command),
-                    Headers = null
+                    Headers = _bus.CurrentMessageContext.Headers.ToDictionary(h => h.Key, h => (object)h.Value)
                 };
             }
         }
