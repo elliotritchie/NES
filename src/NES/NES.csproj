@@ -69,6 +69,7 @@
     <Compile Include="AggregateBase.cs" />
     <Compile Include="CommandContext.cs" />
     <Compile Include="EnlistmentNotification.cs" />
+    <Compile Include="EventStore\EventConverterPipelineHook.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="ConflictingCommandException.cs" />
     <Compile Include="DependencyInjectionContainer.cs" />

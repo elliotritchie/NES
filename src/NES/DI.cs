@@ -15,7 +15,7 @@ namespace NES
                 new UnitOfWork(commandContextProvider, eventSourceMapper));
             
             _current.Register<IEventSourceMapper, IEventSourceFactory, IEventStore, IEventConversionRunner>((eventSourceFactory, eventStoreAdapter, eventConverterFactory) =>
-                new EventSourceMapper(eventSourceFactory, eventStoreAdapter, eventConverterFactory));
+                new EventSourceMapper(eventSourceFactory, eventStoreAdapter));
 
             _current.Register<IEventSourceFactory>(() => new EventSourceFactory());
             _current.Register<IEventFactory>(() => new EventFactory());

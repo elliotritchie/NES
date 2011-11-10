@@ -11,6 +11,7 @@ namespace NES.Sample
         {
             Wireup.Init()
                 .UsingInMemoryPersistence()
+                .UsingBinarySerialization()
                 .NES()
                 .Build();
 

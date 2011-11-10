@@ -33,7 +33,7 @@ namespace NES.Tests
 
             protected override void Event()
             {
-                _eventConversionRunner.Run(new[] { _somethingHappenedEvent }).ToList();
+                _eventConversionRunner.Run(_somethingHappenedEvent);
             }
 
             [TestMethod]
@@ -71,7 +71,7 @@ namespace NES.Tests
 
             protected override void Event()
             {
-                _eventConversionRunner.Run(new[] { _somethingHappenedEvent }).ToList();
+                _eventConversionRunner.Run(_somethingHappenedEvent);
             }
 
             [TestMethod]

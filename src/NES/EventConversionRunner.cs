@@ -15,12 +15,7 @@ namespace NES
             _eventConverterFactory = eventConverterFactory;
         }
 
-        public IEnumerable<object> Run(IEnumerable<object> events)
-        {
-            return events.Select(Run);
-        }
-
-        private object Run(object @event)
+        public object Run(object @event)
         {
             var converter = _eventConverterFactory.Get(GetInterfaceType(@event.GetType()));
             return converter != null ? Run(converter(@event)) : @event;

@@ -37,14 +37,14 @@ namespace NES.EventStore
                     stream.UncommittedHeaders[header.Key] = header.Value;
                 }
 
-                foreach (var @event in events.Select(e => new EventMessage { Body = e }))
+                foreach (var eventMessage in events.Select(e => new EventMessage { Body = e }))
                 {
-                    foreach (var header in eventHeaders[@event.Body])
+                    foreach (var header in eventHeaders[eventMessage.Body])
                     {
-                        @event.Headers[header.Key] = header.Value;
+                        eventMessage.Headers[header.Key] = header.Value;
                     }
 
-                    stream.Add(@event);
+                    stream.Add(eventMessage);
                 }
 
                 try
