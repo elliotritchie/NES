@@ -16,7 +16,7 @@ namespace NES.EventStore
 
         public IMemento Read(Guid id)
         {
-            var snapshot = _eventStore.GetSnapshot(id, int.MaxValue);
+            var snapshot = _eventStore.Advanced.GetSnapshot(id, int.MaxValue);
             return snapshot != null ? (IMemento)snapshot.Payload : null;
         }
 

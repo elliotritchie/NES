@@ -5,16 +5,16 @@ using EventStore.Dispatcher;
 
 namespace NES.EventStore
 {
-    public class MessagePublisher : IPublishMessages
+    public class MessageDispatcher : IDispatchCommits
     {
         private readonly Func<IEventPublisher> _eventPublisherFactory;
 
-        public MessagePublisher(Func<IEventPublisher> eventPublisherFactory)
+        public MessageDispatcher(Func<IEventPublisher> eventPublisherFactory)
         {
             _eventPublisherFactory = eventPublisherFactory;
         }
 
-        public virtual void Publish(Commit commit)
+        public virtual void Dispatch(Commit commit)
         {
             _eventPublisherFactory().Publish(commit.Events.Select(e => e.Body), commit.Headers, commit.Events.ToDictionary(e => e.Body, e => e.Headers));
         }
