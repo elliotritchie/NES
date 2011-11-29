@@ -1,4 +1,4 @@
-NES v0.5
+NES v1.0
 ======================================================================
 
 NES (.NET Event Sourcing) is a lightweight framework that helps you build domain models when you're doing event sourcing.
@@ -21,6 +21,13 @@ NES hooks into NServiceBus' and the EventStore's configuration objects and trans
 * Convention based event handling within aggregates
 * No 'Save()' methods on repositories
 * Transparent configuration
+
+## Version History
+
+### 1.0
+
+* Supports EventStore v2
+* Supports NServiceBus v2
 
 ## Download
 The easiest way to install NES is via [NuGet](http://nuget.org/List/Packages/NES) or you can download the source and run 'build.bat' from the command line. Once built, the files will be placed in the 'build' folder.
