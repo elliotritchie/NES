@@ -54,7 +54,7 @@ public class EndpointConfig : IConfigureThisEndpoint, AsA_Publisher, IWantCustom
 }
 ```
 
-For a more complete example, please open and build NES.Sample.sln in Visual Studio and hit F5. This will start the [NES.Sample](https://github.com/elliotritchie/NES/tree/master/sample/NES.Sample) NServiceBus endpoint aswell as the [NES.Sample.Web](https://github.com/elliotritchie/NES/tree/master/sample/NES.Sample.Web) MVC 3 website.
+For a more complete example, please open and build NES.Sample.sln in Visual Studio and hit F5. This will start the [NES.Sample](https://github.com/elliotritchie/NES/tree/master/sample/NES.Sample) NServiceBus endpoint as well as the [NES.Sample.Web](https://github.com/elliotritchie/NES/tree/master/sample/NES.Sample.Web) MVC 3 website.
 
 ## Need help? Found a bug? Have a question?
 
