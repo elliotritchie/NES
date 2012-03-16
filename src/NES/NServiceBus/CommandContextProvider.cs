@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using NServiceBus;
-using NServiceBus.Unicast;
 
 namespace NES.NServiceBus
 {
@@ -49,7 +48,7 @@ namespace NES.NServiceBus
                 return new CommandContext
                 {
                     Id = property(command),
-                    Headers = _bus.CurrentMessageContext.Headers.Where(h => h.Key != UnicastBus.EnclosedMessageTypes).ToDictionary(h => h.Key, h => (object)h.Value)
+                    Headers = _bus.CurrentMessageContext.Headers.Where(h => !h.Key.StartsWith("NServiceBus")).ToDictionary(h => h.Key, h => (object)h.Value)
                 };
             }
         }
