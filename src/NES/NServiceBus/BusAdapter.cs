@@ -17,7 +17,7 @@ namespace NES.NServiceBus
         {
             foreach (var header in headers)
             {
-                _bus.OutgoingHeaders[header.Key] = header.Value.ToString();
+                _bus.OutgoingHeaders[header.Key] = header.Value != null ? header.Value.ToString() : null;
             }
 
             foreach (var @event in events.Cast<IMessage>())
