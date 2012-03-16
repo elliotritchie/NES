@@ -7,7 +7,6 @@ namespace NES.NServiceBus
     {
         public void Begin()
         {
-            UnitOfWorkFactory.Begin();
         }
 
         public void End(Exception ex = null)
@@ -16,8 +15,6 @@ namespace NES.NServiceBus
             {
                 UnitOfWorkFactory.Current.Commit();
             }
-
-            UnitOfWorkFactory.End();
         }
     }
 }

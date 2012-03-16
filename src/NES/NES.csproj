@@ -104,6 +104,7 @@
     <Compile Include="NServiceBus\CommandContextProvider.cs" />
     <Compile Include="NServiceBus\ConfigureNES.cs" />
     <Compile Include="NServiceBus\MessageMapperAdapter.cs" />
+    <Compile Include="NServiceBus\MessageModule.cs" />
     <Compile Include="NServiceBus\MessageSerializerAdapter.cs" />
     <Compile Include="NServiceBus\UnitOfWorkManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
