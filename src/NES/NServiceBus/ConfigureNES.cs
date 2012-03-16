@@ -1,6 +1,5 @@
 using NServiceBus;
 using NServiceBus.MessageInterfaces;
-using NServiceBus.ObjectBuilder;
 using NServiceBus.Serialization;
 
 namespace NES.NServiceBus
@@ -11,7 +10,7 @@ namespace NES.NServiceBus
         {
             Global.TypesToScan = Configure.TypesToScan;
 
-            config.Configurer.ConfigureComponent<MessageModule>(ComponentCallModelEnum.Singlecall);
+            config.Configurer.ConfigureComponent<UnitOfWorkManager>(DependencyLifecycle.InstancePerUnitOfWork);
 
             DI.Current.Register<ICommandContextProvider, IBus>(bus => new CommandContextProvider(bus));
             DI.Current.Register<IEventFactory, IMessageMapper>(messageMapper => new MessageMapperAdapter(messageMapper));
