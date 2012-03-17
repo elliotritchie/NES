@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using NES.Sample.Messages;
-using NES.Sample.Model;
 
 namespace NES.Sample.Tests.Builders
 {
-    public abstract class AggregateBuilder<T> where T : Aggregate
+    public abstract class AggregateBuilder<T> where T : AggregateBase
     {
         private readonly IEventSourceFactory _eventSourceFactory = new EventSourceFactory();
         private readonly IEventFactory _eventFactory = new EventFactory();

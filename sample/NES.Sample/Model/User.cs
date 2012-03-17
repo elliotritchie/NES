@@ -3,7 +3,7 @@ using NES.Sample.Messages;
 
 namespace NES.Sample.Model
 {
-    public class User : Aggregate
+    public class User : AggregateBase
     {
         public User(Guid userId, string username)
         {
