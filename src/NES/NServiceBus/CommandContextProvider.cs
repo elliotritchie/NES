@@ -48,7 +48,12 @@ namespace NES.NServiceBus
                 return new CommandContext
                 {
                     Id = property(command),
-                    Headers = _bus.CurrentMessageContext.Headers.Where(h => !h.Key.StartsWith("NServiceBus")).ToDictionary(h => h.Key, h => (object)h.Value)
+                    Headers = _bus.CurrentMessageContext.Headers
+                        .Where(h =>
+                            !h.Key.Equals("CorrId", StringComparison.InvariantCultureIgnoreCase) &&
+                            !h.Key.Equals("WinIdName", StringComparison.InvariantCultureIgnoreCase) &&
+                            !h.Key.StartsWith("NServiceBus", StringComparison.InvariantCultureIgnoreCase))
+                        .ToDictionary(h => h.Key, h => (object)h.Value)
                 };
             }
         }
