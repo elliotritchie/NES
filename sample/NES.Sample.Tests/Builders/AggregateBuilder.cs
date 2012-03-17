@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using NES.Sample.Messages;
 
 namespace NES.Sample.Tests.Builders
 {
@@ -8,11 +7,11 @@ namespace NES.Sample.Tests.Builders
     {
         private readonly IEventSourceFactory _eventSourceFactory = new EventSourceFactory();
         private readonly IEventFactory _eventFactory = new EventFactory();
-        private readonly List<IEvent> _events = new List<IEvent>();
+        private readonly List<object> _events = new List<object>();
         private IEventSource _source;
         private T _aggregate;
 
-        protected void Apply<TEvent>(Action<TEvent> action) where TEvent : IEvent
+        protected void Apply<TEvent>(Action<TEvent> action)
         {
             _events.Add(_eventFactory.Create(action));
         }

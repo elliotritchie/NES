@@ -73,7 +73,6 @@
     <Compile Include="Messages\Command.cs" />
     <Compile Include="Messages\CreatedUserEvent.cs" />
     <Compile Include="Messages\CreateUserCommand.cs" />
-    <Compile Include="Messages\IEvent.cs" />
     <Compile Include="Messages\SendMessageCommand.cs" />
     <Compile Include="Messages\SentMessageEvent.cs" />
     <Compile Include="Model\Message.cs" />

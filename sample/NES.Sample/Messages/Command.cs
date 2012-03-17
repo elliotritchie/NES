@@ -3,7 +3,7 @@ using NServiceBus;
 
 namespace NES.Sample.Messages
 {
-    public class Command : IMessage
+    public class Command : ICommand
     {
         private Guid _id = GuidComb.NewGuidComb();
         public Guid Id
