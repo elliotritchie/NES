@@ -28,8 +28,7 @@ namespace NES.Sample.Web
                 .PurgeOnStartup(false)
                 .UnicastBus()
                 .ImpersonateSender(false)
-                .CreateBus()
-                .Start();
+                .SendOnly();
         }
 
         private static void RegisterAllAreas()
