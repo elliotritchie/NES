@@ -11,14 +11,13 @@ namespace NES.Sample
         {
             Wireup.Init()
                 .UsingInMemoryPersistence()
-                .UsingBinarySerialization()
                 .NES()
                 .Build();
 
             Configure.With()
                 .Log4Net()
                 .DefaultBuilder()
-                .XmlSerializer("http://getnes.net")
+                .JsonSerializer()
                 .NES();
         }
     }

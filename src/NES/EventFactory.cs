@@ -8,7 +8,7 @@ namespace NES
 {
     /// <summary>
     /// Based on the MessageMapper implementation in NServiceBus
-    /// https://www.github.com/NServiceBus/NServiceBus/blob/master/src/impl/messageInterfaces/NServiceBus.MessageInterfaces.MessageMapper.Reflection/MessageMapper.cs
+    /// https://github.com/NServiceBus/NServiceBus/blob/master/src/impl/messageInterfaces/NServiceBus.MessageInterfaces.MessageMapper.Reflection/MessageMapper.cs
     /// </summary>
     public class EventFactory : IEventFactory
     {
@@ -34,7 +34,7 @@ namespace NES
             return @event;
         }
 
-        private object Create(Type type)
+        public object Create(Type type)
         {
             return FormatterServices.GetUninitializedObject(GetConcreteType(type));
         }

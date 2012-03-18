@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using NServiceBus;
 
 namespace NES.NServiceBus
@@ -20,7 +19,7 @@ namespace NES.NServiceBus
                 _bus.OutgoingHeaders[header.Key] = header.Value != null ? header.Value.ToString() : null;
             }
 
-            foreach (var @event in events.Cast<IMessage>())
+            foreach (var @event in events)
             {
                 foreach (var header in eventHeaders[@event])
                 {

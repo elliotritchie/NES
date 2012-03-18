@@ -7,15 +7,15 @@ using EventStore.Serialization;
 
 namespace NES.EventStore
 {
-    public class Serializer : ISerialize
+    public class CompositeSerializer : ISerialize
     {
         private readonly ISerialize _inner;
-        private readonly Func<IEventSerializer> _eventSerializerFactory;
+        private readonly Func<IEventSerializer> _eventSerializerFunc;
 
-        public Serializer(ISerialize inner, Func<IEventSerializer> eventSerializerFactory)
+        public CompositeSerializer(ISerialize inner, Func<IEventSerializer> eventSerializerFunc)
         {
             _inner = inner;
-            _eventSerializerFactory = eventSerializerFactory;
+            _eventSerializerFunc = eventSerializerFunc;
         }
 
         public void Serialize<T>(Stream output, T graph)
@@ -28,7 +28,7 @@ namespace NES.EventStore
 
                 foreach (var eventMessage in eventMessages)
                 {
-                    eventMessage.Body = _eventSerializerFactory().Serialize(eventMessage.Body);
+                    eventMessage.Body = _eventSerializerFunc().Serialize(eventMessage.Body);
                 }
 
                 _inner.Serialize(output, graph);
@@ -53,7 +53,7 @@ namespace NES.EventStore
             {
                 foreach (var eventMessage in eventMessages)
                 {
-                    eventMessage.Body = _eventSerializerFactory().Deserialize((string)eventMessage.Body);
+                    eventMessage.Body = _eventSerializerFunc().Deserialize((string)eventMessage.Body);
                 }
             }
 

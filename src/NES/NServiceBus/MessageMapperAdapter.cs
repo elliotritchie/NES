@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using NServiceBus.MessageInterfaces;
 
 namespace NES.NServiceBus
 {
-    public class MessageMapperAdapter : IEventFactory
+    public class MessageMapperAdapter : IEventMapper
     {
         private readonly IMessageMapper _messageMapper;
 
@@ -12,13 +12,9 @@ namespace NES.NServiceBus
             _messageMapper = messageMapper;
         }
 
-        public T Create<T>(Action<T> action)
+        public Type GetMappedTypeFor(Type type)
         {
-            var @event = (T)_messageMapper.CreateInstance(typeof(T));
-
-            action(@event);
-
-            return @event;
+            return _messageMapper.GetMappedTypeFor(type);
         }
     }
 }

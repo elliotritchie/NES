@@ -22,7 +22,7 @@ namespace NES.Sample.Web
             Bus = Configure.WithWeb()
                 .Log4Net()
                 .DefaultBuilder()
-                .XmlSerializer()
+                .JsonSerializer()
                 .MsmqTransport()
                 .IsTransactional(false)
                 .PurgeOnStartup(false)

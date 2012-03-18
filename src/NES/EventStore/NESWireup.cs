@@ -12,21 +12,40 @@ namespace NES.EventStore
     {
         private static readonly ILog _logger = LogFactory.BuildLogger(typeof(NESWireup));
 
-        public NESWireup(Wireup wireup)
+        public NESWireup(Wireup wireup) 
             : base(wireup)
         {
-            _logger.Debug("Configuring serializer to cope with payloads that contain messages as interfaces.");
-            _logger.Debug("Wrapping serializer of type '" + Container.Resolve<ISerialize>().GetType() + "' in '" + typeof(Serializer) + "'");
+            var serializer = Container.Resolve<ISerialize>();
 
-            Container.Register<ISerialize>(new Serializer(Container.Resolve<ISerialize>(), () => DI.Current.Resolve<IEventSerializer>()));
-            
+            if (serializer != null)
+            {
+                _logger.Debug("Configuring custom NES serializer to cope with payloads that contain messages as interfaces.");
+                _logger.Debug("Wrapping serializer of type '" + serializer.GetType() + "' in '" + typeof(CompositeSerializer) + "'");
+
+                Container.Register<ISerialize>(new CompositeSerializer(serializer, () => DI.Current.Resolve<IEventSerializer>()));
+            }
+
             _logger.Debug("Configuring the store to dispatch messages synchronously.");
             _logger.Debug("Registering dispatcher of type '" + typeof(MessageDispatcher) + "'.");
 
             Container.Register<IScheduleDispatches>(c => new SynchronousDispatchScheduler(new MessageDispatcher(() => DI.Current.Resolve<IEventPublisher>()), c.Resolve<IPersistStreams>()));
-            
+
             DI.Current.Register<IEventStore, IStoreEvents>(eventStore => new EventStoreAdapter(eventStore));
             DI.Current.Register(() => Container.Resolve<IStoreEvents>());
+        }
+
+        public SerializationWireup UsingJsonSerialization()
+        {
+            _logger.Debug("Configuring custom NES Json serializer to cope with payloads that contain messages as interfaces.");
+
+            return new SerializationWireup(this, new JsonSerializer(() => DI.Current.Resolve<IEventMapper>(), () => DI.Current.Resolve<IEventFactory>()));
+        }
+
+        public SerializationWireup UsingBsonSerialization()
+        {
+            _logger.Debug("Configuring custom NES Bson serializer to cope with payloads that contain messages as interfaces.");
+
+            return new SerializationWireup(this, new BsonSerializer(() => DI.Current.Resolve<IEventMapper>(), () => DI.Current.Resolve<IEventFactory>()));
         }
 
         public override IStoreEvents Build()

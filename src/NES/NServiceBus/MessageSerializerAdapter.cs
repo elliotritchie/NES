@@ -1,5 +1,4 @@
 using System.IO;
-using NServiceBus;
 using NServiceBus.Serialization;
 
 namespace NES.NServiceBus
@@ -19,7 +18,7 @@ namespace NES.NServiceBus
             {
                 var reader = new StreamReader(stream);
 
-                _messageSerializer.Serialize(new[] { (IMessage)@event }, stream);
+                _messageSerializer.Serialize(new[] { @event }, stream);
                 stream.Position = 0;
 
                 return reader.ReadToEnd();
