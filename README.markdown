@@ -51,8 +51,10 @@ public class EndpointConfig : IConfigureThisEndpoint, AsA_Publisher, IWantCustom
 	public void Init()
 	{
 		EventStore.Wireup.Init()
-			.UsingInMemoryPersistence()
+			.UsingSqlPersistence("EventStore")
+			.InitializeStorageEngine()
 			.NES()
+			.UsingJsonSerialization()
 			.Build();
 
 		NServiceBus.Configure.With()
