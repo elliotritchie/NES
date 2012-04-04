@@ -21,8 +21,7 @@ namespace NES
         {
             var eventSource = _eventSources.OfType<T>().SingleOrDefault(s => s.Id == id) ?? _eventSourceMapper.Get<T>(id);
 
-            if (eventSource != null)
-                Register(eventSource);
+            Register(eventSource);
 
             return eventSource;
         }
@@ -34,7 +33,10 @@ namespace NES
                 _commandContext = _commandContextProvider.Get();
             }
 
-            _eventSources.Add(eventSource);
+            if (eventSource != null)
+            {
+                _eventSources.Add(eventSource);
+            }
         }
 
         public void Commit()
