@@ -21,7 +21,8 @@ namespace NES
         {
             var eventSource = _eventSources.OfType<T>().SingleOrDefault(s => s.Id == id) ?? _eventSourceMapper.Get<T>(id);
 
-            Register(eventSource);
+            if (eventSource != null)
+                Register(eventSource);
 
             return eventSource;
         }
