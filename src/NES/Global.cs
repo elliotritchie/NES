@@ -5,6 +5,11 @@ namespace NES
 {
     internal class Global
     {
-        public static IEnumerable<Type> TypesToScan { get; set; }
+        private static IEnumerable<Type> _typesToScan = new List<Type>();
+        internal static IEnumerable<Type> TypesToScan
+        {
+            get { return _typesToScan; }
+            set { _typesToScan = value; }
+        }
     }
 }
