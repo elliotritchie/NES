@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using EventStore;
@@ -34,14 +35,26 @@ namespace NES.EventStore
             DI.Current.Register(() => Container.Resolve<IStoreEvents>());
         }
 
+        [Obsolete("This method is obsolete, it has been replaced by UsingJsonSerializationForEventsAsInterfaces.", false)]
         public SerializationWireup UsingJsonSerialization()
+        {
+            return UsingJsonSerializationForEventsAsInterfaces();
+        }
+
+        public SerializationWireup UsingJsonSerializationForEventsAsInterfaces()
         {
             _logger.Debug("Configuring custom NES Json serializer to cope with payloads that contain messages as interfaces.");
 
             return new SerializationWireup(this, new JsonSerializer(() => DI.Current.Resolve<IEventMapper>(), () => DI.Current.Resolve<IEventFactory>()));
         }
 
+        [Obsolete("This method is obsolete, it has been replaced by UsingBsonSerializationForEventsAsInterfaces.", false)]
         public SerializationWireup UsingBsonSerialization()
+        {
+            return UsingBsonSerializationForEventsAsInterfaces();
+        }
+
+        public SerializationWireup UsingBsonSerializationForEventsAsInterfaces()
         {
             _logger.Debug("Configuring custom NES Bson serializer to cope with payloads that contain messages as interfaces.");
 
