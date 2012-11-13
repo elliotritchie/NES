@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>NServiceBus</id>
+    <version>3.3.1</version>
+    <title>NServiceBus</title>
+    <authors>NServiceBus Ltd</authors>
+    <owners>NServiceBus Ltd</owners>
+    <licenseUrl>http://nservicebus.com/license.aspx</licenseUrl>
+    <projectUrl>http://nservicebus.com/</projectUrl>
+    <iconUrl>http://a2.twimg.com/profile_images/1203939022/nServiceBus_Twitter_Logo_reasonably_small.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>The most popular open-source service bus for .net</description>
+    <releaseNotes />
+    <copyright>Copyright (C) NServiceBus 2010-2012</copyright>
+    <tags>nservicebus servicebus msmq cqrs publish subscribe</tags>
+    <dependencies>
+      <dependency id="NServiceBus.Interfaces" version="[3.3.1]" />
+      <dependency id="log4net" version="[1.2.10]" />
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" targetFramework=".NETFramework4.0" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework=".NETFramework4.0" />
+    </frameworkAssemblies>
+  </metadata>
+</package>
