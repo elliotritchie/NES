@@ -37,21 +37,6 @@
     <AssemblyOriginatorKeyFile>..\NES.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EventStore">
-      <HintPath>..\packages\EventStore.3.0.11326.44\lib\net40\EventStore.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NServiceBus">
-      <HintPath>..\packages\NServiceBus.3.2.0\lib\net40\NServiceBus.dll</HintPath>
-    </Reference>
-    <Reference Include="NServiceBus.Core">
-      <HintPath>..\packages\NServiceBus.3.2.0\lib\net40\NServiceBus.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -68,12 +53,6 @@
     </Compile>
     <Compile Include="AggregateBase.cs" />
     <Compile Include="CommandContext.cs" />
-    <Compile Include="EventStore\BsonSerializer.cs" />
-    <Compile Include="EventStore\EventContractResolver.cs" />
-    <Compile Include="EventStore\EventConverterPipelineHook.cs" />
-    <Compile Include="EventStore\EventSerializationBinder.cs" />
-    <Compile Include="EventStore\JsonSerializer.cs" />
-    <Compile Include="EventStore\NullObjectSerializer.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="ConflictingCommandException.cs" />
     <Compile Include="DependencyInjectionContainer.cs" />
@@ -85,11 +64,6 @@
     <Compile Include="EventHandlerFactory.cs" />
     <Compile Include="EventSourceFactory.cs" />
     <Compile Include="EventSourceMapper.cs" />
-    <Compile Include="EventStore\EventStoreAdapter.cs" />
-    <Compile Include="EventStore\MessageDispatcher.cs" />
-    <Compile Include="EventStore\NESWireup.cs" />
-    <Compile Include="EventStore\CompositeSerializer.cs" />
-    <Compile Include="EventStore\NESWireupExtensions.cs" />
     <Compile Include="GuidComb.cs" />
     <Compile Include="ICommandContextProvider.cs" />
     <Compile Include="IEventConversionRunner.cs" />
@@ -107,21 +81,10 @@
     <Compile Include="IMemento.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
-    <Compile Include="NServiceBus\BusAdapter.cs" />
-    <Compile Include="NServiceBus\CommandContextProvider.cs" />
-    <Compile Include="NServiceBus\ConfigureNES.cs" />
-    <Compile Include="NServiceBus\MessageCreatorAdapter.cs" />
-    <Compile Include="NServiceBus\MessageMapperAdapter.cs" />
-    <Compile Include="NServiceBus\MessageModule.cs" />
-    <Compile Include="NServiceBus\MessageSerializerAdapter.cs" />
-    <Compile Include="NServiceBus\UnitOfWorkManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="UnitOfWorkFactory.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,13 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D90F2F0E-F858-48DB-BD00-7042E06FB46F}"
-	ProjectSection(SolutionItems) = preProject
-		Local.testsettings = Local.testsettings
-		NES.Sample.vsmdi = NES.Sample.vsmdi
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES.Sample", "NES.Sample\NES.Sample.csproj", "{C56DB675-874E-40CC-B1A1-EFFEA2859D69}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES.Sample.Web", "NES.Sample.Web\NES.Sample.Web.csproj", "{805744B5-831C-4A86-A1A3-A61E777AB74B}"
@@ -15,6 +8,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES", "..\src\NES\NES.csproj", "{EC7040E2-7A13-4447-900D-6ED57328E5DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES.Sample.Tests", "NES.Sample.Tests\NES.Sample.Tests.csproj", "{A0F9A970-CCF4-4D10-985C-4EE718537C76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES.EventStore", "..\src\NES.EventStore\NES.EventStore.csproj", "{3FD2B750-D1CF-4344-9969-FF9DA63F9C53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES.NServiceBus", "..\src\NES.NServiceBus\NES.NServiceBus.csproj", "{8EAE9DC8-5CF2-47BE-8FDF-00891682F221}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -41,6 +38,14 @@ Global
 		{A0F9A970-CCF4-4D10-985C-4EE718537C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0F9A970-CCF4-4D10-985C-4EE718537C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0F9A970-CCF4-4D10-985C-4EE718537C76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FD2B750-D1CF-4344-9969-FF9DA63F9C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FD2B750-D1CF-4344-9969-FF9DA63F9C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FD2B750-D1CF-4344-9969-FF9DA63F9C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FD2B750-D1CF-4344-9969-FF9DA63F9C53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EAE9DC8-5CF2-47BE-8FDF-00891682F221}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EAE9DC8-5CF2-47BE-8FDF-00891682F221}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EAE9DC8-5CF2-47BE-8FDF-00891682F221}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EAE9DC8-5CF2-47BE-8FDF-00891682F221}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

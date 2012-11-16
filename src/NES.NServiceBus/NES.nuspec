@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/elliotritchie/NES/blob/master/license.txt</licenseUrl>
+    <projectUrl>http://getnes.net</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>NES (.NET Event Sourcing) is a lightweight framework that helps you build domain models when you're doing event sourcing.</description>
+    <tags>nes cqrs eventsourcing nservicebus eventstore</tags>
+    <dependencies>
+      <dependency id="NServiceBus" version="3.3.1"/>
+    </dependencies>
+  </metadata>
+</package>
