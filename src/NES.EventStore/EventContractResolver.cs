@@ -17,16 +17,17 @@ namespace NES.EventStore
 
         protected override JsonObjectContract CreateObjectContract(Type objectType)
         {
-            var mappedType = _eventMapper.GetMappedTypeFor(objectType);
+            if (objectType.IsInterface)
+            {
+                var mappedType = _eventMapper.GetMappedTypeFor(objectType);
+                var objectContract = base.CreateObjectContract(mappedType);
 
-            if (mappedType == null)
-                return base.CreateObjectContract(objectType);
+                objectContract.DefaultCreator = () => _eventFactory.Create(mappedType);
 
-            var jsonObjectContract = base.CreateObjectContract(mappedType);
+                return objectContract;
+            }
 
-            jsonObjectContract.DefaultCreator = () => _eventFactory.Create(mappedType);
-
-            return jsonObjectContract;
+            return base.CreateObjectContract(objectType);
         }
     }
 }

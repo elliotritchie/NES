@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Runtime.Serialization;
+using Newtonsoft.Json.Serialization;
 
 namespace NES.EventStore
 {
-    public class EventSerializationBinder : SerializationBinder
+    public class EventSerializationBinder : DefaultSerializationBinder
     {
         private readonly IEventMapper _eventMapper;
 
@@ -14,15 +14,10 @@ namespace NES.EventStore
 
         public override void BindToName(Type serializedType, out string assemblyName, out string typeName)
         {
-            var mappedType = _eventMapper.GetMappedTypeFor(serializedType) ?? serializedType;
+            var mappedType = _eventMapper.GetMappedTypeFor(serializedType);
 
-            assemblyName = null;
-            typeName = mappedType.AssemblyQualifiedName;
-        }
-
-        public override Type BindToType(string assemblyName, string typeName)
-        {
-            throw new NotImplementedException();
+            assemblyName = mappedType.Assembly.FullName;
+            typeName = mappedType.FullName;
         }
     }
 }

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES.EventStore", "NES.Event
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES.NServiceBus", "NES.NServiceBus\NES.NServiceBus.csproj", "{8EAE9DC8-5CF2-47BE-8FDF-00891682F221}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES.EventStore.Raven", "NES.EventStore.Raven\NES.EventStore.Raven.csproj", "{F1AD57BA-D193-4BA8-871A-CA596DDAD3D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{8EAE9DC8-5CF2-47BE-8FDF-00891682F221}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EAE9DC8-5CF2-47BE-8FDF-00891682F221}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EAE9DC8-5CF2-47BE-8FDF-00891682F221}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1AD57BA-D193-4BA8-871A-CA596DDAD3D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1AD57BA-D193-4BA8-871A-CA596DDAD3D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1AD57BA-D193-4BA8-871A-CA596DDAD3D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1AD57BA-D193-4BA8-871A-CA596DDAD3D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

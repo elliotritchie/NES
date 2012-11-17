@@ -10,12 +10,13 @@ using JsonNetSerializer = Newtonsoft.Json.JsonSerializer;
 namespace NES.EventStore
 {
     /// <summary>
-    /// Based on the JsonSerializer implementation in EventStore
+    /// Based on the JsonSerializer implementations in EventStore & NServiceBus
     /// https://github.com/joliver/EventStore/blob/master/src/proj/EventStore.Serialization.Json/JsonSerializer.cs
+    /// https://github.com/NServiceBus/NServiceBus/blob/master/src/impl/Serializers/NServiceBus.Serializers.Json/JsonMessageSerializer.cs
     /// </summary>
     public class JsonSerializer : ISerialize
     {
-        private static readonly ILog _logger = LogFactory.BuildLogger(typeof(JsonSerializer));
+        private static readonly ILog Logger = LogFactory.BuildLogger(typeof(JsonSerializer));
 
         private readonly JsonSerializerSettings _settings = new JsonSerializerSettings
         {
@@ -36,7 +37,7 @@ namespace NES.EventStore
 
         public virtual void Serialize<T>(Stream output, T graph)
         {
-            _logger.Verbose("Serializing object graph of type '" + typeof(T) + "'.");
+            Logger.Verbose("Serializing object graph of type '" + typeof(T) + "'.");
 
             using (var streamWriter = new StreamWriter(output, Encoding.UTF8))
             {
@@ -57,7 +58,7 @@ namespace NES.EventStore
 
         public virtual T Deserialize<T>(Stream input)
         {
-            _logger.Verbose("Deserializing stream to object of type '" + typeof(T)  + "'.");
+            Logger.Verbose("Deserializing stream to object of type '" + typeof(T)  + "'.");
 
             using (var streamReader = new StreamReader(input, Encoding.UTF8))
             {

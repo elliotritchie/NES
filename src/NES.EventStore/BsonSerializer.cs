@@ -7,12 +7,13 @@ using Newtonsoft.Json.Bson;
 namespace NES.EventStore
 {
     /// <summary>
-    /// Based on the JsonSerializer implementation in EventStore
+    /// Based on the BsonSerializer implementations in EventStore & NServiceBus
     /// https://github.com/joliver/EventStore/blob/master/src/proj/EventStore.Serialization.Json/BsonSerializer.cs
+    /// https://github.com/NServiceBus/NServiceBus/blob/master/src/impl/Serializers/NServiceBus.Serializers.Json/BsonMessageSerializer.cs
     /// </summary>
     public class BsonSerializer : JsonSerializer
     {
-        private static readonly ILog _logger = LogFactory.BuildLogger(typeof(BsonSerializer));
+        private static readonly ILog Logger = LogFactory.BuildLogger(typeof(BsonSerializer));
 
         public BsonSerializer(Func<IEventMapper> eventMapperFunc, Func<IEventFactory> eventFactoryFunc) 
             : base(eventMapperFunc, eventFactoryFunc)
@@ -33,7 +34,7 @@ namespace NES.EventStore
         {
             var array = typeof(IEnumerable).IsAssignableFrom(type) && !typeof(IDictionary).IsAssignableFrom(type);
 
-            _logger.Verbose(string.Format("Objects of type '{0}' are considered to be an array: '{1}'.", type, array));
+            Logger.Verbose(string.Format("Objects of type '{0}' are considered to be an array: '{1}'.", type, array));
 
             return array;
         }
