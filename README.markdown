@@ -40,7 +40,7 @@ NES hooks into NServiceBus' and the EventStore's configuration objects and trans
 * Supports NServiceBus v2
 
 ## Download
-The easiest way to install NES is via [NuGet](http://nuget.org/packages/NES) or you can download the source and run 'build.bat' from the command line. Once built, the files will be placed in the 'build' folder.
+The easiest way to install NES is via NuGet ([NES](http://nuget.org/packages/NES), [NES.EventStore](http://nuget.org/packages/NES.EventStore), [NES.EventStore.Raven](http://nuget.org/packages/NES.EventStore.Raven), [NES.NServiceBus](http://nuget.org/packages/NES.NServiceBus)) or you can download the source and run 'build.bat' from the command line. Once built, the files will be placed in the 'build' folder.
 
 ## Using NES
 
@@ -66,7 +66,7 @@ public class EndpointConfig : IConfigureThisEndpoint, AsA_Publisher, IWantCustom
 }
 ```
 
-For a more complete example, please open and build NES.Sample.sln in Visual Studio and hit F5. This will start the [NES.Sample](https://github.com/elliotritchie/NES/tree/master/samples/NES.Sample) NServiceBus endpoint as well as the [NES.Sample.Web](https://github.com/elliotritchie/NES/tree/master/samples/NES.Sample.Web) MVC 3 website.
+For a more complete example, please open and build NES.Sample.sln in Visual Studio and hit F5. This will start the [NES.Sample](https://github.com/elliotritchie/NES/tree/master/samples/NES.Sample) NServiceBus endpoint as well as the [NES.Sample.Web](https://github.com/elliotritchie/NES/tree/master/samples/NES.Sample.Web) MVC3 website.
 
 ## Need help? Found a bug? Have a question?
 
