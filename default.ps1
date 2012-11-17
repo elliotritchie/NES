@@ -23,5 +23,5 @@ task build -depends clean {
 }
 
 task output -depends build {
-	get-childitem $bin_dir -recurse -include @('NES.dll', 'NES.pdb', 'NES.xml') | copy-item -destination $build_dir
+	get-childitem $bin_dir -recurse -include NES* -exclude *Tests* | copy-item -destination $build_dir
 }
