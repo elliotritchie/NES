@@ -20,7 +20,7 @@ NES hooks into NServiceBus' and the EventStore's configuration objects and trans
 * Automatic publishing of persisted events
 * Convention based event handling within aggregates
 * No 'Save()' methods on repositories
-* Transparent configuration
+* Minimal configuration
 
 ## Version History
 
@@ -45,7 +45,7 @@ The easiest way to install NES is via NuGet ([NES](http://nuget.org/packages/NES
 ## Using NES
 
 
-```
+```c#
 public class EndpointConfig : IConfigureThisEndpoint, AsA_Publisher, IWantCustomInitialization
 {
 	public void Init()
