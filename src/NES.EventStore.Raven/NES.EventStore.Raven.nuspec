@@ -13,7 +13,8 @@
     <dependencies>
       <dependency id="EventStore" version="3.0.11326.44"/>
       <dependency id="EventStore.Persistence.RavenPersistence" version="3.0.11326.44"/>
-      <dependency id="NES.EventStore" version="3.2"/>
+      <dependency id="NES" version="3.2.1"/>
+      <dependency id="NES.EventStore" version="3.2.1"/>
       <dependency id="Newtonsoft.Json" version="4.0.8"/>
       <dependency id="RavenDB.Client" version="1.0.980"/>
     </dependencies>
