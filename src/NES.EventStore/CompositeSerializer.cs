@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using EventStore;
-using EventStore.Serialization;
+using NEventStore;
+using NEventStore.Serialization;
 
 namespace NES.EventStore
 {

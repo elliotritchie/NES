@@ -8,6 +8,7 @@ namespace NES
 {
     public class EventHandlerFactory : IEventHandlerFactory
     {
+        private static readonly ILogger Logger = LoggingFactory.BuildLogger(typeof(EventHandlerFactory));
         private static readonly Dictionary<Type, Dictionary<Type, Action<object, object>>> _cache = new Dictionary<Type, Dictionary<Type, Action<object, object>>>();
         private static readonly object _cacheLock = new object();
 
@@ -22,6 +23,8 @@ namespace NES
 
                 if (!_cache.TryGetValue(aggregateType, out handlers) || !handlers.TryGetValue(eventType, out handler))
                 {
+                    Logger.Debug("cache does not contain the aggregateType {0}", aggregateType.FullName);
+
                     var handlerMethodInfo = aggregateType.GetMethod("Handle", BindingFlags.Instance | BindingFlags.NonPublic, null, new[] { eventType }, null);
 
                     if (handlerMethodInfo != null)
@@ -39,6 +42,7 @@ namespace NES
                     }
                     else
                     {
+                        Logger.Warn(string.Format("Aggregate {0} has not Handle methods", aggregateType.FullName));
                         handler = (a, e) => {};
                     }
 

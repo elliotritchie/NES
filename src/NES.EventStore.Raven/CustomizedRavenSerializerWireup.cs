@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
-using EventStore;
-using EventStore.Logging;
-using EventStore.Persistence;
-using EventStore.Persistence.RavenPersistence;
+using NEventStore;
+using NEventStore.Logging;
+using NEventStore.Persistence;
+using NEventStore.Persistence.RavenPersistence;
 using Raven.Client;
 
 namespace NES.EventStore.Raven

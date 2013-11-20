@@ -1,10 +1,11 @@
 ﻿using System;
-using EventStore;
+using NEventStore;
 
 namespace NES.EventStore
 {
     public class EventConverterPipelineHook : IPipelineHook
     {
+        private static readonly ILogger Logger = LoggingFactory.BuildLogger(typeof(EventConverterPipelineHook));
         private readonly Func<IEventConversionRunner> _eventConversionRunnerFactory;
 
         public EventConverterPipelineHook(Func<IEventConversionRunner> eventConversionRunnerFactory)
@@ -14,6 +15,8 @@ namespace NES.EventStore
 
         public Commit Select(Commit committed)
         {
+            Logger.Debug("Select commitId{0}", committed.CommitId);
+
             var eventConversionRunner = _eventConversionRunnerFactory();
 
             foreach (var eventMessage in committed.Events)
@@ -26,11 +29,13 @@ namespace NES.EventStore
 
         public bool PreCommit(Commit attempt)
         {
+            Logger.Debug("PreComit");
             return true;
         }
 
         public void PostCommit(Commit committed)
         {
+            Logger.Debug("PostCommit");
         }
 
         public void Dispose()

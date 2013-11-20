@@ -23,7 +23,7 @@ namespace NES.NServiceBus
             {
                 foreach (var header in eventHeaders[@event])
                 {
-                    @event.SetHeader(header.Key, header.Value.ToString());
+                    this._bus.SetMessageHeader(@event, header.Key, header.Value.ToString());
                 }
 
                 _bus.Publish(@event);

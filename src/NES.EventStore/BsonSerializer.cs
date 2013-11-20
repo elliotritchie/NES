@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.IO;
-using EventStore.Logging;
+using NEventStore.Logging;
 using Newtonsoft.Json.Bson;
 
 namespace NES.EventStore

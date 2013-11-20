@@ -15,7 +15,7 @@ namespace NES.EventStore
         public override void BindToName(Type serializedType, out string assemblyName, out string typeName)
         {
             var mappedType = _eventMapper.GetMappedTypeFor(serializedType);
-
+            
             assemblyName = mappedType.Assembly.FullName;
             typeName = mappedType.FullName;
         }
