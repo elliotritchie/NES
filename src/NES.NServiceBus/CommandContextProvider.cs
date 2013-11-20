@@ -31,7 +31,7 @@ namespace NES.NServiceBus
 
                 if (!_cache.TryGetValue(commandType, out property))
                 {
-                    Logger.Debug(string.Format("{0} is not on cache", commandType.FullName));
+                    Logger.Debug("{0} is not on cache", commandType.FullName);
                     var propertyInfo = commandType.GetProperty("Id");
 
                     if (propertyInfo != null)
@@ -48,7 +48,7 @@ namespace NES.NServiceBus
                         property = c => GuidComb.NewGuidComb();
                     }
 
-                    Logger.Debug(string.Format("Add property Id to the cache of the command {0}", commandType.FullName));
+                    Logger.Debug("Add property Id to the cache of the command {0}", commandType.FullName);
                     _cache[commandType] = property;
                 }
 

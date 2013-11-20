@@ -63,7 +63,9 @@
     <Compile Include="CommandContextProvider.cs" />
     <Compile Include="ConfigureNES.cs" />
     <Compile Include="MessageCreatorAdapter.cs" />
-    <Compile Include="MessageMapperAdapter.cs" />
+    <Compile Include="MessageMapperAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MessageSerializerAdapter.cs" />
     <Compile Include="UnitOfWorkManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

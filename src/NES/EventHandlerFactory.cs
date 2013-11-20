@@ -23,7 +23,7 @@ namespace NES
 
                 if (!_cache.TryGetValue(aggregateType, out handlers) || !handlers.TryGetValue(eventType, out handler))
                 {
-                    Logger.Debug(string.Format("cache does not contain the aggregateType {0}", aggregateType.FullName));
+                    Logger.Debug("cache does not contain the aggregateType {0}", aggregateType.FullName);
 
                     var handlerMethodInfo = aggregateType.GetMethod("Handle", BindingFlags.Instance | BindingFlags.NonPublic, null, new[] { eventType }, null);
 

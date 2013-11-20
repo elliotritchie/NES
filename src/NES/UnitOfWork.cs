@@ -24,7 +24,7 @@ namespace NES
 
             var eventSource = _eventSources.OfType<T>().SingleOrDefault(s => s.Id == id) ?? _eventSourceMapper.Get<T>(id);
             
-            Logger.Debug(string.Format("Get id {0} eventSource found {1}", id, eventSource != null));
+            Logger.Debug("Get id {0} eventSource found {1}", id, eventSource != null);
 
             Register(eventSource);
 
@@ -41,7 +41,7 @@ namespace NES
 
             if (eventSource != null)
             {
-                Logger.Debug(string.Format("add eventsource to the list {0} Id {1} Version {2}", eventSource.GetType().FullName, eventSource.Id, eventSource.Version));
+                Logger.Debug("add eventsource to the list {0} Id {1} Version {2}", eventSource.GetType().FullName, eventSource.Id, eventSource.Version);
                 _eventSources.Add(eventSource);
             }
         }

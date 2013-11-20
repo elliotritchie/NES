@@ -15,7 +15,7 @@ namespace NES.EventStore
 
         public Commit Select(Commit committed)
         {
-            Logger.Debug(string.Format("Select commitId{0}", committed.CommitId));
+            Logger.Debug("Select commitId{0}", committed.CommitId);
 
             var eventConversionRunner = _eventConversionRunnerFactory();
 

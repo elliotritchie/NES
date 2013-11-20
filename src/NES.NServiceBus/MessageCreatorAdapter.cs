@@ -15,7 +15,7 @@ namespace NES.NServiceBus
 
         public T Create<T>(Action<T> action)
         {
-            Logger.Debug(string.Format("Creating instance of the message {0}", typeof(T).FullName));
+            Logger.Debug("Creating instance of the message {0}", typeof(T).FullName);
             return _messageCreator.CreateInstance(action);
         }
 

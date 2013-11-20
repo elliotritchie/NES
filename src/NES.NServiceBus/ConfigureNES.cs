@@ -11,7 +11,7 @@ namespace NES.NServiceBus
         public static Configure NES(this Configure config)
         {
             Global.TypesToScan = Configure.TypesToScan;
-
+            
             config.Configurer.ConfigureComponent<UnitOfWorkManager>(DependencyLifecycle.InstancePerUnitOfWork);
 
             DI.Current.Register<ICommandContextProvider, IBus>(bus => new CommandContextProvider(bus));

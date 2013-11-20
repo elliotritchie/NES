@@ -18,7 +18,7 @@ namespace NES
 
         public T Get<T>(Guid id) where T : class, IEventSource
         {
-            Logger.Debug(string.Format("Get id {0}", id));
+            Logger.Debug("Get id {0}", id);
 
             var eventSource = _eventSourceFactory.Create<T>();
 
@@ -43,7 +43,7 @@ namespace NES
 
             var eventsCount = events.Count();
 
-            Logger.Debug(string.Format("commitId {0}eventSource Id {1} eventSource {2} events count {3}", commitId, id, eventSource.GetType().FullName, eventsCount));
+            Logger.Debug("commitId {0}eventSource Id {1} eventSource {2} events count {3}", commitId, id, eventSource.GetType().FullName, eventsCount);
 
             headers["AggregateId"] = id;
             headers["AggregateVersion"] = version + eventsCount;
@@ -68,7 +68,7 @@ namespace NES
 
         private void RestoreSnapshot<T>(Guid id, T eventSource) where T : IEventSource
         {
-            Logger.Debug(string.Format("RestoreSnaphost for id {0} and type {1}", id, eventSource.GetType().FullName));
+            Logger.Debug("RestoreSnaphost for id {0} and type {1}", id, eventSource.GetType().FullName);
 
             var memento = _eventStore.Read(id);
 
@@ -82,7 +82,7 @@ namespace NES
 
         private void Hydrate<T>(Guid id, T eventSource) where T : IEventSource
         {
-            Logger.Debug(string.Format("Hydrate id {0} eventSource {1} version {2}", id, eventSource, eventSource.Version));
+            Logger.Debug("Hydrate id {0} eventSource {1} version {2}", id, eventSource, eventSource.Version);
             var events = _eventStore.Read(id, eventSource.Version);
 
             eventSource.Hydrate(events);
