@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using EventStore;
-using EventStore.Dispatcher;
-using EventStore.Logging;
-using EventStore.Persistence;
-using EventStore.Serialization;
+using NEventStore;
+using NEventStore.Dispatcher;
+using NEventStore.Logging;
+using NEventStore.Persistence;
+using NEventStore.Serialization;
 
 namespace NES.EventStore
 {
@@ -27,7 +27,7 @@ namespace NES.EventStore
 
             Logger.Debug("Configuring the store to dispatch messages synchronously.");
             Logger.Debug("Registering dispatcher of type '" + typeof(MessageDispatcher) + "'.");
-
+            
             Container.Register<IScheduleDispatches>(c => new SynchronousDispatchScheduler(new MessageDispatcher(() => DI.Current.Resolve<IEventPublisher>()), c.Resolve<IPersistStreams>()));
 
             DI.Current.Register<IEventStore, IStoreEvents>(eventStore => new EventStoreAdapter(eventStore));

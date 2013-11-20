@@ -2,8 +2,8 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
-using EventStore.Logging;
-using EventStore.Serialization;
+using NEventStore.Logging;
+using NEventStore.Serialization;
 using Newtonsoft.Json;
 using JsonNetSerializer = Newtonsoft.Json.JsonSerializer;
 

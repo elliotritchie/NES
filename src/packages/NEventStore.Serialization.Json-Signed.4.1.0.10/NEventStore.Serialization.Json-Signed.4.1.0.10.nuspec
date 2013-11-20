@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>NEventStore.Serialization.Json-Signed</id>
+    <version>4.1.0.10</version>
+    <title>NEventStore Newtonsoft JSON Serialization Plugin</title>
+    <authors>NEventStore Dev Team</authors>
+    <owners>NEventStore Dev Team</owners>
+    <projectUrl>http://neventstore.org/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Additional serialization provider for NEventStore based on the Newtonsoft JSON.NET library.</description>
+    <summary>Newtonsoft JSON.NET Serializer for NEventStore.</summary>
+    <language>es-US</language>
+    <tags>events event sourcing cqrs storage persistence database newtonsoft json serialization</tags>
+    <dependencies>
+      <dependency id="NEventStore-Signed" version="4.0" />
+    </dependencies>
+    <references>
+      <reference file="NEventStore.Serialization.Json.dll" />
+    </references>
+  </metadata>
+</package>

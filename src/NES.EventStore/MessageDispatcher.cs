@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
-using EventStore;
-using EventStore.Dispatcher;
+using NEventStore;
+using NEventStore.Dispatcher;
 
 namespace NES.EventStore
 {
