@@ -24,7 +24,7 @@ namespace NES.EventStore.Raven
 
             store.Conventions.CustomizeJsonSerializer = s =>
             {
-                s.Binder = new SerializationBinder(DI.Current.Resolve<IEventMapper>());
+                s.Binder = new EventSerializationBinder(DI.Current.Resolve<IEventMapper>());
                 s.ContractResolver = new EventContractResolver(DI.Current.Resolve<IEventMapper>(), DI.Current.Resolve<IEventFactory>());
             };
 

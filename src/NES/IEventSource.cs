@@ -10,6 +10,6 @@ namespace NES
         void RestoreSnapshot(IMemento memento);
         IMemento TakeSnapshot();
         void Hydrate(IEnumerable<object> events);
-        IEnumerable<object> Flush();
+        List<object> Flush();
     }
 }

@@ -12,8 +12,7 @@ namespace NES.EventStore
     {
         private static readonly ILog Logger = LogFactory.BuildLogger(typeof(NESWireup));
 
-        public NESWireup(Wireup wireup) 
-            : base(wireup)
+        public NESWireup(Wireup wireup) : base(wireup)
         {
             var serializer = Container.Resolve<ISerialize>();
 

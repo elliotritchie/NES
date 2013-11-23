@@ -3,11 +3,11 @@ using Raven.Imports.Newtonsoft.Json.Serialization;
 
 namespace NES.EventStore.Raven
 {
-    public class SerializationBinder : DefaultSerializationBinder
+    public class EventSerializationBinder : DefaultSerializationBinder
     {
         private readonly IEventMapper _eventMapper;
 
-        public SerializationBinder(IEventMapper eventMapper)
+        public EventSerializationBinder(IEventMapper eventMapper)
         {
             _eventMapper = eventMapper;
         }

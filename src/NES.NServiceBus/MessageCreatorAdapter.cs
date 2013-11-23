@@ -5,7 +5,6 @@ namespace NES.NServiceBus
 {
     public class MessageCreatorAdapter : IEventFactory
     {
-        private static readonly ILogger Logger = LoggingFactory.BuildLogger(typeof(MessageCreatorAdapter));
         private readonly IMessageCreator _messageCreator;
 
         public MessageCreatorAdapter(IMessageCreator messageCreator)
@@ -15,7 +14,6 @@ namespace NES.NServiceBus
 
         public T Create<T>(Action<T> action)
         {
-            Logger.Debug("Creating instance of the message {0}", typeof(T).FullName);
             return _messageCreator.CreateInstance(action);
         }
 

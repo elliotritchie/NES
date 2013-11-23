@@ -8,8 +8,7 @@ namespace NES.EventStore
         private readonly IEventMapper _eventMapper;
         private readonly IEventFactory _eventFactory;
 
-        public EventContractResolver(IEventMapper eventMapper, IEventFactory eventFactory)
-            : base(true)
+        public EventContractResolver(IEventMapper eventMapper, IEventFactory eventFactory) : base(true)
         {
             _eventMapper = eventMapper;
             _eventFactory = eventFactory;

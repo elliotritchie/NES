@@ -8,7 +8,7 @@ namespace NES.NServiceBus
 {
     public class CommandContextProvider : ICommandContextProvider
     {
-        private static readonly ILogger Logger = LoggingFactory.BuildLogger(typeof(CommandContextProvider));
+        private static readonly ILogger Logger = LoggerFactory.Create(typeof(CommandContextProvider));
         private static readonly Dictionary<Type, Func<object, Guid>> _cache = new Dictionary<Type, Func<object, Guid>>();
         private static readonly object _cacheLock = new object();
         private readonly IBus _bus;
@@ -20,8 +20,6 @@ namespace NES.NServiceBus
 
         public CommandContext Get()
         {
-            Logger.Debug("Retrive the CurrentMessageBeingHandled");
-
             var command = ExtensionMethods.CurrentMessageBeingHandled;
             var commandType = command.GetType();
 
@@ -31,12 +29,12 @@ namespace NES.NServiceBus
 
                 if (!_cache.TryGetValue(commandType, out property))
                 {
-                    Logger.Debug("{0} is not on cache", commandType.FullName);
                     var propertyInfo = commandType.GetProperty("Id");
 
                     if (propertyInfo != null)
                     {
-                        Logger.Debug("Command has property Id");
+                        Logger.Debug("Message Id property found for use as CommitId");
+
                         var commandParameter = Expression.Parameter(typeof(object), "command");
                         var propertyCall = Expression.Property(Expression.Convert(commandParameter, commandType), propertyInfo);
 
@@ -44,11 +42,11 @@ namespace NES.NServiceBus
                     }
                     else
                     {
-                        Logger.Debug("Command has no property Id so the Id can't be automatically assigned");
+                        Logger.Debug("Message Id property not found a CommitId will be automatically generated");
+
                         property = c => GuidComb.NewGuidComb();
                     }
 
-                    Logger.Debug("Add property Id to the cache of the command {0}", commandType.FullName);
                     _cache[commandType] = property;
                 }
 

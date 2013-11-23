@@ -11,6 +11,7 @@ namespace NES.NServiceBus
             Global.TypesToScan = Configure.TypesToScan;
             
             config.Configurer.ConfigureComponent<UnitOfWorkManager>(DependencyLifecycle.SingleInstance);
+            config.Configurer.ConfigureComponent<ConfigurationRunner>(DependencyLifecycle.InstancePerCall);
 
             DI.Current.Register<ICommandContextProvider, IBus>(bus => new CommandContextProvider(bus));
             DI.Current.Register<IEventMapper, IMessageMapper>(messageMapper => new MessageMapperAdapter(messageMapper));

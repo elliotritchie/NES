@@ -68,6 +68,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MessageSerializerAdapter.cs" />
+    <Compile Include="ConfigurationRunner.cs" />
     <Compile Include="UnitOfWorkManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
