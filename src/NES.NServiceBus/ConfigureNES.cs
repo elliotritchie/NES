@@ -4,15 +4,13 @@ using NServiceBus.Serialization;
 
 namespace NES.NServiceBus
 {
-    using System;
-
     public static class ConfigureNES
     {
         public static Configure NES(this Configure config)
         {
             Global.TypesToScan = Configure.TypesToScan;
             
-            config.Configurer.ConfigureComponent<UnitOfWorkManager>(DependencyLifecycle.InstancePerUnitOfWork);
+            config.Configurer.ConfigureComponent<UnitOfWorkManager>(DependencyLifecycle.SingleInstance);
 
             DI.Current.Register<ICommandContextProvider, IBus>(bus => new CommandContextProvider(bus));
             DI.Current.Register<IEventMapper, IMessageMapper>(messageMapper => new MessageMapperAdapter(messageMapper));
