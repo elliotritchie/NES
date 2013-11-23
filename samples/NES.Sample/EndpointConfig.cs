@@ -1,6 +1,6 @@
-using EventStore;
 using NES.EventStore;
 using NES.NServiceBus;
+using NEventStore;
 using NServiceBus;
 
 namespace NES.Sample

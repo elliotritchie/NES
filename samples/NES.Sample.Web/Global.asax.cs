@@ -19,7 +19,7 @@ namespace NES.Sample.Web
 
         private void RegisterBus()
         {
-            Bus = Configure.WithWeb()
+            Bus = Configure.With()
                 .Log4Net()
                 .DefaultBuilder()
                 .JsonSerializer()
