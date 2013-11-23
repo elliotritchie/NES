@@ -1,20 +1,20 @@
-NES v3
+NES v4
 ======================================================================
 
 NES (.NET Event Sourcing) is a lightweight framework that helps you build domain models when you're doing event sourcing.
 
 ### What
-If you're looking to take advantage of event sourcing on the .NET platform then you may also be looking to use [NServiceBus](http://www.nservicebus.com) and Jonathan Oliver's [EventStore](https://github.com/joliver/eventstore). NES is an attempt to fill in the gaps between these two frameworks.
+If you're looking to take advantage of event sourcing on the .NET platform then you may also be looking to use [NServiceBus](http://particular.net/NServiceBus) and [NEventStore](http://neventstore.org). NES is an attempt to fill in the gaps between these two frameworks.
 
 ### Why
-The code required to bring NServiceBus and the EventStore together isn't hard to write but it is important and it does have to work a certain way to take full advantage of both frameworks. There's some great resources out there already that help you write this yourself but ideally you'd want to concentrate on developing your domain model's behaviour rather than the infrastructure to glue these two frameworks together.
+The code required to bring NServiceBus and NEventStore together isn't hard to write but it is important and it does have to work a certain way to take full advantage of both frameworks. There's some great resources out there already that help you write this yourself but ideally you'd want to concentrate on developing your domain model's behaviour rather than the infrastructure to glue these two frameworks together.
 
 ### How
-NES hooks into NServiceBus' and the EventStore's configuration objects and transparently takes care of everything for you. All you have to do is add two extra lines to your application's initialisation code.
+NES hooks into NServiceBus' and NEventStore's configuration objects and transparently takes care of everything for you. All you have to do is add two extra lines to your application's initialisation code.
 
 ## Project Goals
 * Allow processing of messages sent in a batch as a single transaction ([Ref](http://www.udidahan.com/2008/03/30/nservicebus-explanations-3/))
-* Allow use of interfaces for events ([Ref](http://www.nservicebus.com/MessagesAsInterfaces.aspx))
+* Allow use of interfaces for events ([Ref](http://particular.net/articles/messages-as-interfaces))
 * Allow up-conversion of events ([Ref](http://distributedpodcast.com/2011/episode-5-cqrs-eventstore-best-frameworklibrary-ever) @ 36:00)
 * Automatic persistence of message headers
 * Automatic publishing of persisted events
@@ -23,6 +23,11 @@ NES hooks into NServiceBus' and the EventStore's configuration objects and trans
 * Minimal configuration
 
 ## Version History
+
+### v4
+
+* Supports NEventStore v4
+* Supports NServiceBus v4
 
 ### v3
 
