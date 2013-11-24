@@ -9,9 +9,16 @@ namespace NES.NServiceBus
         public static Configure NES(this Configure config)
         {
             Global.TypesToScan = Configure.TypesToScan;
-            
-            config.Configurer.ConfigureComponent<UnitOfWorkManager>(DependencyLifecycle.SingleInstance);
-            config.Configurer.ConfigureComponent<ConfigurationRunner>(DependencyLifecycle.InstancePerCall);
+
+            if (!config.Configurer.HasComponent<UnitOfWorkManager>())
+            {
+                config.Configurer.ConfigureComponent<UnitOfWorkManager>(DependencyLifecycle.SingleInstance);
+            }
+
+            if (!config.Configurer.HasComponent<ConfigurationRunner>())
+            {
+                config.Configurer.ConfigureComponent<ConfigurationRunner>(DependencyLifecycle.InstancePerCall);
+            }
 
             DI.Current.Register<ICommandContextProvider, IBus>(bus => new CommandContextProvider(bus));
             DI.Current.Register<IEventMapper, IMessageMapper>(messageMapper => new MessageMapperAdapter(messageMapper));
