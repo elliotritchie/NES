@@ -27,7 +27,7 @@ namespace NES
 
                     if (handlerMethodInfo != null)
                     {
-                        Logger.Debug("Handle method found on Aggregate of Type '{0}' for event of type '{1}'", aggregateType.Name, eventType.Name);
+                        Logger.Debug("Handle method found on aggregate Type '{0}' for event Type '{1}'", aggregateType.Name, eventType.Name);
 
                         var aggregateParameter = Expression.Parameter(typeof(object), "aggregate");
                         var eventParameter = Expression.Parameter(typeof(object), "event");
@@ -42,7 +42,7 @@ namespace NES
                     }
                     else
                     {
-                        Logger.Debug("No handle method found on Aggregate of Type '{0}' for event of type '{1}'", aggregateType.Name, eventType.Name);
+                        Logger.Debug("No handle method found on aggregate Type '{0}' for event Type '{1}'", aggregateType.Name, eventType.Name);
 
                         handler = (a, e) => {};
                     }

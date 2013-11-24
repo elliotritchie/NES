@@ -15,8 +15,7 @@ namespace NES.EventStore
     {
         private static readonly ILog Logger = LogFactory.BuildLogger(typeof(BsonSerializer));
 
-        public BsonSerializer(Func<IEventMapper> eventMapperFunc, Func<IEventFactory> eventFactoryFunc) 
-            : base(eventMapperFunc, eventFactoryFunc)
+        public BsonSerializer(Func<IEventMapper> eventMapperFunc, Func<IEventFactory> eventFactoryFunc) : base(eventMapperFunc, eventFactoryFunc)
         {
         }
 

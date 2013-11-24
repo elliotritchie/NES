@@ -18,6 +18,8 @@ namespace NES
 
         public T Get<T>(Guid id) where T : class, IEventSource
         {
+            Logger.Debug("Get event source Id '{0}', Type '{1}'", id, typeof(T).Name);
+
             var eventSource = _eventSourceFactory.Create<T>();
 
             RestoreSnapshot(id, eventSource);
@@ -42,7 +44,7 @@ namespace NES
                 return;
             }
 
-            Logger.Debug("Save event source Id '{0}', Version '{1}', Type '{2}', CommitId '{3}'", id, newVersion, eventSource.GetType().Name, commitId);
+            Logger.Debug("Set event source Id '{0}', Version '{1}', Type '{2}', CommitId '{3}'", id, newVersion, eventSource.GetType().Name, commitId);
 
             headers["AggregateId"] = id;
             headers["AggregateVersion"] = newVersion;

@@ -10,7 +10,7 @@ namespace NES
         private readonly ICommandContextProvider _commandContextProvider;
         private readonly IEventSourceMapper _eventSourceMapper;
         private CommandContext _commandContext;
-        private readonly HashSet<IEventSource> _eventSources = new HashSet<IEventSource>();
+        private readonly List<IEventSource> _eventSources = new List<IEventSource>();
 
         public UnitOfWork(ICommandContextProvider commandContextProvider, IEventSourceMapper eventSourceMapper)
         {
@@ -20,8 +20,6 @@ namespace NES
 
         public T Get<T>(Guid id) where T : class, IEventSource
         {
-            Logger.Debug("Get event source Id '{0}', Type '{1}'", id, typeof(T).Name);
-
             var eventSource = _eventSources.OfType<T>().SingleOrDefault(s => s.Id == id) ?? _eventSourceMapper.Get<T>(id);
             
             Register(eventSource);
@@ -31,7 +29,7 @@ namespace NES
 
         public void Register<T>(T eventSource) where T : class, IEventSource
         {
-            if (eventSource != null)
+            if (eventSource != null && !_eventSources.Contains(eventSource))
             {
                 Logger.Debug("Register event source Id '{0}', Version '{1}', Type '{2}'", eventSource.Id, eventSource.Version, eventSource.GetType().Name);
 
@@ -46,8 +44,6 @@ namespace NES
 
         public void Commit()
         {
-            Logger.Debug("Commit event sources");
-
             foreach (var eventSource in _eventSources)
             {
                 _eventSourceMapper.Set(_commandContext, eventSource);

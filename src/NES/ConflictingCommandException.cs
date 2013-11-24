@@ -5,8 +5,7 @@ namespace NES
     [Serializable]
     public class ConflictingCommandException : Exception
     {
-        public ConflictingCommandException(string message, Exception innerException)
-            : base(message, innerException)
+        public ConflictingCommandException(string message, Exception innerException) : base(message, innerException)
         {
         }
     }
