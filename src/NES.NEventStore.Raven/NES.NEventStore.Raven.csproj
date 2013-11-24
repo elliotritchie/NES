@@ -29,15 +29,21 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\NES.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net4">
       <HintPath>..\packages\Microsoft.CompilerServices.AsyncTargetingPack.1.0.1\lib\net40\Microsoft.CompilerServices.AsyncTargetingPack.Net4.dll</HintPath>
     </Reference>
     <Reference Include="NEventStore">
-      <HintPath>..\packages\NEventStore.4.1.0.10\lib\net40\NEventStore.dll</HintPath>
+      <HintPath>..\packages\NEventStore-Signed.4.1.0.10\lib\net40\NEventStore.dll</HintPath>
     </Reference>
     <Reference Include="NEventStore.Persistence.RavenPersistence">
-      <HintPath>..\packages\NEventStore.Persistence.RavenPersistence.4.1.0.10\lib\net40\NEventStore.Persistence.RavenPersistence.dll</HintPath>
+      <HintPath>..\packages\NEventStore.Persistence.RavenPersistence-Signed.4.1.0.10\lib\net40\NEventStore.Persistence.RavenPersistence.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Abstractions">
       <HintPath>..\packages\RavenDB.Client.2.5.2750\lib\net40\Raven.Abstractions.dll</HintPath>
