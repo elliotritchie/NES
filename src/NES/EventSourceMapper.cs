@@ -50,7 +50,7 @@ namespace NES
             headers["AggregateVersion"] = newVersion;
             headers["AggregateType"] = type.FullName;
 
-            for (int i = 0; i < events.Count; i++)
+            for (int i = 0; i < events.Count(); i++)
             {
                 eventHeaders[events.ElementAt(i)] = new Dictionary<string, object> {{ "EventVersion", oldVersion + i + 1 }};
             }

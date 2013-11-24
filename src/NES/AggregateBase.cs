@@ -44,7 +44,7 @@ namespace NES
             }
         }
 
-        List<object> IEventSource.Flush()
+        IEnumerable<object> IEventSource.Flush()
         {
             var events = new List<object>(_events);
 
