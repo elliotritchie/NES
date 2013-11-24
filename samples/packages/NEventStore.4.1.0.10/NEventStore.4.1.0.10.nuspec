@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>NEventStore-Signed</id>
+    <id>NEventStore</id>
     <version>4.1.0.10</version>
     <title>NEventStore</title>
     <authors>NEventStore Dev Team</authors>
@@ -10,6 +10,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The purpose of the EventStore is to represent a series of events as a stream. Furthermore, it provides hooks whereby any events committed to the stream can be dispatched to interested parties.</description>
     <summary>NEventStore is a persistence agnostic event sourcing library for .NET. The primary use is most often associated with CQRS.</summary>
+    <releaseNotes />
+    <copyright />
     <language>es-US</language>
     <tags>events event sourcing cqrs storage persistence database</tags>
   </metadata>
