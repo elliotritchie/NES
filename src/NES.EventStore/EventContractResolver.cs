@@ -16,7 +16,7 @@ namespace NES.EventStore
 
         protected override JsonObjectContract CreateObjectContract(Type objectType)
         {
-            if (objectType.IsInterface)
+            if (objectType.IsInterface  && _eventMapper.GetMappedTypeFor(objectType) != null)
             {
                 var mappedType = _eventMapper.GetMappedTypeFor(objectType);
                 var objectContract = base.CreateObjectContract(mappedType);
