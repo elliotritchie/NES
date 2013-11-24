@@ -45,7 +45,7 @@ NES hooks into NServiceBus' and NEventStore's configuration objects and transpar
 * Supports NServiceBus v2
 
 ## Download
-The easiest way to install NES is via NuGet ([NES](http://nuget.org/packages/NES), [NES.EventStore](http://nuget.org/packages/NES.EventStore), [NES.EventStore.Raven](http://nuget.org/packages/NES.EventStore.Raven), [NES.NServiceBus](http://nuget.org/packages/NES.NServiceBus)) or you can download the source and run 'build.bat' from the command line. Once built, the files will be placed in the 'build' folder.
+The easiest way to install NES is via NuGet ([NES](http://nuget.org/packages/NES), [NES.NEventStore](http://nuget.org/packages/NES.NEventStore), [NES.NEventStore.Raven](http://nuget.org/packages/NES.NEventStore.Raven), [NES.NServiceBus](http://nuget.org/packages/NES.NServiceBus)) or you can download the source and run 'build.bat' from the command line. Once built, the files will be placed in the 'build' folder.
 
 ## Using NES
 
