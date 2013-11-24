@@ -12,12 +12,17 @@ namespace NES.NServiceBus
 
         public void End(Exception ex = null)
         {
-            if (ex == null)
+            try
             {
-                UnitOfWorkFactory.Current.Commit();
+                if (ex == null)
+                {
+                    UnitOfWorkFactory.Current.Commit();
+                }
             }
-
-            UnitOfWorkFactory.End();
+            finally
+            {
+                UnitOfWorkFactory.End();
+            }
         }
     }
 }
