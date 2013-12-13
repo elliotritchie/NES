@@ -30,7 +30,6 @@ namespace NES.EventStore
             Container.Register<IScheduleDispatches>(c => new SynchronousDispatchScheduler(new MessageDispatcher(() => DI.Current.Resolve<IEventPublisher>()), c.Resolve<IPersistStreams>()));
 
             DI.Current.Register<IEventStore, IStoreEvents>(eventStore => new EventStoreAdapter(eventStore));
-            DI.Current.Register(() => Container.Resolve<IStoreEvents>());
         }
 
         public SerializationWireup UsingJsonSerialization()
@@ -61,7 +60,11 @@ namespace NES.EventStore
 
             pipelineHooks.Add(eventConverterPipelineHook);
 
-            return base.Build();
+            var store = base.Build();
+
+            DI.Current.Register(() => store);
+
+            return store;
         }
     }
 }
