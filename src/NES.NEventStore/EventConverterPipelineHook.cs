@@ -1,7 +1,7 @@
 ﻿using System;
 using NEventStore;
 
-namespace NES.EventStore
+namespace NES.NEventStore
 {
     public class EventConverterPipelineHook : IPipelineHook
     {

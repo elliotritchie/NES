@@ -5,7 +5,7 @@ using System.Linq;
 using NEventStore;
 using NEventStore.Serialization;
 
-namespace NES.EventStore
+namespace NES.NEventStore
 {
     public class CompositeSerializer : ISerialize
     {

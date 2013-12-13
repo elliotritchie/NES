@@ -5,9 +5,8 @@ using System.Text;
 using NEventStore.Logging;
 using NEventStore.Serialization;
 using Newtonsoft.Json;
-using JsonNetSerializer = Newtonsoft.Json.JsonSerializer;
 
-namespace NES.EventStore
+namespace NES.NEventStore
 {
     /// <summary>
     /// Based on the JsonSerializer implementations in EventStore & NServiceBus
@@ -49,7 +48,7 @@ namespace NES.EventStore
         {
             using (writer)
             {
-                var serializer = JsonNetSerializer.Create(_settings);
+                var serializer = Newtonsoft.Json.JsonSerializer.Create(_settings);
 
                 serializer.Binder = new EventSerializationBinder(_eventMapperFunc());
                 serializer.Serialize(writer, graph);
@@ -70,7 +69,7 @@ namespace NES.EventStore
         {
             using (reader)
             {
-                var serializer = JsonNetSerializer.Create(_settings);
+                var serializer = Newtonsoft.Json.JsonSerializer.Create(_settings);
 
                 serializer.ContractResolver = new EventContractResolver(_eventMapperFunc(), _eventFactoryFunc());
 

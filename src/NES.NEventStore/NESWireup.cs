@@ -6,7 +6,7 @@ using NEventStore.Logging;
 using NEventStore.Persistence;
 using NEventStore.Serialization;
 
-namespace NES.EventStore
+namespace NES.NEventStore
 {
     public class NESWireup : Wireup
     {

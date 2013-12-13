@@ -3,7 +3,7 @@ using System.Linq;
 using NEventStore;
 using NEventStore.Dispatcher;
 
-namespace NES.EventStore
+namespace NES.NEventStore
 {
     public class MessageDispatcher : IDispatchCommits
     {

@@ -4,7 +4,7 @@ using System.IO;
 using NEventStore.Logging;
 using Newtonsoft.Json.Bson;
 
-namespace NES.EventStore
+namespace NES.NEventStore
 {
     /// <summary>
     /// Based on the BsonSerializer implementations in EventStore & NServiceBus

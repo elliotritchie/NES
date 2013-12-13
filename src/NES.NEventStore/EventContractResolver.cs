@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json.Serialization;
 
-namespace NES.EventStore
+namespace NES.NEventStore
 {
     public class EventContractResolver : DefaultContractResolver
     {

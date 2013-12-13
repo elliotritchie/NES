@@ -1,7 +1,7 @@
 ﻿using System;
 using Raven.Imports.Newtonsoft.Json.Serialization;
 
-namespace NES.EventStore.Raven
+namespace NES.NEventStore.Raven
 {
     public class EventContractResolver : DefaultContractResolver
     {

@@ -1,4 +1,4 @@
-﻿namespace NES.EventStore.Raven
+﻿namespace NES.NEventStore.Raven
 {
     public static class CustomizedRavenSerializerWireupExtensions
     {

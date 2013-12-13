@@ -5,7 +5,7 @@ using NEventStore.Persistence;
 using NEventStore.Persistence.RavenPersistence;
 using Raven.Client;
 
-namespace NES.EventStore.Raven
+namespace NES.NEventStore.Raven
 {
     public class CustomizedRavenSerializerWireup : Wireup
     {
