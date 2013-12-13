@@ -55,7 +55,7 @@ public class EndpointConfig : IConfigureThisEndpoint, AsA_Publisher, IWantCustom
 {
 	public void Init()
 	{
-		EventStore.Wireup.Init()
+		NEventStore.Wireup.Init()
 			.UsingSqlPersistence("EventStore")
 			.InitializeStorageEngine()
 			.NES()
@@ -65,7 +65,7 @@ public class EndpointConfig : IConfigureThisEndpoint, AsA_Publisher, IWantCustom
 		NServiceBus.Configure.With()
 			.Log4Net()
 			.DefaultBuilder()
-			.XmlSerializer()
+			.JsonSerializer()
 			.NES();
 	}
 }
