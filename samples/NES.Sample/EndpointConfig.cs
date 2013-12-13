@@ -1,4 +1,4 @@
-using NES.EventStore;
+using NES.NEventStore;
 using NES.NServiceBus;
 using NEventStore;
 using NServiceBus;
