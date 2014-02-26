@@ -12,7 +12,8 @@ namespace NES.NEventStore
     {
         private static readonly ILog Logger = LogFactory.BuildLogger(typeof(NESWireup));
 
-        public NESWireup(Wireup wireup) : base(wireup)
+        public NESWireup(Wireup wireup)
+            : base(wireup)
         {
             var serializer = Container.Resolve<ISerialize>();
 
@@ -26,8 +27,9 @@ namespace NES.NEventStore
 
             Logger.Debug("Configuring the store to dispatch messages synchronously.");
             Logger.Debug("Registering dispatcher of type '" + typeof(MessageDispatcher) + "'.");
-            
-            Container.Register<IScheduleDispatches>(c => new SynchronousDispatchScheduler(new MessageDispatcher(() => DI.Current.Resolve<IEventPublisher>()), c.Resolve<IPersistStreams>()));
+
+            Container.Register<IDispatchCommits>(new MessageDispatcher(() => DI.Current.Resolve<IEventPublisher>()));
+            Container.Register<IScheduleDispatches>(c => new SynchronousDispatchScheduler(c.Resolve<IDispatchCommits>(), c.Resolve<IPersistStreams>()));
 
             DI.Current.Register<IEventStore, IStoreEvents>(eventStore => new EventStoreAdapter(eventStore));
         }
