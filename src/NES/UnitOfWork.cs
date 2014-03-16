@@ -18,13 +18,23 @@ namespace NES
             _eventSourceMapper = eventSourceMapper;
         }
 
-        public T Get<T>(Guid id) where T : class, IEventSource
+        public T Get<T>(Guid id, Func<IEnumerable<object>, IEnumerable<object>> sortFilterAction) where T : class, IEventSource
         {
-            var eventSource = _eventSources.OfType<T>().SingleOrDefault(s => s.Id == id) ?? _eventSourceMapper.Get<T>(id);
+            var eventSource = _eventSources.OfType<T>().SingleOrDefault(s => s.Id == id) ?? _eventSourceMapper.Get<T>(id, sortFilterAction);
             
             Register(eventSource);
 
             return eventSource;
+        }
+
+        public T Get<T>(Guid id) where T : class, IEventSource
+        {
+            return this.Get<T>(id, null);
+        }
+
+        public IEnumerable<object> GetEvents(Guid id)
+        {
+            return _eventSourceMapper.GetEvents(id);
         }
 
         public void Register<T>(T eventSource) where T : class, IEventSource
