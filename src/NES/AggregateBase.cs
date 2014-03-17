@@ -37,6 +37,8 @@ namespace NES
 
         void IEventSource.Hydrate(IEnumerable<object> events)
         {
+            events = this.ReoderEventsBeforeHydrate(events);
+
             foreach (var @event in events)
             {
                 Raise(@event);
@@ -75,6 +77,11 @@ namespace NES
         private void Raise(object @event)
         {
             _eventHandlerFactory.Get(this, @event.GetType())(@event);
+        }
+
+        protected virtual IEnumerable<object> ReoderEventsBeforeHydrate(IEnumerable<object> events)
+        {
+            return events;
         }
     }
 }
