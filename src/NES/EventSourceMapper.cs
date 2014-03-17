@@ -16,16 +16,26 @@ namespace NES
             _eventStore = eventStore;
         }
 
-        public T Get<T>(Guid id) where T : class, IEventSource
+        public T Get<T>(Guid id, Func<IEnumerable<object>, IEnumerable<object>> sortFilterAction) where T : class, IEventSource
         {
             Logger.Debug("Get event source Id '{0}', Type '{1}'", id, typeof(T).Name);
 
             var eventSource = _eventSourceFactory.Create<T>();
 
             RestoreSnapshot(id, eventSource);
-            Hydrate(id, eventSource);
-            
+            Hydrate(id, eventSource, sortFilterAction);
+
             return eventSource.Id != Guid.Empty ? eventSource : null;
+        }
+
+        public T Get<T>(Guid id) where T : class, IEventSource
+        {
+            return this.Get<T>(id, null);
+        }
+
+        public IEnumerable<object> GetEvents(Guid id)
+        {
+            return _eventStore.Read(id, int.MinValue);
         }
 
         public void Set<T>(CommandContext commandContext, T eventSource) where T : class, IEventSource
@@ -54,7 +64,7 @@ namespace NES
             {
                 eventHeaders[events.ElementAt(i)] = new Dictionary<string, object> {{ "EventVersion", oldVersion + i + 1 }};
             }
-            
+
             try
             {
                 _eventStore.Write(id, oldVersion, events, commitId, headers, eventHeaders);
@@ -78,11 +88,16 @@ namespace NES
             }
         }
 
-        private void Hydrate<T>(Guid id, T eventSource) where T : IEventSource
+        private void Hydrate<T>(Guid id, T eventSource, Func<IEnumerable<object>, IEnumerable<object>> sortFilterAction) where T : IEventSource
         {
             Logger.Debug("Hydrate event source Id '{0}', Version '{1}' and Type '{2}'", id, eventSource.Version, eventSource.GetType().Name);
 
             var events = _eventStore.Read(id, eventSource.Version);
+
+            if (sortFilterAction != null)
+            {
+                events = sortFilterAction(events);
+            }
 
             eventSource.Hydrate(events);
         }
