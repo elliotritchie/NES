@@ -1,14 +1,38 @@
-using NServiceBus;
-using NServiceBus.MessageInterfaces;
-using NServiceBus.Serialization;
-
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ConfigureNES.cs" company="Elliot Ritchie">
+//   Copyright © Elliot Ritchie. All rights reserved.
+// </copyright>
+// <summary>
+//   The configure nes.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 namespace NES.NServiceBus
 {
+    using global::NServiceBus;
+
+    using global::NServiceBus.MessageInterfaces;
+
+    using global::NServiceBus.Serialization;
+
+    /// <summary>
+    ///     The configure nes.
+    /// </summary>
     public static class ConfigureNES
     {
+        #region Public Methods and Operators
+
+        /// <summary>
+        /// The nes.
+        /// </summary>
+        /// <param name="config">
+        /// The config.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Configure"/>.
+        /// </returns>
         public static Configure NES(this Configure config)
         {
-            Global.TypesToScan = Configure.TypesToScan;
+            Global.TypesToScan = config.TypesToScan;
 
             if (!config.Configurer.HasComponent<UnitOfWorkManager>())
             {
@@ -32,5 +56,7 @@ namespace NES.NServiceBus
 
             return config;
         }
+
+        #endregion
     }
 }

@@ -1,61 +1,126 @@
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="RepositoryTests.cs" company="Elliot Ritchie">
+//   Copyright © Elliot Ritchie. All rights reserved.
+// </copyright>
+// <summary>
+//   The repository tests.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 namespace NES.Tests
 {
+    using System;
+
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using Moq;
+
+    /// <summary>
+    ///     The repository tests.
+    /// </summary>
     public static class RepositoryTests
     {
+        /// <summary>
+        ///     The when_adding_aggregate.
+        /// </summary>
         [TestClass]
         public class When_adding_aggregate : Test
         {
-            private Repository _repository;
-            private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
+            #region Fields
+
             private readonly Mock<IEventSource> _aggregate = new Mock<IEventSource>();
 
-            protected override void Context()
-            {
-                _repository = new Repository();
+            private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
 
-                UnitOfWorkFactory.Current = _unitOfWork.Object;
-            }
+            private Repository _repository;
 
-            protected override void Event()
-            {
-                _repository.Add(_aggregate.Object);
-            }
+            #endregion
 
+            #region Public Methods and Operators
+
+            /// <summary>
+            ///     The should_register_aggregate_with_unit_of_work.
+            /// </summary>
             [TestMethod]
             public void Should_register_aggregate_with_unit_of_work()
             {
-                _unitOfWork.Verify(u => u.Register(_aggregate.Object));
+                this._unitOfWork.Verify(u => u.Register(this._aggregate.Object));
             }
+
+            #endregion
+
+            #region Methods
+
+            /// <summary>
+            ///     The context.
+            /// </summary>
+            protected override void Context()
+            {
+                this._repository = new Repository();
+
+                UnitOfWorkFactory.Current = this._unitOfWork.Object;
+            }
+
+            /// <summary>
+            ///     The event.
+            /// </summary>
+            protected override void Event()
+            {
+                this._repository.Add(this._aggregate.Object);
+            }
+
+            #endregion
         }
 
+        /// <summary>
+        ///     The when_getting_aggregate.
+        /// </summary>
         [TestClass]
         public class When_getting_aggregate : Test
         {
-            private Repository _repository;
-            private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
+            #region Fields
+
             private readonly Guid _id = GuidComb.NewGuidComb();
 
-            protected override void Context()
-            {
-                _repository = new Repository();
+            private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
 
-                UnitOfWorkFactory.Current = _unitOfWork.Object;
-            }
+            private Repository _repository;
 
-            protected override void Event()
-            {
-                _repository.Get<IEventSource>(_id);
-            }
+            #endregion
 
+            #region Public Methods and Operators
+
+            /// <summary>
+            ///     The should_get_aggregate_from_unit_of_work.
+            /// </summary>
             [TestMethod]
             public void Should_get_aggregate_from_unit_of_work()
             {
-                _unitOfWork.Verify(u => u.Get<IEventSource>(_id));
+                this._unitOfWork.Verify(u => u.Get<IEventSource>(BucketSupport.DefaultBucketId, this._id));
             }
+
+            #endregion
+
+            #region Methods
+
+            /// <summary>
+            ///     The context.
+            /// </summary>
+            protected override void Context()
+            {
+                this._repository = new Repository();
+
+                UnitOfWorkFactory.Current = this._unitOfWork.Object;
+            }
+
+            /// <summary>
+            ///     The event.
+            /// </summary>
+            protected override void Event()
+            {
+                this._repository.Get<IEventSource>(this._id);
+            }
+
+            #endregion
         }
     }
 }
