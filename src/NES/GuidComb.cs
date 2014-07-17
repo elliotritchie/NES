@@ -1,22 +1,39 @@
-using System;
-
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="GuidComb.cs" company="Elliot Ritchie">
+//   Copyright © Elliot Ritchie. All rights reserved.
+// </copyright>
+// <summary>
+//   Based on the GuidCombGenerator implementation in NHibernate
+//   https://nhibernate.svn.sourceforge.net/svnroot/nhibernate/trunk/nhibernate/src/NHibernate/Id/GuidCombGenerator.cs
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 namespace NES
 {
+    using System;
+
     /// <summary>
-    /// Based on the GuidCombGenerator implementation in NHibernate
-    /// https://nhibernate.svn.sourceforge.net/svnroot/nhibernate/trunk/nhibernate/src/NHibernate/Id/GuidCombGenerator.cs
+    ///     Based on the GuidCombGenerator implementation in NHibernate
+    ///     https://nhibernate.svn.sourceforge.net/svnroot/nhibernate/trunk/nhibernate/src/NHibernate/Id/GuidCombGenerator.cs
     /// </summary>
     public static class GuidComb
     {
+        #region Public Methods and Operators
+
+        /// <summary>
+        ///     The new guid comb.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="Guid" />.
+        /// </returns>
         public static Guid NewGuidComb()
         {
             byte[] guidArray = Guid.NewGuid().ToByteArray();
 
-            DateTime baseDate = new DateTime(1900, 1, 1);
+            var baseDate = new DateTime(1900, 1, 1);
             DateTime now = DateTime.Now;
 
             // Get the days and milliseconds which will be used to build the byte string 
-            TimeSpan days = new TimeSpan(now.Ticks - baseDate.Ticks);
+            var days = new TimeSpan(now.Ticks - baseDate.Ticks);
             TimeSpan msecs = now.TimeOfDay;
 
             // Convert to a byte array 
@@ -34,5 +51,7 @@ namespace NES
 
             return new Guid(guidArray);
         }
+
+        #endregion
     }
 }

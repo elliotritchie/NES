@@ -1,23 +1,64 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using NServiceBus;
-
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CommandContextProvider.cs" company="Elliot Ritchie">
+//   Copyright © Elliot Ritchie. All rights reserved.
+// </copyright>
+// <summary>
+//   The command context provider.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 namespace NES.NServiceBus
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+
+    using global::NServiceBus;
+
+    /// <summary>
+    ///     The command context provider.
+    /// </summary>
     public class CommandContextProvider : ICommandContextProvider
     {
+        #region Static Fields
+
         private static readonly ILogger Logger = LoggerFactory.Create(typeof(CommandContextProvider));
+
         private static readonly Dictionary<Type, Func<object, Guid>> _cache = new Dictionary<Type, Func<object, Guid>>();
+
         private static readonly object _cacheLock = new object();
+
+        #endregion
+
+        #region Fields
+
         private readonly IBus _bus;
 
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommandContextProvider"/> class.
+        /// </summary>
+        /// <param name="bus">
+        /// The bus.
+        /// </param>
         public CommandContextProvider(IBus bus)
         {
-            _bus = bus;
+            this._bus = bus;
         }
 
+        #endregion
+
+        #region Public Methods and Operators
+
+        /// <summary>
+        ///     The get.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="CommandContext" />.
+        /// </returns>
         public CommandContext Get()
         {
             var command = ExtensionMethods.CurrentMessageBeingHandled;
@@ -51,16 +92,19 @@ namespace NES.NServiceBus
                 }
 
                 return new CommandContext
-                {
-                    Id = property(command),
-                    Headers = _bus.CurrentMessageContext.Headers
-                        .Where(h =>
-                            !h.Key.Equals("CorrId", StringComparison.InvariantCultureIgnoreCase) &&
-                            !h.Key.Equals("WinIdName", StringComparison.InvariantCultureIgnoreCase) &&
-                            !h.Key.StartsWith("NServiceBus", StringComparison.InvariantCultureIgnoreCase))
-                        .ToDictionary(h => h.Key, h => (object)h.Value)
-                };
+                           {
+                               Id = property(command), 
+                               Headers =
+                                   this._bus.CurrentMessageContext.Headers.Where(
+                                       h =>
+                                       !h.Key.Equals("CorrId", StringComparison.InvariantCultureIgnoreCase)
+                                       && !h.Key.Equals("WinIdName", StringComparison.InvariantCultureIgnoreCase)
+                                       && !h.Key.StartsWith("NServiceBus", StringComparison.InvariantCultureIgnoreCase))
+                                   .ToDictionary(h => h.Key, h => (object)h.Value)
+                           };
             }
         }
+
+        #endregion
     }
 }

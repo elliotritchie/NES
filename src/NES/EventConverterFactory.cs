@@ -1,13 +1,33 @@
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EventConverterFactory.cs" company="Elliot Ritchie">
+//   Copyright © Elliot Ritchie. All rights reserved.
+// </copyright>
+// <summary>
+//   The event converter factory.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 namespace NES
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
+
+    /// <summary>
+    ///     The event converter factory.
+    /// </summary>
     public class EventConverterFactory : IEventConverterFactory
     {
+        #region Static Fields
+
         private static readonly Dictionary<Type, Func<object, object>> _cache = new Dictionary<Type, Func<object, object>>();
 
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        ///     Initializes static members of the <see cref="EventConverterFactory" /> class.
+        /// </summary>
         static EventConverterFactory()
         {
             foreach (var type in Global.TypesToScan)
@@ -44,7 +64,7 @@ namespace NES
                 var eventFactoryMemberInfo = type.GetProperty("EventFactory");
 
                 var eventConverterMemberInit = Expression.MemberInit(
-                    Expression.New(type),
+                    Expression.New(type), 
                     Expression.Bind(eventFactoryMemberInfo, Expression.Constant(eventFactory)));
 
                 var eventConverter = Expression.Lambda<Func<object>>(eventConverterMemberInit).Compile().Invoke();
@@ -52,17 +72,32 @@ namespace NES
                 var eventParameter = Expression.Parameter(typeof(object), "event");
 
                 var eventConverterCall = Expression.Call(
-                    Expression.Convert(eventConverterParameter, type),
-                    type.GetMethod("Convert"),
+                    Expression.Convert(eventConverterParameter, type), 
+                    type.GetMethod("Convert"), 
                     Expression.Convert(eventParameter, fromType));
 
                 _cache[fromType] = Expression.Lambda<Func<object, object>>(eventConverterCall, eventParameter).Compile();
             }
         }
 
+        #endregion
+
+        #region Public Methods and Operators
+
+        /// <summary>
+        /// The get.
+        /// </summary>
+        /// <param name="eventType">
+        /// The event type.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Func"/>.
+        /// </returns>
         public Func<object, object> Get(Type eventType)
         {
             return _cache.ContainsKey(eventType) ? _cache[eventType] : null;
         }
+
+        #endregion
     }
 }
