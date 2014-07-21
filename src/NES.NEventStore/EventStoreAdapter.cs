@@ -30,14 +30,7 @@ namespace NES.NEventStore
             }
         }
 
-        public void Write(
-            string bucketId, 
-            Guid id, 
-            int version, 
-            IEnumerable<object> events, 
-            Guid commitId, 
-            Dictionary<string, object> headers, 
-            Dictionary<object, Dictionary<string, object>> eventHeaders)
+        public void Write(string bucketId, Guid id, int version, IEnumerable<object> events, Guid commitId, Dictionary<string, object> headers, Dictionary<object, Dictionary<string, object>> eventHeaders)
         {
             bucketId = this.ChangeBucketIdIfRequired(bucketId);
             using (var stream = _eventStore.OpenStream(bucketId, id, version, int.MaxValue))

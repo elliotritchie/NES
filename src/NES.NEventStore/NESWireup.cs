@@ -20,13 +20,13 @@ namespace NES.NEventStore
             if (serializer != null)
             {
                 Logger.Debug("Configuring custom NES serializer to cope with payloads that contain messages as interfaces.");
-                Logger.Debug(string.Format("Wrapping serializer of type '{0}' in '{1}'", serializer.GetType(), typeof(CompositeSerializer)));
+                Logger.Debug("Wrapping serializer of type '{0}' in '{1}'", serializer.GetType(), typeof(CompositeSerializer));
 
                 this.Container.Register<ISerialize>(new CompositeSerializer(serializer, () => DI.Current.Resolve<IEventSerializer>()));
             }
 
             Logger.Debug("Configuring the store to dispatch messages synchronously.");
-            Logger.Debug(string.Format("Registering dispatcher of type '{0}'.", typeof(MessageDispatcher)));
+            Logger.Debug("Registering dispatcher of type '{0}'.", typeof(MessageDispatcher));
 
             this.Container.Register<IDispatchCommits>(new MessageDispatcher(() => DI.Current.Resolve<IEventPublisher>()));
             this.Container.Register<IScheduleDispatches>(c =>

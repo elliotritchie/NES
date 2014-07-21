@@ -35,7 +35,7 @@ namespace NES
 
             if (!(hasSnaphot || hasEvents))
             {
-                Logger.Debug(string.Format("No event source found using the id {0}", id));
+                Logger.Debug("No event source found using the id {0}", id);
                 return null;
             }
 

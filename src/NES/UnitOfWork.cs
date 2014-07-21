@@ -24,7 +24,7 @@ namespace NES
 
             if (eventSource == null)
             {
-                Logger.Debug(string.Format("EventSource not found in mememory with id {0} and BucketId {1}. So read from event source.", id, bucketId));
+                Logger.Debug("EventSource not found in mememory with id {0} and BucketId {1}. So read from event source.", id, bucketId);
                 eventSource = _eventSourceMapper.Get<T>(bucketId, id);
             }
 
