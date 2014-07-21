@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES", "NES\NES.csproj", "{EC7040E2-7A13-4447-900D-6ED57328E5DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES.Tests", "NES.Tests\NES.Tests.csproj", "{3A7B4387-EDAC-45C7-B99B-583A3B26F483}"
@@ -10,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES.NEventStore", "NES.NEventStore\NES.NEventStore.csproj", "{562747EB-FC42-404D-B1E9-EB4E51BE0B98}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES.NEventStore.Raven", "NES.NEventStore.Raven\NES.NEventStore.Raven.csproj", "{DA73E39E-6170-4AE5-B778-D9E2662D027B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES.NEventStore.Tests", "NES.NEventStore.Tests\NES.NEventStore.Tests.csproj", "{797CD9A7-7102-4C30-898B-132CFB448D66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +41,10 @@ Global
 		{DA73E39E-6170-4AE5-B778-D9E2662D027B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA73E39E-6170-4AE5-B778-D9E2662D027B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA73E39E-6170-4AE5-B778-D9E2662D027B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{797CD9A7-7102-4C30-898B-132CFB448D66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{797CD9A7-7102-4C30-898B-132CFB448D66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{797CD9A7-7102-4C30-898B-132CFB448D66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{797CD9A7-7102-4C30-898B-132CFB448D66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

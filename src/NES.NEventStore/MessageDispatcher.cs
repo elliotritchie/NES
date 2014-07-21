@@ -14,7 +14,7 @@ namespace NES.NEventStore
             _eventPublisherFactory = eventPublisherFactory;
         }
 
-        public virtual void Dispatch(Commit commit)
+        public virtual void Dispatch(ICommit commit)
         {
             _eventPublisherFactory().Publish(commit.Events.Select(e => e.Body), commit.Headers, commit.Events.ToDictionary(e => e.Body, e => e.Headers));
         }

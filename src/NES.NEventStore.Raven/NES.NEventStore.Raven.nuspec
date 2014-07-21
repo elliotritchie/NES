@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" standalone="yes"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>$id$</id>
@@ -11,11 +11,11 @@
     <description>NES (.NET Event Sourcing) is a lightweight framework that helps you build domain models when you're doing event sourcing.</description>
     <tags>nes cqrs eventsourcing nservicebus neventstore</tags>
     <dependencies>
-      <dependency id="NES" version="4.0.4"/>
-      <dependency id="NES.NEventStore" version="4.0.4"/>
-      <dependency id="NEventStore-Signed" version="4.1.0.10"/>
-      <dependency id="NEventStore.Persistence.RavenPersistence-Signed" version="4.1.0.10"/>
-      <dependency id="RavenDB.Client" version="2.5.2750"/>
+      <dependency id="NES" version="5.0.0" />
+      <dependency id="NES.NEventStore" version="5.0.0" />
+      <dependency id="NEventStore" version="5.0.1.12" />
+      <dependency id="NEventStore.Persistence.RavenPersistence" version="5.0.0.12" />
+      <dependency id="RavenDB.Client" version="2.5.2879" />
     </dependencies>
   </metadata>
 </package>

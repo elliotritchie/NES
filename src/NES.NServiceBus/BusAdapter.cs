@@ -12,7 +12,7 @@ namespace NES.NServiceBus
             _bus = bus;
         }
 
-        public void Publish(IEnumerable<object> events, Dictionary<string, object> headers, Dictionary<object, Dictionary<string, object>> eventHeaders)
+        public void Publish(IEnumerable<object> events, IDictionary<string, object> headers, Dictionary<object, Dictionary<string, object>> eventHeaders)
         {
             foreach (var header in headers)
             {
