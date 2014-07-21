@@ -41,11 +41,7 @@ namespace NES
 
             if (eventSource.Id == Guid.Empty)
             {
-                Logger.Warn(
-                    string.Format(
-                        "Source with id {0} found in eventstore, but after hydration the id was not set properly {1}", 
-                        id, 
-                        eventSource.Id));
+                Logger.Warn(string.Format("Source with id {0} found in eventstore, but after hydration the id was not set properly {1}", id, eventSource.Id));
                 return null;
             }
 
@@ -69,12 +65,7 @@ namespace NES
                 return;
             }
 
-            Logger.Debug(
-                "Set event source Id '{0}', Version '{1}', Type '{2}', CommitId '{3}'", 
-                id, 
-                newVersion, 
-                eventSource.GetType().Name, 
-                commitId);
+            Logger.Debug("Set event source Id '{0}', Version '{1}', Type '{2}', CommitId '{3}'", id, newVersion, eventSource.GetType().Name, commitId);
 
             headers["AggregateId"] = id;
             headers["AggregateBucketId"] = bucketId;
@@ -99,12 +90,7 @@ namespace NES
 
         private bool Hydrate<T>(string bucketId, Guid id, T eventSource) where T : IEventSource
         {
-            Logger.Debug(
-                "Hydrate event source Id '{0}', BucketId '{1}', Version '{2}' and Type '{3}'", 
-                id, 
-                bucketId, 
-                eventSource.Version, 
-                eventSource.GetType().Name);
+            Logger.Debug("Hydrate event source Id '{0}', BucketId '{1}', Version '{2}' and Type '{3}'", id, bucketId, eventSource.Version, eventSource.GetType().Name);
 
             var events = _eventStore.Read(bucketId, id, eventSource.Version).ToList();
 

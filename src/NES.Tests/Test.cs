@@ -15,7 +15,6 @@ namespace NES.Tests
         }
 
         protected abstract void Context();
-
         protected abstract void Event();
     }
 }
