@@ -5,11 +5,18 @@ namespace NES
 {
     public interface IEventSource
     {
+        string BucketId { get; }
+
         Guid Id { get; }
+
         int Version { get; }
-        void RestoreSnapshot(IMemento memento);
-        IMemento TakeSnapshot();
-        void Hydrate(IEnumerable<object> events);
+
         IEnumerable<object> Flush();
+
+        void Hydrate(IEnumerable<object> events);
+
+        void RestoreSnapshot(IMemento memento);
+
+        IMemento TakeSnapshot();
     }
 }

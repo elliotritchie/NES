@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3A7B4387-EDAC-45C7-B99B-583A3B26F483}</ProjectGuid>
+    <ProjectGuid>{797CD9A7-7102-4C30-898B-132CFB448D66}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NES.Tests</RootNamespace>
-    <AssemblyName>NES.Tests</AssemblyName>
+    <RootNamespace>NES.NEventStore.Tests</RootNamespace>
+    <AssemblyName>NES.NEventStore.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -16,8 +16,6 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,7 +25,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,23 +33,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\NES.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Moq, Version=4.2.1402.2112, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    <Reference Include="NEventStore">
+      <HintPath>..\packages\NEventStore.5.0.1.2\lib\net40\NEventStore.dll</HintPath>
     </Reference>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\packages\NServiceBus.5.0.0-beta0002\lib\net45\NServiceBus.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -67,35 +59,31 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="..\CommonAssemblyInfo.cs">
-      <Link>Properties\CommonAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="AggregateBaseTests.cs" />
-    <Compile Include="DependencyInjectionContainerTests.cs" />
-    <Compile Include="EventConversionRunnerTests.cs" />
-    <Compile Include="EventConverterFactoryTests.cs" />
-    <Compile Include="EventSourceMapperTests.cs" />
+    <Compile Include="IBucketId.cs" />
+    <Compile Include="TestDomain\Car.cs" />
+    <Compile Include="TestDomain\ICarCreated.cs" />
+    <Compile Include="TestDomain\ICarPriceChanged.cs" />
+    <Compile Include="TestIntegration.cs" />
+    <Compile Include="UsageOfBuckets.cs" />
+    <Compile Include="WireUpExtensionsUsage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RepositoryTests.cs" />
-    <Compile Include="Stubs\AggregateStub.cs" />
-    <Compile Include="Stubs\CreatedAggregateEvent.cs" />
-    <Compile Include="Mocks\EventConverterMock.cs" />
-    <Compile Include="Stubs\IEvent.cs" />
-    <Compile Include="Stubs\SomethingElseHappenedEvent.cs" />
-    <Compile Include="Stubs\SomethingHappenedEvent.cs" />
-    <Compile Include="Test.cs" />
-    <Compile Include="UnitOfWorkTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NES.NEventStore\NES.NEventStore.csproj">
+      <Project>{562747eb-fc42-404d-b1e9-eb4e51be0b98}</Project>
+      <Name>NES.NEventStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NES.NServiceBus\NES.NServiceBus.csproj">
+      <Project>{8eae9dc8-5cf2-47be-8fdf-00891682f221}</Project>
+      <Name>NES.NServiceBus</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NES\NES.csproj">
-      <Project>{EC7040E2-7A13-4447-900D-6ED57328E5DF}</Project>
+      <Project>{ec7040e2-7a13-4447-900d-6ed57328e5df}</Project>
       <Name>NES</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
@@ -116,7 +104,7 @@
     </When>
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

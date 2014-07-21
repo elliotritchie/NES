@@ -12,7 +12,7 @@ namespace NES.NEventStore
             _eventConversionRunnerFactory = eventConversionRunnerFactory;
         }
 
-        public Commit Select(Commit committed)
+        public ICommit Select(ICommit committed)
         {
             var eventConversionRunner = _eventConversionRunnerFactory();
 
@@ -24,12 +24,20 @@ namespace NES.NEventStore
             return committed;
         }
 
-        public bool PreCommit(Commit attempt)
+        public bool PreCommit(CommitAttempt attempt)
         {
             return true;
         }
 
-        public void PostCommit(Commit committed)
+        public void PostCommit(ICommit committed)
+        {
+        }
+
+        public void OnDeleteStream(string bucketId, string streamId)
+        {
+        }
+
+        public void OnPurge(string bucketId)
         {
         }
 

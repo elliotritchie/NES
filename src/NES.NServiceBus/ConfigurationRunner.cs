@@ -1,11 +1,12 @@
-﻿using NServiceBus.Config;
+﻿using NServiceBus;
+using NServiceBus.Config;
 using NServiceBus.Logging;
 
 namespace NES.NServiceBus
 {
     public class ConfigurationRunner : IWantToRunWhenConfigurationIsComplete
     {
-        public void Run()
+        public void Run(Configure config)
         {
             LoggerFactory.Create = t => 
             {

@@ -8,7 +8,7 @@ namespace NES.NServiceBus
     {
         public static Configure NES(this Configure config)
         {
-            Global.TypesToScan = Configure.TypesToScan;
+            Global.TypesToScan = config.TypesToScan;
 
             if (!config.Configurer.HasComponent<UnitOfWorkManager>())
             {

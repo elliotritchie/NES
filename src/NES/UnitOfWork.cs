@@ -18,11 +18,17 @@ namespace NES
             _eventSourceMapper = eventSourceMapper;
         }
 
-        public T Get<T>(Guid id) where T : class, IEventSource
+        public T Get<T>(string bucketId, Guid id) where T : class, IEventSource
         {
-            var eventSource = _eventSources.OfType<T>().SingleOrDefault(s => s.Id == id) ?? _eventSourceMapper.Get<T>(id);
-            
-            Register(eventSource);
+            var eventSource = _eventSources.OfType<T>().SingleOrDefault(s => s.Id == id && (s.BucketId == bucketId || string.IsNullOrEmpty(s.BucketId)));
+
+            if (eventSource == null)
+            {
+                Logger.Debug(string.Format("EventSource not found in mememory with id {0} and BucketId {1}. So read from event source.", id, bucketId));
+                eventSource = _eventSourceMapper.Get<T>(bucketId, id);
+            }
+
+            this.Register(eventSource);
 
             return eventSource;
         }
