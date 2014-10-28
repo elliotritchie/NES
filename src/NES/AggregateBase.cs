@@ -7,6 +7,8 @@ namespace NES
     {
         public Guid Id { get; protected set; }
 
+        public string BucketId { get; protected set; }
+
         int IEventSource.Version
         {
             get { return _version; }
@@ -23,6 +25,7 @@ namespace NES
 
             Id = memento.Id;
             _version = memento.Version;
+            BucketId = memento.BucketId;
         }
 
         IMemento IEventSource.TakeSnapshot()
@@ -31,6 +34,7 @@ namespace NES
 
             snapshot.Id = Id;
             snapshot.Version = _version;
+            snapshot.BucketId = BucketId;
 
             return snapshot;
         }

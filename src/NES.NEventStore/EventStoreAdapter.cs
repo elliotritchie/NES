@@ -14,23 +14,26 @@ namespace NES.NEventStore
             _eventStore = eventStore;
         }
 
-        public IMemento Read(Guid id)
+        public IMemento Read(string bucketId, Guid id)
         {
-            var snapshot = _eventStore.Advanced.GetSnapshot(id, int.MaxValue);
+            bucketId = this.ChangeBucketIdIfRequired(bucketId);
+            var snapshot = _eventStore.Advanced.GetSnapshot(bucketId, id, int.MaxValue);
             return snapshot != null ? (IMemento)snapshot.Payload : null;
         }
 
-        public IEnumerable<object> Read(Guid id, int version)
+        public IEnumerable<object> Read(string bucketId, Guid id, int version)
         {
-            using (var stream = _eventStore.OpenStream(id, version, int.MaxValue))
+            bucketId = this.ChangeBucketIdIfRequired(bucketId);
+            using (var stream = _eventStore.OpenStream(bucketId, id, version, int.MaxValue))
             {
                 return stream.CommittedEvents.Select(e => e.Body);
             }
         }
 
-        public void Write(Guid id, int version, IEnumerable<object> events, Guid commitId, Dictionary<string, object> headers, Dictionary<object, Dictionary<string, object>> eventHeaders)
+        public void Write(string bucketId, Guid id, int version, IEnumerable<object> events, Guid commitId, Dictionary<string, object> headers, Dictionary<object, Dictionary<string, object>> eventHeaders)
         {
-            using (var stream = _eventStore.OpenStream(id, version, int.MaxValue))
+            bucketId = this.ChangeBucketIdIfRequired(bucketId);
+            using (var stream = _eventStore.OpenStream(bucketId, id, version, int.MaxValue))
             {
                 foreach (var header in headers)
                 {
@@ -51,7 +54,7 @@ namespace NES.NEventStore
                 {
                     stream.CommitChanges(commitId);
                 }
-                catch (DuplicateCommitException ex)
+                catch (DuplicateCommitException)
                 {
                     stream.ClearChanges();
                 }
@@ -60,6 +63,16 @@ namespace NES.NEventStore
                     throw new ConflictingCommandException(ex.Message, ex);
                 }
             }
+        }
+
+        private string ChangeBucketIdIfRequired(string bucketId)
+        {
+            if (string.IsNullOrEmpty(bucketId) || string.IsNullOrWhiteSpace(bucketId))
+            {
+                return BucketSupport.DefaultBucketId;
+            }
+
+            return bucketId;
         }
     }
 }

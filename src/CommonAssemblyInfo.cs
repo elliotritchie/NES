@@ -2,5 +2,5 @@
 
 [assembly: AssemblyCompany("Elliot Ritchie")]
 [assembly: AssemblyCopyright("Copyright © Elliot Ritchie 2011")]
-[assembly: AssemblyVersion("4.0.4.0")]
-[assembly: AssemblyFileVersion("4.0.4.0")]
+[assembly: AssemblyVersion("5.0.0.0")]
+[assembly: AssemblyFileVersion("5.0.0.0")]

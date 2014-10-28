@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace NES.Tests
 {
@@ -8,8 +9,9 @@ namespace NES.Tests
         [TestInitialize]
         public void TestInitialize()
         {
-            Context();
-            Event();
+            LoggerFactory.Create = type => new Mock<ILogger>().Object;
+            this.Context();
+            this.Event();
         }
 
         protected abstract void Context();

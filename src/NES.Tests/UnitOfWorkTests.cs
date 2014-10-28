@@ -24,18 +24,18 @@ namespace NES.Tests
                 _aggregate = new AggregateStub(_id);
 
                 _commandContextProvider.Setup(p => p.Get()).Returns(_commandContext);
-                _eventSourceMapper.Setup(m => m.Get<AggregateStub>(_id)).Returns(_aggregate);
+                _eventSourceMapper.Setup(m => m.Get<AggregateStub>(BucketSupport.DefaultBucketId, _id)).Returns(_aggregate);
             }
 
             protected override void Event()
             {
-                _returnedAggregate = _unitOfWork.Get<AggregateStub>(_id);
+                _returnedAggregate = _unitOfWork.Get<AggregateStub>(BucketSupport.DefaultBucketId, _id);
             }
 
             [TestMethod]
             public void Should_get_aggregate_from_event_source_mapper()
             {
-                _eventSourceMapper.Verify(m => m.Get<AggregateStub>(_id));
+                _eventSourceMapper.Verify(m => m.Get<AggregateStub>(BucketSupport.DefaultBucketId, _id));
             }
 
             [TestMethod]
@@ -68,19 +68,19 @@ namespace NES.Tests
                 _aggregate = new AggregateStub(_id);
 
                 _commandContextProvider.Setup(p => p.Get()).Returns(_commandContext);
-                _eventSourceMapper.Setup(m => m.Get<AggregateStub>(_id)).Returns(_aggregate);
+                _eventSourceMapper.Setup(m => m.Get<AggregateStub>(BucketSupport.DefaultBucketId, _id)).Returns(_aggregate);
             }
 
             protected override void Event()
             {
-                _returnedAggregate = _unitOfWork.Get<AggregateStub>(_id);
-                _returnedAggregate = _unitOfWork.Get<AggregateStub>(_id);
+                _returnedAggregate = _unitOfWork.Get<AggregateStub>(BucketSupport.DefaultBucketId, _id);
+                _returnedAggregate = _unitOfWork.Get<AggregateStub>(BucketSupport.DefaultBucketId, _id);
             }
 
             [TestMethod]
             public void Should_get_aggregate_from_event_source_mapper_once()
             {
-                _eventSourceMapper.Verify(m => m.Get<AggregateStub>(_id), Times.Once());
+                _eventSourceMapper.Verify(m => m.Get<AggregateStub>(BucketSupport.DefaultBucketId, _id), Times.Once());
             }
 
             [TestMethod]
@@ -111,18 +111,18 @@ namespace NES.Tests
                 _unitOfWork = new UnitOfWork(_commandContextProvider.Object, _eventSourceMapper.Object);
 
                 _commandContextProvider.Setup(p => p.Get()).Returns(_commandContext);
-                _eventSourceMapper.Setup(m => m.Get<AggregateStub>(_id)).Returns<AggregateStub>(null);
+                _eventSourceMapper.Setup(m => m.Get<AggregateStub>(BucketSupport.DefaultBucketId, _id)).Returns<AggregateStub>(null);
             }
 
             protected override void Event()
             {
-                _returnedAggregate = _unitOfWork.Get<AggregateStub>(_id);
+                _returnedAggregate = _unitOfWork.Get<AggregateStub>(BucketSupport.DefaultBucketId, _id);
             }
 
             [TestMethod]
             public void Should_get_aggregate_from_event_source_mapper()
             {
-                _eventSourceMapper.Verify(m => m.Get<AggregateStub>(_id));
+                _eventSourceMapper.Verify(m => m.Get<AggregateStub>(BucketSupport.DefaultBucketId, _id));
             }
 
             [TestMethod]

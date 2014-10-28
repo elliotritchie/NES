@@ -29,20 +29,22 @@ namespace NES.Tests
                 _commandContext.Headers = new Dictionary<string, object> {{ "TestKey", "TestValue" }};
                 _eventSource.Setup(s => s.Id).Returns(_id);
                 _eventSource.Setup(s => s.Version).Returns(_version);
-                _eventSource.Setup(s => s.Flush()).Returns(_events);
+                _eventSource.Setup(s => s.Flush()).Returns(this._events).Callback(() => _eventSource.Setup(s => s.Version).Returns(_version + _events.Count));
+                _eventSource.Setup(s => s.BucketId).Returns(BucketSupport.DefaultBucketId);
 
                 _eventStore
                     .Setup(s => s.Write(
+                        It.IsAny<string>(),
                         It.IsAny<Guid>(), 
                         It.IsAny<int>(), 
                         It.IsAny<IEnumerable<object>>(), 
                         It.IsAny<Guid>(), 
                         It.IsAny<Dictionary<string, object>>(), 
                         It.IsAny<Dictionary<object, Dictionary<string, object>>>()))
-                    .Callback<Guid, int, IEnumerable<object>, Guid, Dictionary<string, object>, Dictionary<object, Dictionary<string, object>>>((a, b, c, d, e, f) =>
+                    .Callback<string, Guid, int, IEnumerable<object>, Guid, Dictionary<string, object>, Dictionary<object, Dictionary<string, object>>>((a, b, c, d, e, f, g) =>
                     {
-                        _committedHeaders = e;
-                        _committedEventHeaders = f;
+                        _committedHeaders = f;
+                        _committedEventHeaders = g;
                     });
             }
 
@@ -54,7 +56,7 @@ namespace NES.Tests
             [TestMethod]
             public void Should_commit_to_event_store()
             {
-                _eventStore.Verify(s => s.Write(_id, _version, _events, _commitId, It.IsAny<Dictionary<string, object>>(), It.IsAny<Dictionary<object, Dictionary<string, object>>>()));
+                _eventStore.Verify(s => s.Write(BucketSupport.DefaultBucketId, _id, _version, _events, _commitId, It.IsAny<Dictionary<string, object>>(), It.IsAny<Dictionary<object, Dictionary<string, object>>>()));
             }
 
             [TestMethod]
@@ -64,6 +66,7 @@ namespace NES.Tests
                 Assert.AreEqual(_id, _committedHeaders["AggregateId"]);
                 Assert.AreEqual(_version + _events.Count, _committedHeaders["AggregateVersion"]);
                 Assert.AreEqual(_eventSource.Object.GetType().FullName, _committedHeaders["AggregateType"]);
+                Assert.AreEqual(BucketSupport.DefaultBucketId, _committedHeaders["AggregateBucketId"]);
             }
 
             [TestMethod]
@@ -96,8 +99,9 @@ namespace NES.Tests
                 _eventSourceFactory.Setup(f => f.Create<IEventSource>()).Returns(_eventSource.Object);
                 _eventSource.Setup(s => s.Id).Returns(_id);
                 _eventSource.Setup(s => s.Version).Returns(_version);
-                _eventStore.Setup(a => a.Read(_id)).Returns(_memento.Object);
-                _eventStore.Setup(a => a.Read(_id, _version)).Returns(_events);
+                _eventSource.Setup(s => s.BucketId).Returns(BucketSupport.DefaultBucketId);
+                _eventStore.Setup(a => a.Read(BucketSupport.DefaultBucketId, _id)).Returns(this._memento.Object);
+                _eventStore.Setup(a => a.Read(BucketSupport.DefaultBucketId, _id, _version)).Returns(this._events);
             }
 
             protected override void Event()

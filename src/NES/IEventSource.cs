@@ -6,6 +6,7 @@ namespace NES
     public interface IEventSource
     {
         Guid Id { get; }
+        string BucketId { get; }
         int Version { get; }
         void RestoreSnapshot(IMemento memento);
         IMemento TakeSnapshot();
