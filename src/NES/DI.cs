@@ -1,3 +1,5 @@
+using NES.Contracts;
+
 namespace NES
 {
     public static class DI

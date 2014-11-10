@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NES.Sample</RootNamespace>
     <AssemblyName>NES.Sample</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,22 +30,21 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net">
-      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="NEventStore">
-      <HintPath>..\packages\NEventStore-Signed.4.1.0.10\lib\net40\NEventStore.dll</HintPath>
-    </Reference>
-    <Reference Include="NServiceBus">
-      <HintPath>..\packages\NServiceBus.Interfaces.4.2.0\lib\net40\NServiceBus.dll</HintPath>
+      <HintPath>..\packages\NEventStore.5.1.0\lib\net40\NEventStore.dll</HintPath>
     </Reference>
     <Reference Include="NServiceBus.Core">
-      <HintPath>..\packages\NServiceBus.4.2.0\lib\net40\NServiceBus.Core.dll</HintPath>
+      <HintPath>..\packages\NServiceBus.5.1.2\lib\net45\NServiceBus.Core.dll</HintPath>
     </Reference>
     <Reference Include="NServiceBus.Host">
-      <HintPath>..\packages\NServiceBus.Host.4.2.0\lib\net40\NServiceBus.Host.exe</HintPath>
+      <HintPath>..\packages\NServiceBus.Host.5.0.3\lib\net45\NServiceBus.Host.exe</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Log4Net, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NServiceBus.Log4Net.1.0.0\lib\net45\NServiceBus.Log4Net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -58,20 +58,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\ISession.cs" />
-    <Compile Include="Data\Session.cs" />
+    <Compile Include="Data\IDataRepository.cs" />
+    <Compile Include="Data\DataRepository.cs" />
     <Compile Include="Dtos\MessageDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="EndpointConfig.cs" />
     <Compile Include="Handlers\CreateUserCommandHandler.cs" />
-    <Compile Include="Handlers\MessageDtosHandler.cs" />
+    <Compile Include="Handlers\SentMessageEventHandler.cs" />
     <Compile Include="Handlers\SendMessageCommandHandler.cs" />
-    <Compile Include="Handlers\UserDtosHandler.cs" />
+    <Compile Include="Handlers\CreatedUserEventHandler.cs" />
     <Compile Include="Messages\Command.cs" />
-    <Compile Include="Messages\CreatedUserEvent.cs" />
+    <Compile Include="Messages\ICreatedUserEvent.cs" />
     <Compile Include="Messages\CreateUserCommand.cs" />
     <Compile Include="Messages\SendMessageCommand.cs" />
-    <Compile Include="Messages\SentMessageEvent.cs" />
+    <Compile Include="Messages\ISentMessageEvent.cs" />
     <Compile Include="Model\Message.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -82,7 +82,9 @@
     <Compile Include="Services\IMessagesService.cs" />
     <Compile Include="Services\IValidationService.cs" />
     <Compile Include="Services\MessagesService.cs" />
+    <Compile Include="Services\MutateIncomingTransportMessages.cs" />
     <Compile Include="Services\ValidationService.cs" />
+    <Compile Include="ValidateIncomingMessages.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -116,5 +118,6 @@
     <StartAction>Program</StartAction>
     <StartProgram>$(ProjectDir)$(OutputPath)NServiceBus.Host.exe</StartProgram>
     <StartArguments>NServiceBus.Lite</StartArguments>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
 </Project>

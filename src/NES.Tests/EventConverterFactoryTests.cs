@@ -1,5 +1,6 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NES.Contracts;
 using NES.Tests.Stubs;
 
 namespace NES.Tests

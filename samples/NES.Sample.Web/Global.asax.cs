@@ -5,9 +5,11 @@ using NServiceBus;
 
 namespace NES.Sample.Web
 {
+    using NServiceBus.Logging;
+
     public class MvcApplication : HttpApplication
     {
-        public static IBus Bus { get; private set; }
+        public static ISendOnlyBus Bus { get; private set; }
 
         protected void Application_Start()
         {
@@ -19,16 +21,15 @@ namespace NES.Sample.Web
 
         private void RegisterBus()
         {
-            Bus = Configure.With()
-                .Log4Net()
-                .DefaultBuilder()
-                .JsonSerializer()
-                .MsmqTransport()
-                .IsTransactional(false)
-                .PurgeOnStartup(false)
-                .UnicastBus()
-                .ImpersonateSender(false)
-                .SendOnly();
+            var busConfiguration = new BusConfiguration();
+            busConfiguration.UseSerialization<JsonSerializer>();
+            busConfiguration.UseTransport<MsmqTransport>();
+            busConfiguration.Transactions().Disable();
+            busConfiguration.PurgeOnStartup(false);
+            
+            LogManager.Use<NServiceBus.Log4Net.Log4NetFactory>();
+
+            Bus = NServiceBus.Bus.CreateSendOnly(busConfiguration);
         }
 
         private static void RegisterAllAreas()
@@ -50,8 +51,7 @@ namespace NES.Sample.Web
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
-                new { controller = "Messages", action = "Index", id = UrlParameter.Optional }
-            );
+                new { controller = "Messages", action = "Index", id = UrlParameter.Optional });
         }
     }
 }

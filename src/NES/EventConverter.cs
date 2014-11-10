@@ -1,3 +1,5 @@
+using NES.Contracts;
+
 namespace NES
 {
     public abstract class EventConverter<TFrom, TTo>

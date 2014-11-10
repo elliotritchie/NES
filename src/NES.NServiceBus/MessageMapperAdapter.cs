@@ -1,4 +1,5 @@
 ﻿using System;
+using NES.Contracts;
 using NServiceBus.MessageInterfaces;
 
 namespace NES.NServiceBus

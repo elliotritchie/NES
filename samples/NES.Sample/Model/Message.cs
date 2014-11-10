@@ -7,7 +7,7 @@ namespace NES.Sample.Model
     {
         public Message(User user, Guid messageId, string message)
         {
-            Apply<SentMessageEvent>(e =>
+            Apply<ISentMessageEvent>(e =>
             {
                 e.MessageId = messageId;
                 e.UserId = user.Id;
@@ -20,7 +20,7 @@ namespace NES.Sample.Model
         {
         }
 
-        private void Handle(SentMessageEvent @event)
+        private void Handle(ISentMessageEvent @event)
         {
             Id = @event.MessageId;
         }

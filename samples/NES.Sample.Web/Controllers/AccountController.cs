@@ -8,14 +8,14 @@ namespace NES.Sample.Web.Controllers
     public class AccountController : Controller
     {
         private readonly IFormsAuthenticationService _formsAuthenticationService;
-        private readonly IBus _bus;
+        private readonly ISendOnlyBus _bus;
 
         public AccountController()
             : this (new FormsAuthenticationService(), MvcApplication.Bus)
         {
         }
 
-        public AccountController(IFormsAuthenticationService formsAuthenticationService, IBus bus)
+        public AccountController(IFormsAuthenticationService formsAuthenticationService, ISendOnlyBus bus)
         {
             _formsAuthenticationService = formsAuthenticationService;
             _bus = bus;

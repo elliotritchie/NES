@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NES.Contracts;
 
 namespace NES.Tests
 {

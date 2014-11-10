@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NES.Contracts;
 using NES.Tests.Stubs;
 
 namespace NES.Tests

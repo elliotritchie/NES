@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NES.Contracts;
 
 namespace NES
 {
@@ -10,7 +11,7 @@ namespace NES
         private readonly ICommandContextProvider _commandContextProvider;
         private readonly IEventSourceMapper _eventSourceMapper;
         private CommandContext _commandContext;
-        private readonly List<IEventSource> _eventSources = new List<IEventSource>();
+        private readonly List<IEventSourceBase> _eventSources = new List<IEventSourceBase>();
 
         public UnitOfWork(ICommandContextProvider commandContextProvider, IEventSourceMapper eventSourceMapper)
         {
@@ -18,14 +19,16 @@ namespace NES
             _eventSourceMapper = eventSourceMapper;
         }
 
-        public T Get<T>(string bucketId, Guid id) where T : class, IEventSource
+        public T Get<T, TId, TMemento>(string bucketId, string id)
+            where T : class, IEventSourceGeneric<TId, TMemento>
+            where TMemento : class, IMementoGeneric<TId>
         {
-            var eventSource = _eventSources.OfType<T>().SingleOrDefault(s => s.Id == id && (s.BucketId == bucketId || string.IsNullOrEmpty(s.BucketId)));
+            var eventSource = _eventSources.OfType<T>().SingleOrDefault(s => s.StringId == id && (s.BucketId == bucketId || string.IsNullOrEmpty(s.BucketId)));
 
             if (eventSource == null)
             {
                 Logger.Debug("EventSource not found in mememory with id {0} and BucketId {1}. So read from event source.", id, bucketId);
-                eventSource = _eventSourceMapper.Get<T>(bucketId, id);
+                eventSource = _eventSourceMapper.Get<T, TId, TMemento>(bucketId, id);
             }
 
             this.Register(eventSource);
@@ -33,11 +36,11 @@ namespace NES
             return eventSource;
         }
 
-        public void Register<T>(T eventSource) where T : class, IEventSource
+        public void Register<T>(T eventSource) where T : class, IEventSourceBase
         {
             if (eventSource != null && !_eventSources.Contains(eventSource))
             {
-                Logger.Debug("Register event source Id '{0}', Version '{1}', Type '{2}'", eventSource.Id, eventSource.Version, eventSource.GetType().Name);
+                Logger.Debug("Register event source Id '{0}', Version '{1}', Type '{2}'", eventSource.StringId, eventSource.Version, eventSource.GetType().Name);
 
                 _eventSources.Add(eventSource);
             }

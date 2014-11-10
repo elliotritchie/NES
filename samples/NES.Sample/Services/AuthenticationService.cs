@@ -5,12 +5,12 @@ namespace NES.Sample.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
+        private Guid currentUser;
+
         public Guid UserId
         {
-            get
-            {
-                return new Guid(Thread.CurrentPrincipal.Identity.Name);
-            }
+            get { return currentUser; }
+            set { currentUser = value; }
         }
     }
 }

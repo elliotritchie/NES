@@ -7,6 +7,8 @@ using NES.Sample.Tests.Builders;
 
 namespace NES.Sample.Tests.Model
 {
+    using NES.Contracts;
+
     public static class MessageTests
     {
         [TestClass]
@@ -32,7 +34,7 @@ namespace NES.Sample.Tests.Model
             [TestMethod]
             public void Should_apply_sent_message_event()
             {
-                var @event = _source.Flush().OfType<SentMessageEvent>().Single();
+                var @event = _source.Flush().OfType<ISentMessageEvent>().Single();
 
                 Assert.AreEqual(_userId, @event.UserId);
                 Assert.AreEqual(_messageId, @event.MessageId);

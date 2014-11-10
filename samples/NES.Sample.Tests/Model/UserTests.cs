@@ -6,6 +6,8 @@ using NES.Sample.Model;
 
 namespace NES.Sample.Tests.Model
 {
+    using NES.Contracts;
+
     public static class UserTests
     {
         [TestClass]
@@ -27,7 +29,7 @@ namespace NES.Sample.Tests.Model
             [TestMethod]
             public void Should_apply_created_user_event()
             {
-                var @event = _source.Flush().OfType<CreatedUserEvent>().Single();
+                var @event = _source.Flush().OfType<ICreatedUserEvent>().Single();
 
                 Assert.AreEqual(_userId, @event.UserId);
                 Assert.AreEqual(_username, @event.Username);

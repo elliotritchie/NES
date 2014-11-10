@@ -26,7 +26,7 @@ namespace NES.Sample.Tests.Builders
 
         public UserBuilder CreatedUser(Guid userId, string username)
         {
-            Apply<CreatedUserEvent>(e =>
+            Apply<ICreatedUserEvent>(e =>
             {
                 e.UserId = userId;
                 e.Username = username;

@@ -9,14 +9,14 @@ namespace NES.Sample.Web.Controllers
     public class MessagesController : Controller
     {
         private readonly IMessagesService _messagesService;
-        private readonly IBus _bus;
+        private readonly ISendOnlyBus _bus;
 
         public MessagesController()
             : this(new MessagesService(), MvcApplication.Bus)
         {
         }
 
-        public MessagesController(IMessagesService messagesService, IBus bus)
+        public MessagesController(IMessagesService messagesService, ISendOnlyBus bus)
         {
             _messagesService = messagesService;
             _bus = bus;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NES.Contracts;
 
 namespace NES
 {
@@ -18,11 +19,13 @@ namespace NES
             _eventStore = eventStore;
         }
 
-        public T Get<T>(string bucketId, Guid id) where T : class, IEventSource
+        public T Get<T, TId, TMemento>(string bucketId, string id)
+            where T : class, IEventSourceGeneric<TId, TMemento>
+            where TMemento : class, IMementoGeneric<TId>
         {
             Logger.Debug("Get event source Id '{0}', Type '{1}'", id, typeof(T).Name);
 
-            if (id == Guid.Empty)
+            if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
             {
                 Logger.Warn("Try to read event store with Guid.Empty");
                 return null;
@@ -30,7 +33,7 @@ namespace NES
 
             var eventSource = _eventSourceFactory.Create<T>();
 
-            bool hasSnaphot = this.RestoreSnapshot(bucketId, id, eventSource);
+            bool hasSnaphot = this.RestoreSnapshot<T, TId, TMemento>(bucketId, id, eventSource);
             bool hasEvents = this.Hydrate(bucketId, id, eventSource);
 
             if (!(hasSnaphot || hasEvents))
@@ -39,18 +42,18 @@ namespace NES
                 return null;
             }
 
-            if (eventSource.Id == Guid.Empty)
+            if (string.IsNullOrEmpty(eventSource.StringId))
             {
-                Logger.Warn(string.Format("Source with id {0} found in eventstore, but after hydration the id was not set properly {1}", id, eventSource.Id));
+                Logger.Warn(string.Format("Source with id {0} found in eventstore, but after hydration the id was not set properly {1}", id, eventSource.StringId));
                 return null;
             }
 
             return eventSource;
         }
 
-        public void Set<T>(CommandContext commandContext, T eventSource) where T : class, IEventSource
+        public void Set(CommandContext commandContext, IEventSourceBase eventSource)
         {
-            var id = eventSource.Id;
+            var id = eventSource.StringId;
             var bucketId = eventSource.BucketId;
             var type = eventSource.GetType();
             var oldVersion = eventSource.Version;
@@ -88,7 +91,7 @@ namespace NES
             }
         }
 
-        private bool Hydrate<T>(string bucketId, Guid id, T eventSource) where T : IEventSource
+        private bool Hydrate<T>(string bucketId, string id, T eventSource) where T : IEventSourceBase
         {
             Logger.Debug("Hydrate event source Id '{0}', BucketId '{1}', Version '{2}' and Type '{3}'", id, bucketId, eventSource.Version, eventSource.GetType().Name);
 
@@ -99,11 +102,13 @@ namespace NES
             return events.Count > 0;
         }
 
-        private bool RestoreSnapshot<T>(string bucketId, Guid id, T eventSource) where T : IEventSource
+        private bool RestoreSnapshot<T, TId, TMemento>(string bucketId, string id, T eventSource)
+            where T : IEventSourceGeneric<TId, TMemento>
+            where TMemento : class, IMementoGeneric<TId>
         {
             Logger.Debug("Restore snapshot for event source Id '{0}', BucketId '{1}', Type '{2}'", id, bucketId, eventSource.GetType().Name);
 
-            var memento = _eventStore.Read(bucketId, id);
+            var memento = _eventStore.Read<TMemento>(bucketId, id);
 
             if (memento != null)
             {

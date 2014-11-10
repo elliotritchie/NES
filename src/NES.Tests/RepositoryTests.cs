@@ -1,6 +1,7 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NES.Contracts;
 
 namespace NES.Tests
 {
@@ -54,7 +55,7 @@ namespace NES.Tests
             [TestMethod]
             public void Should_get_aggregate_from_unit_of_work()
             {
-                _unitOfWork.Verify(u => u.Get<IEventSource>(BucketSupport.DefaultBucketId, _id));
+                _unitOfWork.Verify(u => u.Get<IEventSource, Guid, IMemento>(BucketSupport.DefaultBucketId, _id.ToString()));
             }
         }
     }

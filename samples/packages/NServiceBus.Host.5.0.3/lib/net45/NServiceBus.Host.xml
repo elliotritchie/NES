@@ -1,0 +1,412 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NServiceBus.Host</name>
+    </assembly>
+    <members>
+        <member name="T:NServiceBus.FileVersionRetriever">
+            <summary>
+            Helper class to retrieve File version.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.FileVersionRetriever.GetFileVersion(System.Type)">
+            <summary>
+            Retrieves a semver compliant version from a <see cref="T:System.Type"/>.
+            </summary>
+            <param name="type"><see cref="T:System.Type"/> to retrieve version from.</param>
+            <returns>SemVer compliant version.</returns>
+        </member>
+        <member name="T:NServiceBus.Hosting.Profiles.IConfigureLogging">
+            <summary>
+            Called in order to configure logging.
+            </summary>
+            <remarks>
+            If you want logging configured regardless of profiles, do not use this interface,
+            instead configure logging before you call <see cref="M:NServiceBus.Bus.Create(NServiceBus.BusConfiguration)"/> if you self hosting or configure logging in <see cref="M:NServiceBus.IConfigureThisEndpoint.Customize(NServiceBus.BusConfiguration)"/>.
+            Implementors should work against the generic version of this interface in the host.
+            </remarks>
+        </member>
+        <member name="M:NServiceBus.Hosting.Profiles.IConfigureLogging.Configure(NServiceBus.IConfigureThisEndpoint)">
+            <summary>
+            Performs all logging configuration.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Hosting.Profiles.IConfigureLoggingForProfile`1">
+            <summary>
+            Called in order to configure logging for the given profile type.
+            If an implementation isn't found for a given profile, then the search continues
+            recursively up that profile's inheritance hierarchy.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Hosting.Profiles.IHandleAnyProfile">
+            <summary>
+            Abstraction for code that will be called that will take dependent action based upon
+            the Profile(s) that are active. Useful for implementing special functionality if
+            a specific profile is activated, and implementing default functionality otherwise.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Hosting.Profiles.IHandleProfile`1">
+            <summary>
+            Generic abstraction for code which will be called when the given profile is active.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Hosting.Profiles.IHandleProfile">
+            <summary>
+            Abstraction for code which will be called when the given profile is active.
+            Implementors should implement IHandleProfile{T} rather than IHandleProfile.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Profiles.IHandleProfile.ProfileActivated(NServiceBus.BusConfiguration)">
+            <summary>
+            Called when a given profile is activated.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Profiles.IHandleProfile.ProfileActivated(NServiceBus.Configure)">
+            <summary>
+            Called when a given profile is activated.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.IWantTheListOfActiveProfiles">
+            <summary>
+            Implementors will receive the list of active Profiles from the <see cref="T:NServiceBus.Hosting.Profiles.ProfileManager"/>. 
+            Implementors must implement <see cref="T:NServiceBus.Hosting.Profiles.IHandleProfile"/>.
+            </summary>
+        </member>
+        <member name="P:NServiceBus.IWantTheListOfActiveProfiles.ActiveProfiles">
+            <summary>
+            ActiveProfiles list will be set by the infrastructure.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.IProfile">
+            <summary>
+            Marker interface to indicate a run-time profile.
+            Implementors must be concrete class - interfaces are not supported.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Hosting.Profiles.ProfileManager">
+            <summary>
+            Scans and loads profile handlers from the given assemblies
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Profiles.ProfileManager.#ctor(System.Collections.Generic.List{System.Reflection.Assembly},System.String[],System.Collections.Generic.List{System.Type})">
+            <summary>
+            Initializes the manager with the assemblies to scan and the endpoint configuration to use
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Profiles.ProfileManager.GetLoggingConfigurer">
+            <summary>
+            Returns an object to configure logging based on the specification and profiles passed in.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Profiles.ProfileManager.ActivateProfileHandlers(NServiceBus.BusConfiguration)">
+            <summary>
+            Activates the profile handlers that handle the previously identified active profiles. 
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Hosting.Windows.EndpointType">
+            <summary>
+                Representation of an Endpoint Type with additional descriptive properties.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Windows.EndpointType.#ctor(System.Type)">
+            <summary>
+                Initializes a new instance of the <see cref="T:NServiceBus.Hosting.Windows.EndpointType"/> class.
+            </summary>
+            <param name="type">The type.</param>
+        </member>
+        <member name="T:NServiceBus.Hosting.Windows.EndpointTypeDeterminer">
+            <summary>
+                Determines the Endpoint Type by applying conventions.
+            </summary>
+            <remarks>
+                The first eligible Type is returned, checking (in order):
+                Args (for windows hosted endpoints)
+                Configuration
+                Assembly scanning for <see cref="T:NServiceBus.IConfigureThisEndpoint"/>
+            </remarks>
+        </member>
+        <member name="M:NServiceBus.Hosting.Windows.EndpointTypeDeterminer.#ctor(NServiceBus.Hosting.Helpers.AssemblyScanner,System.Func{System.String})">
+            <summary>
+                Initializes a new instance of the <see cref="T:NServiceBus.Hosting.Windows.EndpointTypeDeterminer"/> class.
+            </summary>
+            <param name="assemblyScanner">The assembly scanner results.</param>
+            <param name="getEndpointConfigurationTypeFromConfig">A func to retrieve the endpoint configuration type from config.</param>
+            <exception cref="T:System.ArgumentNullException">assemblyScannerResults</exception>
+        </member>
+        <member name="M:NServiceBus.Hosting.Windows.EndpointTypeDeterminer.GetEndpointConfigurationType">
+            <summary>
+                Gets the type of the endpoint configuration.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">No endpoint configuration found in scanned assemblies. </exception>
+        </member>
+        <member name="M:NServiceBus.GenericHost.Start">
+            <summary>
+                Creates and starts the bus as per the configuration
+            </summary>
+        </member>
+        <member name="M:NServiceBus.GenericHost.Stop">
+            <summary>
+                Finalize
+            </summary>
+        </member>
+        <member name="M:NServiceBus.GenericHost.Install(System.String)">
+            <summary>
+                When installing as windows service (/install), run infrastructure installers
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Hosting.Windows.Installers.WindowsInstaller">
+            <summary>
+            Windows Installer for NService Bus Host
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Windows.Installers.WindowsInstaller.Install(System.String[],System.String)">
+            <summary>
+            Run installers (infrastructure and per endpoint) and handles profiles.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Windows.Installers.WindowsInstaller.RunInstall">
+            <summary>
+            Run Install
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Hosting.Windows.LoggingHandlers.IntegrationLoggingHandler">
+            <summary>
+            Handles logging configuration for the <see cref="T:NServiceBus.Integration"/> profile.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Hosting.Windows.LoggingHandlers.LiteLoggingHandler">
+            <summary>
+            Handles logging configuration for the <see cref="T:NServiceBus.Lite"/> profile.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Hosting.Windows.LoggingHandlers.ProductionLoggingHandler">
+            <summary>
+            Handles logging configuration for the <see cref="T:NServiceBus.Production"/> profile.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Distributor">
+            <summary>
+            Feature Profile for starting the Distributor without a worker running on its endpoint
+            </summary>
+        </member>
+        <member name="T:NServiceBus.MultiSite">
+            <summary>
+            Indicates that this node has a Gateway access to it.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Master">
+            <summary>
+            Indicates that this node is the master node for its set of messages.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Worker">
+            <summary>
+            Indicates that this node is a worker node that will process messages coming from its distributor
+            </summary>
+        </member>
+        <member name="T:NServiceBus.AsA_Publisher">
+            <summary>
+            Indicates this endpoint is a publisher.
+            This is compatible with <see cref="T:NServiceBus.AsA_Server"/> but not <see cref="T:NServiceBus.AsA_Client"/>.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Hosting.Windows.Profiles.Handlers.PerformanceCountersProfileHandler">
+            <summary>
+            Handles the PerformanceCounters profile.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.UsingTransport`1">
+            <summary>
+            Role used to specify the desired transport to use
+            </summary>
+            <typeparam name="T">The <see cref="T:NServiceBus.Transports.TransportDefinition"/> to use.</typeparam>
+        </member>
+        <member name="T:NServiceBus.Hosting.Windows.InstallWindowsHost">
+            <summary>
+            A windows implementation of the NServiceBus hosting solution
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Windows.InstallWindowsHost.#ctor(System.Type,System.String[],System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Accepts the type which will specify the users custom configuration.
+            This type should implement <see cref="T:NServiceBus.IConfigureThisEndpoint"/>.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Windows.InstallWindowsHost.Install(System.String)">
+            <summary>
+            Performs installations
+            </summary>
+            <param name="username">Username passed in to host.</param>
+        </member>
+        <member name="T:NServiceBus.IWcfService`2">
+            <summary>
+            Service interface for a generic WCF adapter to a messaging endpoint.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.IWcfService`2.BeginProcess(`0,System.AsyncCallback,System.Object)">
+            <summary>
+            Sends the message to the messaging endpoint.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.IWcfService`2.EndProcess(System.IAsyncResult)">
+            <summary>
+            Returns the result received from the messaging endpoint.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.ServiceAsyncResult.#ctor(System.Object)">
+            <summary>
+            Creates a new object storing the given state.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.ServiceAsyncResult.Complete(NServiceBus.CompletionResult)">
+            <summary>
+            Stores the given completion result from the server, 
+            releases any blocked threads
+            </summary>
+        </member>
+        <member name="P:NServiceBus.ServiceAsyncResult.AsyncState">
+            <summary>
+            Returns the original state passed into the Begin method.
+            </summary>
+        </member>
+        <member name="P:NServiceBus.ServiceAsyncResult.AsyncWaitHandle">
+            <summary>
+            Returns a handle suitable for blocking threads.
+            </summary>
+        </member>
+        <member name="P:NServiceBus.ServiceAsyncResult.CompletedSynchronously">
+            <summary>
+            Returns false.
+            </summary>
+        </member>
+        <member name="P:NServiceBus.ServiceAsyncResult.Result">
+            <summary>
+            Contains the completion result from the server.
+            </summary>
+        </member>
+        <member name="P:NServiceBus.ServiceAsyncResult.IsCompleted">
+            <summary>
+            Returns if the operation has completed.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Hosting.Wcf.WcfManager">
+            <summary>
+                Enable users to expose messages as WCF services
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Wcf.WcfManager.Startup(NServiceBus.Unicast.UnicastBus)">
+            <summary>
+                Starts a <see cref="T:System.ServiceModel.ServiceHost"/> for each found service. Defaults to <see cref="T:System.ServiceModel.BasicHttpBinding"/> if
+                no user specified binding is found
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Wcf.WcfManager.Shutdown">
+            <summary>
+                Shuts down the service hosts
+            </summary>
+        </member>
+        <member name="T:NServiceBus.WcfService`2">
+            <summary>
+            Generic WCF service for exposing a messaging endpoint.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.WcfService`2.#ctor">
+            <summary>
+            Create an instance of <see cref="T:NServiceBus.WcfService`2"/>
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Hosting.Wcf.WcfServiceHost">
+            <summary>
+            A specialized service host that adds a default endpoint if non is specified in config
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Wcf.WcfServiceHost.#ctor(System.Type)">
+            <summary>
+            Constructs the host with the given service type
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Wcf.WcfServiceHost.AddDefaultEndpoint(System.Type,System.ServiceModel.Channels.Binding,System.String)">
+            <summary>
+            Adds the given endpoint unless its already configured in app.config
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Hosting.Windows.WindowsHost">
+            <summary>
+            A windows implementation of the NServiceBus hosting solution
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Windows.WindowsHost.#ctor(System.Type,System.String[],System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Accepts the type which will specify the users custom configuration.
+            This type should implement <see cref="T:NServiceBus.IConfigureThisEndpoint"/>.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Windows.WindowsHost.Start">
+            <summary>
+            Does startup work.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Windows.WindowsHost.Stop">
+            <summary>
+            Does shutdown work.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Integration">
+            <summary>
+            Indicates that infrastructure suitable for integration environments be used.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Lite">
+            <summary>
+            Indicates that the lightest weight infrastructure should be used.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.PerformanceCounters">
+            <summary>
+            Indicates that performance counters should be published.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Production">
+            <summary>
+            Indicates that the infrastructure should configure itself for production.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Hosting.Windows.Program">
+            <summary>
+            Entry point to the process.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Hosting.Windows.HostServiceLocator">
+            <summary>
+            Plugs into the generic service locator to return an instance of <see cref="T:NServiceBus.Hosting.GenericHost"/>.
+            </summary>
+        </member>
+        <member name="F:NServiceBus.Hosting.Windows.HostServiceLocator.Args">
+            <summary>
+            Command line arguments.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Windows.HostServiceLocator.DoGetInstance(System.Type,System.String)">
+            <summary>
+            Returns an instance of <see cref="T:NServiceBus.Hosting.GenericHost"/>
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Hosting.Windows.HostServiceLocator.DoGetAllInstances(System.Type)">
+            <summary>
+            Not implemented.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.AsA_Client">
+            <summary>
+            Indicates this endpoint is a client.
+            As such will be set up as a non-transactional endpoint with no impersonation and purging messages on startup.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.AsA_Server">
+            <summary>
+            Indicates this endpoint is a server.
+            As such will be set up as a transactional endpoint using impersonation, not purging messages on startup.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using NES.Contracts;
 using NEventStore;
 using NEventStore.Dispatcher;
 

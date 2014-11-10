@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NES.Contracts;
 
 namespace NES.Tests
 {
@@ -26,8 +27,9 @@ namespace NES.Tests
                 _eventSourceMapper = new EventSourceMapper(null, _eventStore.Object);
 
                 _commandContext.Id = _commitId;
-                _commandContext.Headers = new Dictionary<string, object> {{ "TestKey", "TestValue" }};
+                _commandContext.Headers = new Dictionary<string, object> { { "TestKey", "TestValue" } };
                 _eventSource.Setup(s => s.Id).Returns(_id);
+                _eventSource.Setup(s => s.StringId).Returns(_id.ToString);
                 _eventSource.Setup(s => s.Version).Returns(_version);
                 _eventSource.Setup(s => s.Flush()).Returns(this._events).Callback(() => _eventSource.Setup(s => s.Version).Returns(_version + _events.Count));
                 _eventSource.Setup(s => s.BucketId).Returns(BucketSupport.DefaultBucketId);
@@ -35,13 +37,13 @@ namespace NES.Tests
                 _eventStore
                     .Setup(s => s.Write(
                         It.IsAny<string>(),
-                        It.IsAny<Guid>(), 
-                        It.IsAny<int>(), 
-                        It.IsAny<IEnumerable<object>>(), 
-                        It.IsAny<Guid>(), 
-                        It.IsAny<Dictionary<string, object>>(), 
+                        It.IsAny<string>(),
+                        It.IsAny<int>(),
+                        It.IsAny<IEnumerable<object>>(),
+                        It.IsAny<Guid>(),
+                        It.IsAny<Dictionary<string, object>>(),
                         It.IsAny<Dictionary<object, Dictionary<string, object>>>()))
-                    .Callback<string, Guid, int, IEnumerable<object>, Guid, Dictionary<string, object>, Dictionary<object, Dictionary<string, object>>>((a, b, c, d, e, f, g) =>
+                    .Callback<string, string, int, IEnumerable<object>, Guid, Dictionary<string, object>, Dictionary<object, Dictionary<string, object>>>((a, b, c, d, e, f, g) =>
                     {
                         _committedHeaders = f;
                         _committedEventHeaders = g;
@@ -56,14 +58,14 @@ namespace NES.Tests
             [TestMethod]
             public void Should_commit_to_event_store()
             {
-                _eventStore.Verify(s => s.Write(BucketSupport.DefaultBucketId, _id, _version, _events, _commitId, It.IsAny<Dictionary<string, object>>(), It.IsAny<Dictionary<object, Dictionary<string, object>>>()));
+                _eventStore.Verify(s => s.Write(BucketSupport.DefaultBucketId, _id.ToString(), _version, _events, _commitId, It.IsAny<Dictionary<string, object>>(), It.IsAny<Dictionary<object, Dictionary<string, object>>>()));
             }
 
             [TestMethod]
             public void Should_commit_headers_to_event_store()
             {
                 Assert.AreEqual("TestValue", _committedHeaders["TestKey"]);
-                Assert.AreEqual(_id, _committedHeaders["AggregateId"]);
+                Assert.AreEqual(_id.ToString(), _committedHeaders["AggregateId"]);
                 Assert.AreEqual(_version + _events.Count, _committedHeaders["AggregateVersion"]);
                 Assert.AreEqual(_eventSource.Object.GetType().FullName, _committedHeaders["AggregateType"]);
                 Assert.AreEqual(BucketSupport.DefaultBucketId, _committedHeaders["AggregateBucketId"]);
@@ -98,15 +100,16 @@ namespace NES.Tests
 
                 _eventSourceFactory.Setup(f => f.Create<IEventSource>()).Returns(_eventSource.Object);
                 _eventSource.Setup(s => s.Id).Returns(_id);
+                _eventSource.Setup(s => s.StringId).Returns(_id.ToString);
                 _eventSource.Setup(s => s.Version).Returns(_version);
                 _eventSource.Setup(s => s.BucketId).Returns(BucketSupport.DefaultBucketId);
-                _eventStore.Setup(a => a.Read(BucketSupport.DefaultBucketId, _id)).Returns(this._memento.Object);
-                _eventStore.Setup(a => a.Read(BucketSupport.DefaultBucketId, _id, _version)).Returns(this._events);
+                _eventStore.Setup(a => a.Read<IMemento>(BucketSupport.DefaultBucketId, _id.ToString())).Returns(this._memento.Object);
+                _eventStore.Setup(a => a.Read(BucketSupport.DefaultBucketId, _id.ToString(), _version)).Returns(this._events);
             }
 
             protected override void Event()
             {
-                _returnedEventSource = _eventSourceMapper.Get<IEventSource>(_id);
+                _returnedEventSource = _eventSourceMapper.Get<IEventSource, Guid, IMemento>(BucketSupport.DefaultBucketId, _id.ToString());
             }
 
             [TestMethod]
@@ -152,7 +155,7 @@ namespace NES.Tests
 
             protected override void Event()
             {
-                _returnedEventSource = _eventSourceMapper.Get<IEventSource>(Guid.NewGuid());
+                _returnedEventSource = _eventSourceMapper.Get<IEventSource, Guid, IMemento>(BucketSupport.DefaultBucketId, Guid.NewGuid().ToString());
             }
 
             [TestMethod]

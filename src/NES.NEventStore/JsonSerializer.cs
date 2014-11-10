@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
+using NES.Contracts;
 using NEventStore.Logging;
 using NEventStore.Serialization;
 using Newtonsoft.Json;

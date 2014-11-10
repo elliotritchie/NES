@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.IO;
+using NES.Contracts;
 using NEventStore.Logging;
 using Newtonsoft.Json.Bson;
 

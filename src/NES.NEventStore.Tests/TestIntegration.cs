@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Moq;
+using NES.Contracts;
 using NES.NServiceBus;
 using NEventStore;
 using NServiceBus;
@@ -18,7 +19,9 @@ namespace NES.NEventStore.Tests
 
             DI.Current.Register(() => this.Repository);
 
-            var busMock = new Mock<IBus>();
+            var busMock = new Mock<IManageMessageHeaders>().As<IBus>();
+
+            busMock.As<IManageMessageHeaders>().SetupGet(b => b.SetHeaderAction).Returns((o, s, arg3) => { });
             busMock.Setup(b => b.CurrentMessageContext).Returns(new MessageContext(new TransportMessage()));
             busMock.Setup(b => b.OutgoingHeaders).Returns(new Dictionary<string, string>());
             global::NServiceBus.ExtensionMethods.CurrentMessageBeingHandled = new Mock<ICommand>().Object;
@@ -28,8 +31,8 @@ namespace NES.NEventStore.Tests
             var commandContextProvider = new CommandContextProvider(busMock.Object);
 
             StoreEvents =
-                Wireup.Init().UsingInMemoryPersistence().InitializeStorageEngine().UsingSynchronousDispatchScheduler().NES().Build();
-
+                Wireup.Init().UsingInMemoryPersistence().InitializeStorageEngine().NES().Build();
+            
             DI.Current.Register<ICommandContextProvider>(() => commandContextProvider);
             DI.Current.Register<IEventPublisher, IBus>(bus => new BusAdapter(bus));
         }

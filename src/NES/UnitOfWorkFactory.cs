@@ -1,4 +1,5 @@
 using System;
+using NES.Contracts;
 
 namespace NES
 {

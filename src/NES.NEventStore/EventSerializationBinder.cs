@@ -1,4 +1,5 @@
 ﻿using System;
+using NES.Contracts;
 using Newtonsoft.Json.Serialization;
 
 namespace NES.NEventStore

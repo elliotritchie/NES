@@ -5,26 +5,19 @@ using NServiceBus;
 
 namespace NES.Sample.Handlers
 {
+    using NES.Contracts;
+
     public class CreateUserCommandHandler : IHandleMessages<CreateUserCommand>
     {
-        private readonly IValidationService _validationService;
         private readonly IRepository _repository;
 
-        public CreateUserCommandHandler()
-            : this(new ValidationService(), new Repository())
+        public CreateUserCommandHandler(IRepository repository)
         {
-        }
-
-        public CreateUserCommandHandler(IValidationService validationService, IRepository repository)
-        {
-            _validationService = validationService;
             _repository = repository;
         }
 
         public void Handle(CreateUserCommand command)
         {
-            _validationService.Validate(command);
-
             var user = new User(command.UserId.Value, command.Username);
 
             _repository.Add(user);

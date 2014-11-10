@@ -1,4 +1,5 @@
 using System.IO;
+using NES.Contracts;
 using NServiceBus.Serialization;
 
 namespace NES.NServiceBus

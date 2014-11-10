@@ -7,7 +7,7 @@ namespace NES.Sample.Model
     {
         public User(Guid userId, string username)
         {
-            Apply<CreatedUserEvent>(e =>
+            Apply<ICreatedUserEvent>(e =>
             {
                 e.UserId = userId;
                 e.Username = username;
@@ -23,7 +23,7 @@ namespace NES.Sample.Model
             return new Message(this, messageId, message);
         }
 
-        private void Handle(CreatedUserEvent @event)
+        private void Handle(ICreatedUserEvent @event)
         {
             Id = @event.UserId;
         }

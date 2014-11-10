@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NES.Contracts;
 using NServiceBus;
 
 namespace NES.NServiceBus
@@ -16,6 +17,12 @@ namespace NES.NServiceBus
         {
             foreach (var header in headers)
             {
+                if (header.Key == Headers.OriginatingHostId)
+                {
+                    //is added by bus in v5
+                    continue;
+                }
+
                 _bus.OutgoingHeaders[header.Key] = header.Value != null ? header.Value.ToString() : null;
             }
 

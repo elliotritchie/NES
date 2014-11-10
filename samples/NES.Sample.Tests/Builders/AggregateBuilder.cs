@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace NES.Sample.Tests.Builders
 {
+    using NES.Contracts;
+
     public abstract class AggregateBuilder<T> where T : AggregateBase
     {
         private readonly IEventSourceFactory _eventSourceFactory = new EventSourceFactory();

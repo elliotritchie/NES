@@ -1,9 +1,10 @@
 ﻿using System.Reflection;
+using NES.Contracts;
 using NEventStore;
 using NEventStore.Logging;
 using NEventStore.Persistence;
-using NEventStore.Persistence.RavenPersistence;
 using Raven.Client;
+using NEventStore.Persistence.RavenDB;
 
 namespace NES.NEventStore.Raven
 {

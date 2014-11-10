@@ -7,21 +7,21 @@ namespace NES.Sample.Services
 {
     public class MessagesService : IMessagesService
     {
-        private readonly ISession _session;
+        private readonly IDataRepository _dataRepository;
 
         public MessagesService()
-            : this(new Session())
+            : this(new DataRepository())
         {
         }
 
-        public MessagesService(ISession session)
+        public MessagesService(IDataRepository dataRepository)
         {
-            _session = session;
+            _dataRepository = dataRepository;
         }
 
         public IEnumerable<MessageDto> Get()
         {
-            return _session.MessageDtos.OrderByDescending(m => m.Sent);
+            return _dataRepository.MessageDtos.OrderByDescending(m => m.Sent);
         }
     }
 }

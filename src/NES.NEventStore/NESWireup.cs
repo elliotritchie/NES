@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using NES.Contracts;
 using NEventStore;
 using NEventStore.Dispatcher;
 using NEventStore.Logging;
@@ -24,23 +25,23 @@ namespace NES.NEventStore
 
                 this.Container.Register<ISerialize>(new CompositeSerializer(serializer, () => DI.Current.Resolve<IEventSerializer>()));
             }
-
+            
             Logger.Debug("Configuring the store to dispatch messages synchronously.");
             Logger.Debug("Registering dispatcher of type '{0}'.", typeof(MessageDispatcher));
 
             this.Container.Register<IDispatchCommits>(new MessageDispatcher(() => DI.Current.Resolve<IEventPublisher>()));
             this.Container.Register<IScheduleDispatches>(c =>
+            {
+                var dispatchScheduler = new SynchronousDispatchScheduler(
+                    c.Resolve<IDispatchCommits>(),
+                    c.Resolve<IPersistStreams>());
+                if (c.Resolve<DispatcherSchedulerStartup>() == DispatcherSchedulerStartup.Auto)
                 {
-                    var dispatchScheduler = new SynchronousDispatchScheduler(
-                        c.Resolve<IDispatchCommits>(),
-                        c.Resolve<IPersistStreams>());
-                    if (c.Resolve<DispatcherSchedulerStartup>() == DispatcherSchedulerStartup.Auto)
-                    {
-                        dispatchScheduler.Start();
-                    }
+                    dispatchScheduler.Start();
+                }
 
-                    return dispatchScheduler;
-                });
+                return dispatchScheduler;
+            });
 
             DI.Current.Register<IEventStore, IStoreEvents>(eventStore => new EventStoreAdapter(eventStore));
         }
@@ -72,9 +73,9 @@ namespace NES.NEventStore
             }
 
             pipelineHooks.Add(eventConverterPipelineHook);
-
+            
             var store = base.Build();
-
+            
             DI.Current.Register(() => store);
 
             return store;
