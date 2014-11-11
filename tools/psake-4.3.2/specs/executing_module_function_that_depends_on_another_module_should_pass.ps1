@@ -1,5 +1,5 @@
 task default -depends test
 
 task test {
-	Execute-ModuleAFunction
+    invoke-psake modules\default.ps1
 }
