@@ -19,17 +19,17 @@ namespace NES.NEventStore
             _eventStore = eventStore;
         }
 
-        public TMemento Read<TMemento>(string bucketId, string id) where TMemento : class, IMementoBase
+        public TMemento Read<TMemento>(string bucketId, string id, int version) where TMemento : class, IMementoBase
         {
             bucketId = this.ChangeBucketIdIfRequired(bucketId);
-            var snapshot = _eventStore.Advanced.GetSnapshot(bucketId, id, int.MaxValue);
+            var snapshot = _eventStore.Advanced.GetSnapshot(bucketId, id, version);
             return snapshot != null ? (TMemento)snapshot.Payload : null;
         }
 
         public IEnumerable<object> Read(string bucketId, string id, int version)
         {
             bucketId = this.ChangeBucketIdIfRequired(bucketId);
-            using (var stream = _eventStore.OpenStream(bucketId, id, version, int.MaxValue))
+            using (var stream = _eventStore.OpenStream(bucketId, id, int.MinValue, version))
             {
                 Logger.Debug("Stream with bucketId {0} id {1} has revision {2}. CommitedEvents count {3}", bucketId, id, stream.StreamRevision, stream.CommittedEvents.Count);
                 return stream.CommittedEvents.Select(e => e.Body);

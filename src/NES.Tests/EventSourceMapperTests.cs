@@ -103,13 +103,13 @@ namespace NES.Tests
                 _eventSource.Setup(s => s.StringId).Returns(_id.ToString);
                 _eventSource.Setup(s => s.Version).Returns(_version);
                 _eventSource.Setup(s => s.BucketId).Returns(BucketSupport.DefaultBucketId);
-                _eventStore.Setup(a => a.Read<IMemento>(BucketSupport.DefaultBucketId, _id.ToString())).Returns(this._memento.Object);
-                _eventStore.Setup(a => a.Read(BucketSupport.DefaultBucketId, _id.ToString(), _version)).Returns(this._events);
+                _eventStore.Setup(a => a.Read<IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue)).Returns(this._memento.Object);
+                _eventStore.Setup(a => a.Read(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue)).Returns(this._events);
             }
 
             protected override void Event()
             {
-                _returnedEventSource = _eventSourceMapper.Get<IEventSource, Guid, IMemento>(BucketSupport.DefaultBucketId, _id.ToString());
+                _returnedEventSource = _eventSourceMapper.Get<IEventSource, Guid, IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue);
             }
 
             [TestMethod]
@@ -155,7 +155,7 @@ namespace NES.Tests
 
             protected override void Event()
             {
-                _returnedEventSource = _eventSourceMapper.Get<IEventSource, Guid, IMemento>(BucketSupport.DefaultBucketId, Guid.NewGuid().ToString());
+                _returnedEventSource = _eventSourceMapper.Get<IEventSource, Guid, IMemento>(BucketSupport.DefaultBucketId, Guid.NewGuid().ToString(), int.MaxValue);
             }
 
             [TestMethod]

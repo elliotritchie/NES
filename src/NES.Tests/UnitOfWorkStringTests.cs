@@ -25,7 +25,7 @@ namespace NES.Tests
                 _aggregate = new AggregateStringStub(_id);
 
                 _commandContextProvider.Setup(p => p.Get()).Returns(_commandContext);
-                _eventSourceMapper.Setup(m => m.Get<AggregateStringStub, string, StringWay.IMemento>(BucketSupport.DefaultBucketId, _id.ToString())).Returns(_aggregate);
+                _eventSourceMapper.Setup(m => m.Get<AggregateStringStub, string, StringWay.IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue)).Returns(_aggregate);
             }
 
             protected override void Event()
@@ -36,7 +36,7 @@ namespace NES.Tests
             [TestMethod]
             public void Should_get_aggregate_from_event_source_mapper()
             {
-                _eventSourceMapper.Verify(m => m.Get<AggregateStringStub, string, StringWay.IMemento>(BucketSupport.DefaultBucketId, _id.ToString()));
+                _eventSourceMapper.Verify(m => m.Get<AggregateStringStub, string, StringWay.IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue));
             }
 
             [TestMethod]
@@ -69,7 +69,7 @@ namespace NES.Tests
                 _aggregate = new AggregateStringStub(_id);
 
                 _commandContextProvider.Setup(p => p.Get()).Returns(_commandContext);
-                _eventSourceMapper.Setup(m => m.Get<AggregateStringStub, string, StringWay.IMemento>(BucketSupport.DefaultBucketId, _id.ToString())).Returns(_aggregate);
+                _eventSourceMapper.Setup(m => m.Get<AggregateStringStub, string, StringWay.IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue)).Returns(_aggregate);
             }
 
             protected override void Event()
@@ -81,7 +81,7 @@ namespace NES.Tests
             [TestMethod]
             public void Should_get_aggregate_from_event_source_mapper_once()
             {
-                _eventSourceMapper.Verify(m => m.Get<AggregateStringStub, string, StringWay.IMemento>(BucketSupport.DefaultBucketId, _id.ToString()), Times.Once());
+                _eventSourceMapper.Verify(m => m.Get<AggregateStringStub, string, StringWay.IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue), Times.Once());
             }
 
             [TestMethod]
@@ -112,7 +112,7 @@ namespace NES.Tests
                 _unitOfWork = new UnitOfWork(_commandContextProvider.Object, _eventSourceMapper.Object);
 
                 _commandContextProvider.Setup(p => p.Get()).Returns(_commandContext);
-                _eventSourceMapper.Setup(m => m.Get<AggregateStringStub, string, StringWay.IMemento>(BucketSupport.DefaultBucketId, _id.ToString())).Returns<AggregateStringStub>(null);
+                _eventSourceMapper.Setup(m => m.Get<AggregateStringStub, string, StringWay.IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue)).Returns<AggregateStringStub>(null);
             }
 
             protected override void Event()
@@ -123,7 +123,7 @@ namespace NES.Tests
             [TestMethod]
             public void Should_get_aggregate_from_event_source_mapper()
             {
-                _eventSourceMapper.Verify(m => m.Get<AggregateStringStub, string, StringWay.IMemento>(BucketSupport.DefaultBucketId, _id.ToString()));
+                _eventSourceMapper.Verify(m => m.Get<AggregateStringStub, string, StringWay.IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue));
             }
 
             [TestMethod]
