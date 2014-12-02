@@ -1,4 +1,4 @@
-NES v4
+NES v5
 ======================================================================
 
 NES (.NET Event Sourcing) is a lightweight framework that helps you build domain models when you're doing event sourcing.
@@ -23,6 +23,11 @@ NES hooks into NServiceBus' and NEventStore's configuration objects and transpar
 * Minimal configuration
 
 ## Version History
+
+### v5
+
+* Supports NEventStore v5
+* Supports NServiceBus v5
 
 ### v4
 
