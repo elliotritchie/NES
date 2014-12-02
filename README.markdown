@@ -47,7 +47,7 @@ NES hooks into NServiceBus' and NEventStore's configuration objects and transpar
 ## Download
 The easiest way to install NES is via NuGet ([NES](http://nuget.org/packages/NES), [NES.NEventStore](http://nuget.org/packages/NES.NEventStore), [NES.NEventStore.Raven](http://nuget.org/packages/NES.NEventStore.Raven), [NES.NServiceBus](http://nuget.org/packages/NES.NServiceBus)) or you can download the source and run 'build.bat' from the command line. Once built, the files will be placed in the 'build' folder.
 
-## Using NES
+## Using NES until Version 4
 
 
 ```c#
@@ -70,6 +70,53 @@ public class EndpointConfig : IConfigureThisEndpoint, AsA_Publisher, IWantCustom
 	}
 }
 ```
+
+## Using NES from version 5
+
+
+```c#
+public class EndpointConfig : IConfigureThisEndpoint, AsA_Server, IWantToRunWhenBusStartsAndStops, IWantToRunWhenConfigurationIsComplete
+    {
+        public void Init()
+        {
+            LogManager.Use<Log4NetFactory>();
+        }
+
+        public void Start()
+        {
+            Wireup.Init()
+                .UsingInMemoryPersistence()
+                .EnlistInAmbientTransaction()
+                .NES()
+                .Build();
+        }
+
+        public void Stop()
+        {
+        }
+
+        public void Customize(BusConfiguration configuration)
+        {
+            configuration.UseSerialization<Json>();
+            configuration.EnableInstallers();
+            configuration.UsePersistence<InMemoryPersistence>();
+            configuration.UseTransport<MsmqTransport>();
+            configuration.PurgeOnStartup(false);
+        }
+
+        public void Run(Configure config)
+        {
+            config.NES();
+        }
+    }
+```
+
+If you customize the BusConfiguration in a way, that you are defining which assemblies should be loading like following
+
+```c#
+configuration.AssembliesToScan(AllAssemblies.Matching("MyNamespace"));
+```
+so please ensure, that also all NES assemblies are loaded as well. You will get NullReferenceException if not doing so.
 
 For a more complete example, please open and build NES.Sample.sln in Visual Studio and hit F5. This will start the [NES.Sample](https://github.com/elliotritchie/NES/tree/master/samples/NES.Sample) NServiceBus endpoint as well as the [NES.Sample.Web](https://github.com/elliotritchie/NES/tree/master/samples/NES.Sample.Web) MVC3 website.
 
