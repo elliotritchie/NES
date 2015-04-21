@@ -12,7 +12,7 @@ namespace NES.Tests
         {
             private Repository _repository;
             private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
-            private readonly Mock<IEventSource> _aggregate = new Mock<IEventSource>();
+            private readonly Mock<IEventSourceBase> _aggregate = new Mock<IEventSourceBase>();
 
             protected override void Context()
             {
@@ -49,13 +49,13 @@ namespace NES.Tests
 
             protected override void Event()
             {
-                _repository.Get<IEventSource>(_id);
+                _repository.Get<IEventSource<Guid>>(_id);
             }
 
             [TestMethod]
             public void Should_get_aggregate_from_unit_of_work()
             {
-                _unitOfWork.Verify(u => u.Get<IEventSource, Guid, IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue));
+                _unitOfWork.Verify(u => u.Get<IEventSource<Guid>, Guid>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue));
             }
         }
     }

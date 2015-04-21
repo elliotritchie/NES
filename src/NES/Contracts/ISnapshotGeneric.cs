@@ -1,9 +1,8 @@
 ﻿namespace NES.Contracts
 {
-    public interface ISnapshotGeneric<TId,TMemento> 
-        where TMemento : IMementoGeneric<TId>
+    public interface ISnapshotGeneric<TId> 
     {
-        void RestoreSnapshot(TMemento memento);
-        TMemento TakeSnapshot();
+        void RestoreSnapshot(Memento<TId> memento);
+        Memento<TId> TakeSnapshot();
     }
 }

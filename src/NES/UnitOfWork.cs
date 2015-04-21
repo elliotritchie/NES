@@ -19,16 +19,15 @@ namespace NES
             _eventSourceMapper = eventSourceMapper;
         }
 
-        public T Get<T, TId, TMemento>(string bucketId, string id, int version = int.MaxValue)
-            where T : class, IEventSourceGeneric<TId, TMemento>
-            where TMemento : class, IMementoGeneric<TId>
+        public T Get<T, TId>(string bucketId, string id, int version = int.MaxValue)
+            where T : class, IEventSource<TId>
         {
             var eventSource = _eventSources.OfType<T>().SingleOrDefault(s => s.StringId == id && (s.BucketId == bucketId || string.IsNullOrEmpty(s.BucketId)));
 
             if (eventSource == null)
             {
                 Logger.Debug("EventSource not found in mememory with id {0} and BucketId {1}. So read from event source.", id, bucketId);
-                eventSource = _eventSourceMapper.Get<T, TId, TMemento>(bucketId, id, version);
+                eventSource = _eventSourceMapper.Get<T, TId>(bucketId, id, version);
             }
 
             this.Register(eventSource);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NES.Tests.Stubs
 {
-    public class AggregateStringStub : StringWay.AggregateBase
+    public class AggregateStringStub : AggregateBase<string>
     {
         public readonly List<IEvent> HandledEvents = new List<IEvent>();
 

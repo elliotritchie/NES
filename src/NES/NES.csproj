@@ -54,10 +54,10 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AggregateBaseGeneric.cs" />
     <Compile Include="AggregateBase.cs" />
     <Compile Include="BucketSupport.cs" />
     <Compile Include="CommandContext.cs" />
+    <Compile Include="Contracts\IRepositoryGeneric.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="ConflictingCommandException.cs" />
     <Compile Include="DependencyInjectionContainer.cs" />
@@ -79,10 +79,9 @@
     <Compile Include="Contracts\IEventPublisher.cs" />
     <Compile Include="Contracts\IDependencyInjectionContainer.cs" />
     <Compile Include="Contracts\IEventSerializer.cs" />
-    <Compile Include="Contracts\IEventSource.cs" />
     <Compile Include="Contracts\IEventSourceBase.cs" />
     <Compile Include="Contracts\IEventSourceFactory.cs" />
-    <Compile Include="Contracts\IEventSourceGeneric.cs" />
+    <Compile Include="Contracts\IEventSource.cs" />
     <Compile Include="Contracts\IStringId.cs" />
     <Compile Include="Contracts\IIdGenericWithSet.cs" />
     <Compile Include="Contracts\IIdGeneric.cs" />
@@ -90,8 +89,6 @@
     <Compile Include="Contracts\IEventStore.cs" />
     <Compile Include="Contracts\ILogger.cs" />
     <Compile Include="Contracts\IMemento.cs" />
-    <Compile Include="Contracts\IMementoBase.cs" />
-    <Compile Include="Contracts\IMementoGeneric.cs" />
     <Compile Include="Contracts\IRepository.cs" />
     <Compile Include="Contracts\IRepositoryAdd.cs" />
     <Compile Include="Contracts\ISnapshotGeneric.cs" />
@@ -99,12 +96,9 @@
     <Compile Include="Contracts\IUnitOfWork.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="LoggerFactory.cs" />
+    <Compile Include="Contracts\Memento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
-    <Compile Include="StringWay\AggregateBase.cs" />
-    <Compile Include="StringWay\IEventSource.cs" />
-    <Compile Include="StringWay\IEventSourceId.cs" />
-    <Compile Include="StringWay\IMemento.cs" />
     <Compile Include="StringWay\IRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="UnitOfWorkFactory.cs" />

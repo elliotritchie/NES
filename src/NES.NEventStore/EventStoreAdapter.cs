@@ -19,11 +19,11 @@ namespace NES.NEventStore
             _eventStore = eventStore;
         }
 
-        public TMemento Read<TMemento>(string bucketId, string id, int version) where TMemento : class, IMementoBase
+        public Memento<TId> Read<TId>(string bucketId, string id, int version)
         {
             bucketId = this.ChangeBucketIdIfRequired(bucketId);
             var snapshot = _eventStore.Advanced.GetSnapshot(bucketId, id, version);
-            return snapshot != null ? (TMemento)snapshot.Payload : null;
+            return snapshot != null ? (Memento<TId>)snapshot.Payload : null;
         }
 
         public IEnumerable<object> Read(string bucketId, string id, int version)
@@ -38,7 +38,7 @@ namespace NES.NEventStore
 
         public void Write(string bucketId, string id, int version, IEnumerable<object> events, Guid commitId, Dictionary<string, object> headers, Dictionary<object, Dictionary<string, object>> eventHeaders)
         {
-            Logger.Debug("Write eventstream with bucketId {0} id {1} version {2} commitId {3} events {4}", bucketId, id, version, events.Count());
+            Logger.Debug("Write eventstream with bucketId {0} id {1} version {2} commitId {3} events {4}", bucketId, id, version, commitId, events.Count());
 
             bucketId = this.ChangeBucketIdIfRequired(bucketId);
             using (var stream = _eventStore.OpenStream(bucketId, id, version, int.MaxValue))

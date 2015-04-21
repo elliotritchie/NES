@@ -19,9 +19,8 @@ namespace NES
             _eventStore = eventStore;
         }
 
-        public T Get<T, TId, TMemento>(string bucketId, string id, int version)
-            where T : class, IEventSourceGeneric<TId, TMemento>
-            where TMemento : class, IMementoGeneric<TId>
+        public T Get<T, TId>(string bucketId, string id, int version)
+            where T : class, IEventSource<TId>
         {
             Logger.Debug("Get event source Id '{0}', Type '{1}'", id, typeof(T).Name);
 
@@ -33,7 +32,7 @@ namespace NES
 
             var eventSource = _eventSourceFactory.Create<T>();
 
-            bool hasSnaphot = this.RestoreSnapshot<T, TId, TMemento>(bucketId, id, eventSource, version);
+            bool hasSnaphot = this.RestoreSnapshot<T, TId>(bucketId, id, eventSource, version);
             bool hasEvents = this.Hydrate(bucketId, id, eventSource, version);
 
             if (!(hasSnaphot || hasEvents))
@@ -102,13 +101,12 @@ namespace NES
             return events.Count > 0;
         }
 
-        private bool RestoreSnapshot<T, TId, TMemento>(string bucketId, string id, T eventSource, int version)
-            where T : IEventSourceGeneric<TId, TMemento>
-            where TMemento : class, IMementoGeneric<TId>
+        private bool RestoreSnapshot<T, TId>(string bucketId, string id, T eventSource, int version)
+            where T : IEventSource<TId>
         {
             Logger.Debug("Restore snapshot for event source Id '{0}', BucketId '{1}', Type '{2}'", id, bucketId, eventSource.GetType().Name);
 
-            var memento = _eventStore.Read<TMemento>(bucketId, id, version);
+            var memento = _eventStore.Read<TId>(bucketId, id, version);
 
             if (memento != null)
             {

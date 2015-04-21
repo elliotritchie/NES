@@ -2,7 +2,7 @@
 
 namespace NES.NEventStore.Tests.TestDomain
 {
-    public class Car : AggregateBase
+    public class Car : AggregateBase<Guid>
     {
         private string name;
 

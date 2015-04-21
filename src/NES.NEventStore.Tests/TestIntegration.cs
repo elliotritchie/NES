@@ -46,7 +46,7 @@ namespace NES.NEventStore.Tests
 
         protected IRepository Repository { get; set; }
 
-        protected void RepositoryAdd<T>(T eventSource) where T : class, IEventSource
+        protected void RepositoryAdd<T>(T eventSource) where T : class, IEventSourceBase
         {
             using (this.BusScope)
             {

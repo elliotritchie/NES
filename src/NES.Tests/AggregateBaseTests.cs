@@ -12,7 +12,7 @@ namespace NES.Tests
         public class When_hydrating_and_events_are_supplied : Test
         {
             private AggregateStub _aggregate;
-            private IEventSource _eventSource;
+            private IEventSourceBase _eventSource;
             private readonly EventFactory _eventFactory = new EventFactory();
             private readonly List<IEvent> _events = new List<IEvent>();
             
@@ -44,7 +44,7 @@ namespace NES.Tests
         public class When_hydrating_and_events_are_not_supplied : Test
         {
             private AggregateStub _aggregate;
-            private IEventSource _eventSource;
+            private IEventSourceBase _eventSource;
             private readonly List<IEvent> _events = new List<IEvent>();
 
             protected override void Context()
@@ -74,7 +74,7 @@ namespace NES.Tests
         public class When_applying_event : Test
         {
             private AggregateStub _aggregate;
-            private IEventSource _eventSource;
+            private IEventSourceBase _eventSource;
             private const string _value = "qwerty";
 
             protected override void Context()
@@ -99,7 +99,7 @@ namespace NES.Tests
         public class When_flushing_and_events_have_been_applied : Test
         {
             private AggregateStub _aggregate;
-            private IEventSource _eventSource;
+            private IEventSourceBase _eventSource;
             private IEnumerable<IEvent> _flushedEvents;
             private const string _value = "qwerty";
 
@@ -132,7 +132,7 @@ namespace NES.Tests
         public class When_flushing_and_no_events_have_been_applied : Test
         {
             private AggregateStub _aggregate;
-            private IEventSource _eventSource;
+            private IEventSourceBase _eventSource;
             private IEnumerable<IEvent> _flushedEvents;
 
             protected override void Context()

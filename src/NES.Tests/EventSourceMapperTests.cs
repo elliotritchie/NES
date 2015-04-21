@@ -15,7 +15,7 @@ namespace NES.Tests
             private readonly Mock<IEventStore> _eventStore = new Mock<IEventStore>();
             private readonly CommandContext _commandContext = new CommandContext();
             private readonly Guid _commitId = GuidComb.NewGuidComb();
-            private readonly Mock<IEventSource> _eventSource = new Mock<IEventSource>();
+            private readonly Mock<IEventSource<Guid>> _eventSource = new Mock<IEventSource<Guid>>();
             private readonly Guid _id = GuidComb.NewGuidComb();
             private const int _version = 2;
             private readonly List<object> _events = new List<object> { new object(), new object() };
@@ -87,35 +87,35 @@ namespace NES.Tests
             private IEventSourceMapper _eventSourceMapper;
             private readonly Mock<IEventSourceFactory> _eventSourceFactory = new Mock<IEventSourceFactory>();
             private readonly Mock<IEventStore> _eventStore = new Mock<IEventStore>();
-            private readonly Mock<IEventSource> _eventSource = new Mock<IEventSource>();
+            private readonly Mock<IEventSource<Guid>> _eventSource = new Mock<IEventSource<Guid>>();
             private readonly Guid _id = Guid.NewGuid();
             private const int _version = 0;
-            private readonly Mock<IMemento> _memento = new Mock<IMemento>();
+            private readonly Mock<Memento<Guid>> _memento = new Mock<Memento<Guid>>();
             private readonly List<object> _events = new List<object> { new object() };
-            private IEventSource _returnedEventSource;
+            private IEventSourceBase _returnedEventSource;
 
             protected override void Context()
             {
                 _eventSourceMapper = new EventSourceMapper(_eventSourceFactory.Object, _eventStore.Object);
 
-                _eventSourceFactory.Setup(f => f.Create<IEventSource>()).Returns(_eventSource.Object);
+                _eventSourceFactory.Setup(f => f.Create<IEventSource<Guid>>()).Returns(_eventSource.Object);
                 _eventSource.Setup(s => s.Id).Returns(_id);
                 _eventSource.Setup(s => s.StringId).Returns(_id.ToString);
                 _eventSource.Setup(s => s.Version).Returns(_version);
                 _eventSource.Setup(s => s.BucketId).Returns(BucketSupport.DefaultBucketId);
-                _eventStore.Setup(a => a.Read<IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue)).Returns(this._memento.Object);
+                _eventStore.Setup(a => a.Read<Guid>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue)).Returns(this._memento.Object);
                 _eventStore.Setup(a => a.Read(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue)).Returns(this._events);
             }
 
             protected override void Event()
             {
-                _returnedEventSource = _eventSourceMapper.Get<IEventSource, Guid, IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue);
+                _returnedEventSource = _eventSourceMapper.Get<IEventSource<Guid>, Guid>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue);
             }
 
             [TestMethod]
             public void Should_create_event_source()
             {
-                _eventSourceFactory.Verify(f => f.Create<IEventSource>());
+                _eventSourceFactory.Verify(f => f.Create<IEventSource<Guid>>());
             }
 
             [TestMethod]
@@ -143,31 +143,31 @@ namespace NES.Tests
             private IEventSourceMapper _eventSourceMapper;
             private readonly Mock<IEventSourceFactory> _eventSourceFactory = new Mock<IEventSourceFactory>();
             private readonly Mock<IEventStore> _eventStore = new Mock<IEventStore>();
-            private readonly Mock<IEventSource> _eventSource = new Mock<IEventSource>();
-            private IEventSource _returnedEventSource;
+            private readonly Mock<IEventSource<Guid>> _eventSource = new Mock<IEventSource<Guid>>();
+            private IEventSourceBase _returnedEventSource;
 
             protected override void Context()
             {
                 _eventSourceMapper = new EventSourceMapper(_eventSourceFactory.Object, _eventStore.Object);
 
-                _eventSourceFactory.Setup(f => f.Create<IEventSource>()).Returns(_eventSource.Object);
+                _eventSourceFactory.Setup(f => f.Create<IEventSource<Guid>>()).Returns(_eventSource.Object);
             }
 
             protected override void Event()
             {
-                _returnedEventSource = _eventSourceMapper.Get<IEventSource, Guid, IMemento>(BucketSupport.DefaultBucketId, Guid.NewGuid().ToString(), int.MaxValue);
+                _returnedEventSource = _eventSourceMapper.Get<IEventSource<Guid>, Guid>(BucketSupport.DefaultBucketId, Guid.NewGuid().ToString(), int.MaxValue);
             }
 
             [TestMethod]
             public void Should_create_event_source()
             {
-                _eventSourceFactory.Verify(f => f.Create<IEventSource>());
+                _eventSourceFactory.Verify(f => f.Create<IEventSource<Guid>>());
             }
 
             [TestMethod]
             public void Should_not_restore_snapshot()
             {
-                _eventSource.Verify(s => s.RestoreSnapshot(It.IsAny<IMemento>()), Times.Never());
+                _eventSource.Verify(s => s.RestoreSnapshot(It.IsAny<Memento<Guid>>()), Times.Never());
             }
 
             [TestMethod]

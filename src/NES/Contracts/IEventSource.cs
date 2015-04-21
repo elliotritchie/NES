@@ -1,8 +1,6 @@
-using System;
-
-namespace NES.Contracts
+﻿namespace NES.Contracts
 {
-    public interface IEventSource : IEventSourceGeneric<Guid, IMemento>
+    public interface IEventSource<TId> : IEventSourceBase, IIdGeneric<TId>, ISnapshotGeneric<TId> 
     {
     }
 }

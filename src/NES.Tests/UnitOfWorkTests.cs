@@ -25,18 +25,18 @@ namespace NES.Tests
                 _aggregate = new AggregateStub(_id);
 
                 _commandContextProvider.Setup(p => p.Get()).Returns(_commandContext);
-                _eventSourceMapper.Setup(m => m.Get<AggregateStub, Guid, IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue)).Returns(_aggregate);
+                _eventSourceMapper.Setup(m => m.Get<AggregateStub, Guid>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue)).Returns(_aggregate);
             }
 
             protected override void Event()
             {
-                _returnedAggregate = _unitOfWork.Get<AggregateStub, Guid, IMemento>(BucketSupport.DefaultBucketId, _id.ToString());
+                _returnedAggregate = _unitOfWork.Get<AggregateStub, Guid>(BucketSupport.DefaultBucketId, _id.ToString());
             }
 
             [TestMethod]
             public void Should_get_aggregate_from_event_source_mapper()
             {
-                _eventSourceMapper.Verify(m => m.Get<AggregateStub, Guid, IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue));
+                _eventSourceMapper.Verify(m => m.Get<AggregateStub, Guid>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue));
             }
 
             [TestMethod]
@@ -69,19 +69,19 @@ namespace NES.Tests
                 _aggregate = new AggregateStub(_id);
 
                 _commandContextProvider.Setup(p => p.Get()).Returns(_commandContext);
-                _eventSourceMapper.Setup(m => m.Get<AggregateStub, Guid, IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue)).Returns(_aggregate);
+                _eventSourceMapper.Setup(m => m.Get<AggregateStub, Guid>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue)).Returns(_aggregate);
             }
 
             protected override void Event()
             {
-                _returnedAggregate = _unitOfWork.Get<AggregateStub, Guid, IMemento>(BucketSupport.DefaultBucketId, _id.ToString());
-                _returnedAggregate = _unitOfWork.Get<AggregateStub, Guid, IMemento>(BucketSupport.DefaultBucketId, _id.ToString());
+                _returnedAggregate = _unitOfWork.Get<AggregateStub, Guid>(BucketSupport.DefaultBucketId, _id.ToString());
+                _returnedAggregate = _unitOfWork.Get<AggregateStub, Guid>(BucketSupport.DefaultBucketId, _id.ToString());
             }
 
             [TestMethod]
             public void Should_get_aggregate_from_event_source_mapper_once()
             {
-                _eventSourceMapper.Verify(m => m.Get<AggregateStub, Guid, IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue), Times.Once());
+                _eventSourceMapper.Verify(m => m.Get<AggregateStub, Guid>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue), Times.Once());
             }
 
             [TestMethod]
@@ -112,18 +112,18 @@ namespace NES.Tests
                 _unitOfWork = new UnitOfWork(_commandContextProvider.Object, _eventSourceMapper.Object);
 
                 _commandContextProvider.Setup(p => p.Get()).Returns(_commandContext);
-                _eventSourceMapper.Setup(m => m.Get<AggregateStub, Guid, IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue)).Returns<AggregateStub>(null);
+                _eventSourceMapper.Setup(m => m.Get<AggregateStub, Guid>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue)).Returns<AggregateStub>(null);
             }
 
             protected override void Event()
             {
-                _returnedAggregate = _unitOfWork.Get<AggregateStub, Guid, IMemento>(BucketSupport.DefaultBucketId, _id.ToString());
+                _returnedAggregate = _unitOfWork.Get<AggregateStub, Guid>(BucketSupport.DefaultBucketId, _id.ToString());
             }
 
             [TestMethod]
             public void Should_get_aggregate_from_event_source_mapper()
             {
-                _eventSourceMapper.Verify(m => m.Get<AggregateStub, Guid, IMemento>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue));
+                _eventSourceMapper.Verify(m => m.Get<AggregateStub, Guid>(BucketSupport.DefaultBucketId, _id.ToString(), int.MaxValue));
             }
 
             [TestMethod]
@@ -173,7 +173,7 @@ namespace NES.Tests
             private readonly Mock<ICommandContextProvider> _commandContextProvider = new Mock<ICommandContextProvider>();
             private readonly Mock<IEventSourceMapper> _eventSourceMapper = new Mock<IEventSourceMapper>();
             private UnitOfWork _unitOfWork;
-            private IEventSource _aggregate;
+            private IEventSourceBase _aggregate;
             private readonly CommandContext _commandContext = new CommandContext();
 
             protected override void Context()
@@ -203,7 +203,7 @@ namespace NES.Tests
             private readonly Mock<ICommandContextProvider> _commandContextProvider = new Mock<ICommandContextProvider>();
             private readonly Mock<IEventSourceMapper> _eventSourceMapper = new Mock<IEventSourceMapper>();
             private UnitOfWork _unitOfWork;
-            private IEventSource _aggregate;
+            private IEventSourceBase _aggregate;
             private readonly CommandContext _commandContext = new CommandContext();
 
             protected override void Context()
@@ -234,8 +234,8 @@ namespace NES.Tests
             private readonly Mock<ICommandContextProvider> _commandContextProvider = new Mock<ICommandContextProvider>();
             private readonly Mock<IEventSourceMapper> _eventSourceMapper = new Mock<IEventSourceMapper>();
             private UnitOfWork _unitOfWork;
-            private IEventSource _aggregate1;
-            private IEventSource _aggregate2;
+            private IEventSourceBase _aggregate1;
+            private IEventSourceBase _aggregate2;
             private readonly CommandContext _commandContext = new CommandContext();
 
             protected override void Context()
@@ -286,7 +286,7 @@ namespace NES.Tests
             [TestMethod]
             public void Should_not_call_event_source_mapper()
             {
-                _eventSourceMapper.Verify(m => m.Set(_commandContext, It.IsAny<IEventSource>()), Times.Never());
+                _eventSourceMapper.Verify(m => m.Set(_commandContext, It.IsAny<IEventSource<Guid>>()), Times.Never());
             }
         }
     }

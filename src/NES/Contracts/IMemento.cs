@@ -2,7 +2,8 @@ using System;
 
 namespace NES.Contracts
 {
-    public interface IMemento : IMementoGeneric<Guid>
+    public interface IMemento
     {
+        Memento<T> GetMemento<T>();
     }
 }

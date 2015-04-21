@@ -8,11 +8,7 @@ using NES.Contracts;
 
 namespace NES.StringWay
 {
-    public interface IRepository : IRepositoryAdd
+    public interface IRepository : IRepositoryGeneric<string>
     {
-        T Get<T>(string bucketId, string id) where T : class, IEventSource;
-        T Get<T>(string bucketId, string id, int version) where T : class, IEventSource;
-        T Get<T>(string id) where T : class, IEventSource;
-        T Get<T>(string id, int version) where T : class, IEventSource;
     }
 }
