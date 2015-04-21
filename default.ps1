@@ -6,12 +6,10 @@ properties {
 	$lib_dir = "$base_dir\lib"
 	$tools_dir = "$base_dir\tools"
 	$_dir = "$base_dir\build\"
-	$build_dir = "$base_dir\build\"
-	$bin_dir = "$build_dir\bin\\"
 	$release_dir = "$base_dir\release"
 	$packageinfo_dir = "$base_dir\packaging"
-	$version = "5.0.0"
-	$isbeta = $True
+	$version = "5.0.5"
+	$isbeta = $False
 }
 
 include .\tools\psake_ext.ps1
@@ -19,9 +17,13 @@ include .\tools\psake_ext.ps1
 task default -depends clean, build, output, package, uploadpackages
 
 task clean {
-	rd $build_dir -recurse -force -erroraction silentlycontinue | out-null
+	
 	rd $release_dir -recurse -force -erroraction silentlycontinue | out-null
 	md $release_dir -force -erroraction silentlycontinue | out-null
+	
+	Get-ChildItem $source_dir -Directory -recurse -include Release | rd -recurse -force -erroraction silentlycontinue | out-null
+	Get-ChildItem $source_dir -Directory -recurse -include Debug | rd -recurse -force -erroraction silentlycontinue | out-null
+	Get-ChildItem $source_dir -Directory -recurse -include obj | rd -recurse -force -erroraction silentlycontinue | out-null
 	
     Generate-Assembly-Info `
         -file "$source_dir\CommonAssemblyInfo.cs" `
@@ -34,12 +36,12 @@ task clean {
 }
 
 task build -depends clean {
-	exec { msbuild "$source_dir\NES.sln" /t:clean /t:build /p:configuration=Release /v:quiet /p:outdir=$bin_dir }
+	exec { msbuild "$source_dir\NES.sln" /t:clean /t:build /p:configuration=Release /v:quiet }
 	
 }
 
 task output -depends build {
-	get-childitem $bin_dir -recurse -include NES* -exclude *Tests* | copy-item -destination $build_dir
+	get-childitem $source_dir -recurse -include NES*.dll -exclude *Tests* | copy-item -destination $build_dir
 }
 
 task package -depends output {
@@ -52,7 +54,7 @@ task package -depends output {
 	foreach ($spec in $spec_files)
 	{
 	  $ProjectFileFullPath = [System.IO.Path]::ChangeExtension($spec.FullName,".csproj")
-	& $tools_dir\nuget\NuGet.exe pack $ProjectFileFullPath -o $release_dir -Version $nuget_version -Symbols -IncludeReferencedProjects
+	& $tools_dir\nuget\NuGet.exe pack $ProjectFileFullPath -o $release_dir -Version $nuget_version -Symbols -IncludeReferencedProjects -Prop Configuration=Release
 	}
 }
 

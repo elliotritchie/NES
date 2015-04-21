@@ -22,7 +22,9 @@ namespace NES
         public T Get<T, TId>(string bucketId, string id, int version = int.MaxValue)
             where T : class, IEventSource<TId>
         {
-            var eventSource = _eventSources.OfType<T>().SingleOrDefault(s => s.StringId == id && (s.BucketId == bucketId || string.IsNullOrEmpty(s.BucketId)));
+            var eventSource = _eventSources.OfType<T>().SingleOrDefault(s => s.StringId == id 
+                && (s.BucketId == bucketId || string.IsNullOrEmpty(s.BucketId))
+                && (s.Version <= version));
 
             if (eventSource == null)
             {
