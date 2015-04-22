@@ -15,7 +15,7 @@ namespace NES.Sample.Tests.Model
         public class When_sending_a_message : Test
         {
             private User _user;
-            private IEventSource _source;
+            private IEventSource<Guid> _source;
             private readonly Guid _userId = GuidComb.NewGuidComb();
             private readonly Guid _messageId = GuidComb.NewGuidComb();
             private const string _message = "Hello!";

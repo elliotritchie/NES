@@ -13,7 +13,7 @@ namespace NES.Sample.Tests.Model
         [TestClass]
         public class When_creating_a_new_user : Test
         {
-            private IEventSource _source;
+            private IEventSource<Guid> _source;
             private readonly Guid _userId = GuidComb.NewGuidComb();
             private const string _username = "Bob";
 

@@ -4,18 +4,6 @@
         <name>NServiceBus.Host</name>
     </assembly>
     <members>
-        <member name="T:NServiceBus.FileVersionRetriever">
-            <summary>
-            Helper class to retrieve File version.
-            </summary>
-        </member>
-        <member name="M:NServiceBus.FileVersionRetriever.GetFileVersion(System.Type)">
-            <summary>
-            Retrieves a semver compliant version from a <see cref="T:System.Type"/>.
-            </summary>
-            <param name="type"><see cref="T:System.Type"/> to retrieve version from.</param>
-            <returns>SemVer compliant version.</returns>
-        </member>
         <member name="T:NServiceBus.Hosting.Profiles.IConfigureLogging">
             <summary>
             Called in order to configure logging.
@@ -57,11 +45,6 @@
             </summary>
         </member>
         <member name="M:NServiceBus.Hosting.Profiles.IHandleProfile.ProfileActivated(NServiceBus.BusConfiguration)">
-            <summary>
-            Called when a given profile is activated.
-            </summary>
-        </member>
-        <member name="M:NServiceBus.Hosting.Profiles.IHandleProfile.ProfileActivated(NServiceBus.Configure)">
             <summary>
             Called when a given profile is activated.
             </summary>
@@ -139,6 +122,18 @@
             </summary>
             <exception cref="T:System.InvalidOperationException">No endpoint configuration found in scanned assemblies. </exception>
         </member>
+        <member name="T:NServiceBus.FileVersionRetriever">
+            <summary>
+            Helper class to retrieve File version.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.FileVersionRetriever.GetFileVersion(System.Type)">
+            <summary>
+            Retrieves a semver compliant version from a <see cref="T:System.Type"/>.
+            </summary>
+            <param name="type"><see cref="T:System.Type"/> to retrieve version from.</param>
+            <returns>SemVer compliant version.</returns>
+        </member>
         <member name="M:NServiceBus.GenericHost.Start">
             <summary>
                 Creates and starts the bus as per the configuration
@@ -182,32 +177,6 @@
         <member name="T:NServiceBus.Hosting.Windows.LoggingHandlers.ProductionLoggingHandler">
             <summary>
             Handles logging configuration for the <see cref="T:NServiceBus.Production"/> profile.
-            </summary>
-        </member>
-        <member name="T:NServiceBus.Distributor">
-            <summary>
-            Feature Profile for starting the Distributor without a worker running on its endpoint
-            </summary>
-        </member>
-        <member name="T:NServiceBus.MultiSite">
-            <summary>
-            Indicates that this node has a Gateway access to it.
-            </summary>
-        </member>
-        <member name="T:NServiceBus.Master">
-            <summary>
-            Indicates that this node is the master node for its set of messages.
-            </summary>
-        </member>
-        <member name="T:NServiceBus.Worker">
-            <summary>
-            Indicates that this node is a worker node that will process messages coming from its distributor
-            </summary>
-        </member>
-        <member name="T:NServiceBus.AsA_Publisher">
-            <summary>
-            Indicates this endpoint is a publisher.
-            This is compatible with <see cref="T:NServiceBus.AsA_Server"/> but not <see cref="T:NServiceBus.AsA_Client"/>.
             </summary>
         </member>
         <member name="T:NServiceBus.Hosting.Windows.Profiles.Handlers.PerformanceCountersProfileHandler">
@@ -378,7 +347,7 @@
         </member>
         <member name="T:NServiceBus.Hosting.Windows.HostServiceLocator">
             <summary>
-            Plugs into the generic service locator to return an instance of <see cref="T:NServiceBus.Hosting.GenericHost"/>.
+            Plugs into the generic service locator to return an instance of GenericHost"
             </summary>
         </member>
         <member name="F:NServiceBus.Hosting.Windows.HostServiceLocator.Args">
@@ -388,7 +357,7 @@
         </member>
         <member name="M:NServiceBus.Hosting.Windows.HostServiceLocator.DoGetInstance(System.Type,System.String)">
             <summary>
-            Returns an instance of <see cref="T:NServiceBus.Hosting.GenericHost"/>
+            Returns an instance of GenericHost"
             </summary>
         </member>
         <member name="M:NServiceBus.Hosting.Windows.HostServiceLocator.DoGetAllInstances(System.Type)">
