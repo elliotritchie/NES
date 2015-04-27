@@ -263,6 +263,71 @@ namespace NES.Tests
         }
 
         [TestClass]
+        public class When_getting_and_event_sources_previous_version_have_been_registered : Test
+        {
+            private readonly Mock<ICommandContextProvider> _commandContextProvider = new Mock<ICommandContextProvider>();
+            private readonly Mock<IEventSourceMapper> _eventSourceMapper = new Mock<IEventSourceMapper>();
+            private UnitOfWork _unitOfWork;
+            private IEventSourceBase _aggregate;
+            private readonly CommandContext _commandContext = new CommandContext();
+
+            private readonly Guid id = Guid.NewGuid();
+
+            protected override void Context()
+            {
+                //var eventSourceMapper = new EventSourceMapper(new Mock<IEventSourceFactory>().Object, new Mock<IEventStore>().Object);
+                _commandContextProvider.Setup(p => p.Get()).Returns(_commandContext);
+
+
+                 var aggregate = new AggregateStub(id);
+                ((IEventSourceBase)aggregate).Flush();
+                _eventSourceMapper.Setup(m => m.Get<AggregateStub, Guid>(string.Empty, id.ToString(), 1)).Returns(aggregate);
+
+                aggregate = new AggregateStub(id);
+                aggregate.DoSomething("Hi version 2");
+                ((IEventSourceBase)aggregate).Flush();
+                _aggregate = aggregate;
+            }
+
+            protected override void Event()
+            {
+                _unitOfWork = new UnitOfWork(_commandContextProvider.Object, _eventSourceMapper.Object);
+                _unitOfWork.Register(_aggregate);
+            }
+
+            [TestMethod]
+            public void Should_get_version_1()
+            {
+                var aggregate = _unitOfWork.Get<AggregateStub, Guid>(string.Empty, id.ToString(), 1);
+                Assert.IsTrue(((IEventSourceBase)aggregate).Version == 1);
+            }
+
+            [TestMethod]
+            public void Should_get_version_2()
+            {
+                var aggregate = _unitOfWork.Get<AggregateStub, Guid>(string.Empty, id.ToString(), 2);
+                Assert.IsTrue(((IEventSourceBase)aggregate).Version == 2);
+            }
+
+            [TestMethod]
+            public void Should_get_version_2_when_version_not_passed()
+            {
+                var aggregate = _unitOfWork.Get<AggregateStub, Guid>(string.Empty, id.ToString());
+                Assert.IsTrue(((IEventSourceBase)aggregate).Version == 2);
+            }
+
+            [TestMethod]
+            public void Should_get_version_2_when_version_not_passed_and_1_is_registered()
+            {
+                var aggregate1 = _unitOfWork.Get<AggregateStub, Guid>(string.Empty, id.ToString(), 1);
+                Assert.IsTrue(((IEventSourceBase)aggregate1).Version == 1);
+
+                var aggregate = _unitOfWork.Get<AggregateStub, Guid>(string.Empty, id.ToString());
+                Assert.IsTrue(((IEventSourceBase)aggregate).Version == 2);
+            }
+        }
+
+        [TestClass]
         public class When_committing_and_a_null_event_source_has_been_registered : Test
         {
             private readonly Mock<ICommandContextProvider> _commandContextProvider = new Mock<ICommandContextProvider>();
