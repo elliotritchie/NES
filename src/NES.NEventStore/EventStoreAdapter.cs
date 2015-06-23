@@ -47,7 +47,7 @@ namespace NES.NEventStore
 
                 if (version != stream.StreamRevision && Transaction.Current != null)
                 {
-                    Logger.Warn("Opened stream version {0} is not equal to the actual eventSource version {1}. EventSource has been modified between the read and this write");
+                    Logger.Warn("Opened stream version {0} is not equal to the actual eventSource version {1}. EventSource has been modified between the read and this write", stream.StreamRevision, version);
                     throw new ConflictingCommandException(string.Format("EventSource {0} has the version {1} and the stream has version {2}", id, version, stream.StreamRevision));
                 }
 
