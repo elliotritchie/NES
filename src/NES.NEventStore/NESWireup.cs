@@ -6,6 +6,7 @@ using NEventStore.Dispatcher;
 using NEventStore.Logging;
 using NEventStore.Persistence;
 using NEventStore.Serialization;
+using Newtonsoft.Json;
 
 namespace NES.NEventStore
 {
@@ -25,7 +26,7 @@ namespace NES.NEventStore
 
                 this.Container.Register<ISerialize>(new CompositeSerializer(serializer, () => DI.Current.Resolve<IEventSerializer>()));
             }
-            
+
             Logger.Debug("Configuring the store to dispatch messages synchronously.");
             Logger.Debug("Registering dispatcher of type '{0}'.", typeof(MessageDispatcher));
 
@@ -53,6 +54,14 @@ namespace NES.NEventStore
             return new SerializationWireup(this, new JsonSerializer(() => DI.Current.Resolve<IEventMapper>(), () => DI.Current.Resolve<IEventFactory>()));
         }
 
+        public SerializationWireup UsingJsonSerialization(JsonSerializerSettings serializerSettings)
+        {
+            Logger.Debug("Configuring custom NES Json serializer to cope with payloads that contain messages as interfaces. SerializerSettings are also passed");
+
+            return new SerializationWireup(this, new JsonSerializer(() => DI.Current.Resolve<IEventMapper>(), () => DI.Current.Resolve<IEventFactory>(), serializerSettings));
+        }
+
+
         public SerializationWireup UsingBsonSerialization()
         {
             Logger.Debug("Configuring custom NES Bson serializer to cope with payloads that contain messages as interfaces.");
@@ -73,9 +82,9 @@ namespace NES.NEventStore
             }
 
             pipelineHooks.Add(eventConverterPipelineHook);
-            
+
             var store = base.Build();
-            
+
             DI.Current.Register(() => store);
 
             return store;

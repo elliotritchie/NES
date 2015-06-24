@@ -18,14 +18,14 @@ namespace NES.NEventStore
     {
         private static readonly ILog Logger = LogFactory.BuildLogger(typeof(JsonSerializer));
 
-        private readonly JsonSerializerSettings _settings = new JsonSerializerSettings
+        private JsonSerializerSettings _settings = new JsonSerializerSettings
         {
             TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
             TypeNameHandling = TypeNameHandling.Auto,
             DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore
         };
-        
+
         private readonly Func<IEventMapper> _eventMapperFunc;
         private readonly Func<IEventFactory> _eventFactoryFunc;
 
@@ -33,6 +33,19 @@ namespace NES.NEventStore
         {
             _eventMapperFunc = eventMapperFunc;
             _eventFactoryFunc = eventFactoryFunc;
+        }
+
+        public JsonSerializer(Func<IEventMapper> eventMapperFunc, Func<IEventFactory> eventFactoryFunc, JsonSerializerSettings serializerSettings)
+            : this(eventMapperFunc, eventFactoryFunc)
+        {
+            if (serializerSettings == null)
+            {
+                throw new ArgumentNullException("serializerSettings");
+            }
+
+            _eventMapperFunc = eventMapperFunc;
+            _eventFactoryFunc = eventFactoryFunc;
+            _settings = serializerSettings;
         }
 
         public virtual void Serialize<T>(Stream output, T graph)
@@ -58,7 +71,7 @@ namespace NES.NEventStore
 
         public virtual T Deserialize<T>(Stream input)
         {
-            Logger.Verbose("Deserializing stream to object of type '" + typeof(T)  + "'.");
+            Logger.Verbose("Deserializing stream to object of type '" + typeof(T) + "'.");
 
             using (var streamReader = new StreamReader(input, Encoding.UTF8))
             {
