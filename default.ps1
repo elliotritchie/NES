@@ -8,7 +8,7 @@ properties {
 	$_dir = "$base_dir\build\"
 	$release_dir = "$base_dir\release"
 	$packageinfo_dir = "$base_dir\packaging"
-	$version = "5.0.7"
+	$version = "5.0.8"
 	$isbeta = $False
 }
 
