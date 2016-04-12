@@ -88,11 +88,9 @@
     <Compile Include="Contracts\IEventSourceMapper.cs" />
     <Compile Include="Contracts\IEventStore.cs" />
     <Compile Include="Contracts\ILogger.cs" />
-    <Compile Include="Contracts\IMemento.cs" />
     <Compile Include="Contracts\IRepository.cs" />
     <Compile Include="Contracts\IRepositoryAdd.cs" />
     <Compile Include="Contracts\ISnapshotGeneric.cs" />
-    <Compile Include="Contracts\ISnapshot.cs" />
     <Compile Include="Contracts\IUnitOfWork.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="LoggerFactory.cs" />

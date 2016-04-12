@@ -45,7 +45,10 @@ namespace NES
         Memento<TId> ISnapshotGeneric<TId>.TakeSnapshot()
         {
             var snapshot = TakeSnapshot();
-
+            if (snapshot == null)
+            {
+                return null;
+            }
             snapshot.Id = Id;
             snapshot.Version = _version;
             snapshot.BucketId = BucketId;
