@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES", "NES\NES.csproj", "{EC7040E2-7A13-4447-900D-6ED57328E5DF}"
 EndProject
@@ -14,13 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES.NEventStore.Raven", "NES.NEventStore.Raven\NES.NEventStore.Raven.csproj", "{DA73E39E-6170-4AE5-B778-D9E2662D027B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES.NEventStore.Tests", "NES.NEventStore.Tests\NES.NEventStore.Tests.csproj", "{797CD9A7-7102-4C30-898B-132CFB448D66}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7EAF8F54-F84F-4CC4-BB2E-0E2325E93EDF}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

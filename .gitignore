@@ -40,3 +40,4 @@ _[Uu]pgradeReport_Files*/
 ASPNETDB.MDF
 aspnetdb_log.ldf
 build
+/src/packages
